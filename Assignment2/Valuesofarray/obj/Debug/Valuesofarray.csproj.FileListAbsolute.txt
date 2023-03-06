@@ -1,0 +1,8 @@
+D:\homework-ruan\homework2\Program2\bin\Debug\Program2.exe.config
+D:\homework-ruan\homework2\Program2\bin\Debug\Program2.exe
+D:\homework-ruan\homework2\Program2\bin\Debug\Program2.pdb
+D:\homework-ruan\homework2\Program2\obj\Debug\Valuesofarray.csproj.AssemblyReference.cache
+D:\homework-ruan\homework2\Program2\obj\Debug\Valuesofarray.csproj.SuggestedBindingRedirects.cache
+D:\homework-ruan\homework2\Program2\obj\Debug\Valuesofarray.csproj.CoreCompileInputs.cache
+D:\homework-ruan\homework2\Program2\obj\Debug\Program2.exe
+D:\homework-ruan\homework2\Program2\obj\Debug\Program2.pdb

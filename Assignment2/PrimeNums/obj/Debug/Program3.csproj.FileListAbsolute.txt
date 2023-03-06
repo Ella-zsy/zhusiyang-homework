@@ -1,0 +1,8 @@
+D:\homework-ruan\homework2\Program3\bin\Debug\Program3.exe.config
+D:\homework-ruan\homework2\Program3\bin\Debug\Program3.exe
+D:\homework-ruan\homework2\Program3\bin\Debug\Program3.pdb
+D:\homework-ruan\homework2\Program3\obj\Debug\Program3.csproj.AssemblyReference.cache
+D:\homework-ruan\homework2\Program3\obj\Debug\Program3.csproj.SuggestedBindingRedirects.cache
+D:\homework-ruan\homework2\Program3\obj\Debug\Program3.csproj.CoreCompileInputs.cache
+D:\homework-ruan\homework2\Program3\obj\Debug\Program3.exe
+D:\homework-ruan\homework2\Program3\obj\Debug\Program3.pdb
