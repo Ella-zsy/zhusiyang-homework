@@ -1,0 +1,8 @@
+D:\homework-ruan\ConsoleApp\calculate\bin\Debug\calculate.exe.config
+D:\homework-ruan\ConsoleApp\calculate\bin\Debug\calculate.exe
+D:\homework-ruan\ConsoleApp\calculate\bin\Debug\calculate.pdb
+D:\homework-ruan\ConsoleApp\calculate\obj\Debug\calculate.csproj.AssemblyReference.cache
+D:\homework-ruan\ConsoleApp\calculate\obj\Debug\calculate.csproj.SuggestedBindingRedirects.cache
+D:\homework-ruan\ConsoleApp\calculate\obj\Debug\calculate.csproj.CoreCompileInputs.cache
+D:\homework-ruan\ConsoleApp\calculate\obj\Debug\calculate.exe
+D:\homework-ruan\ConsoleApp\calculate\obj\Debug\calculate.pdb

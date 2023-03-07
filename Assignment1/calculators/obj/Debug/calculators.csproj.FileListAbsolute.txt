@@ -1,0 +1,11 @@
+D:\ConsoleApp\calculators\bin\Debug\calculators.exe.config
+D:\ConsoleApp\calculators\bin\Debug\calculators.exe
+D:\ConsoleApp\calculators\bin\Debug\calculators.pdb
+D:\ConsoleApp\calculators\obj\Debug\calculators.csproj.AssemblyReference.cache
+D:\ConsoleApp\calculators\obj\Debug\calculators.csproj.SuggestedBindingRedirects.cache
+D:\ConsoleApp\calculators\obj\Debug\calculators.Form1.resources
+D:\ConsoleApp\calculators\obj\Debug\calculators.Properties.Resources.resources
+D:\ConsoleApp\calculators\obj\Debug\calculators.csproj.GenerateResource.cache
+D:\ConsoleApp\calculators\obj\Debug\calculators.csproj.CoreCompileInputs.cache
+D:\ConsoleApp\calculators\obj\Debug\calculators.exe
+D:\ConsoleApp\calculators\obj\Debug\calculators.pdb
