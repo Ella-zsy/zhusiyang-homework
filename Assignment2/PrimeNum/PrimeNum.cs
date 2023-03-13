@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+//命名，意图清晰，算法复杂度，可靠性（先进行异常情况检查）
 namespace homework2
 {
     internal class PrimeNum
