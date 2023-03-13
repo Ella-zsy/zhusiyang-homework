@@ -103,7 +103,7 @@ namespace Assignment3
             }
         }
 
-        class Circle : FigureShape///正方形继承抽象类
+        class Circle : FigureShape///圆形继承抽象类
         {
             private double area;
             private int _r;
