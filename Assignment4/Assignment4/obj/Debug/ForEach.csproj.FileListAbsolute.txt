@@ -1,0 +1,8 @@
+D:\homework-ruan\Assignment4\Assignment4\bin\Debug\Assignment4.exe.config
+D:\homework-ruan\Assignment4\Assignment4\bin\Debug\Assignment4.exe
+D:\homework-ruan\Assignment4\Assignment4\bin\Debug\Assignment4.pdb
+D:\homework-ruan\Assignment4\Assignment4\obj\Debug\ForEach.csproj.AssemblyReference.cache
+D:\homework-ruan\Assignment4\Assignment4\obj\Debug\ForEach.csproj.SuggestedBindingRedirects.cache
+D:\homework-ruan\Assignment4\Assignment4\obj\Debug\ForEach.csproj.CoreCompileInputs.cache
+D:\homework-ruan\Assignment4\Assignment4\obj\Debug\Assignment4.exe
+D:\homework-ruan\Assignment4\Assignment4\obj\Debug\Assignment4.pdb

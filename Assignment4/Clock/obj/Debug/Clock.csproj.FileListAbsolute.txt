@@ -1,0 +1,8 @@
+D:\homework-ruan\Assignment4\Clock\bin\Debug\Clock.exe.config
+D:\homework-ruan\Assignment4\Clock\bin\Debug\Clock.exe
+D:\homework-ruan\Assignment4\Clock\bin\Debug\Clock.pdb
+D:\homework-ruan\Assignment4\Clock\obj\Debug\Clock.csproj.AssemblyReference.cache
+D:\homework-ruan\Assignment4\Clock\obj\Debug\Clock.csproj.SuggestedBindingRedirects.cache
+D:\homework-ruan\Assignment4\Clock\obj\Debug\Clock.csproj.CoreCompileInputs.cache
+D:\homework-ruan\Assignment4\Clock\obj\Debug\Clock.exe
+D:\homework-ruan\Assignment4\Clock\obj\Debug\Clock.pdb
