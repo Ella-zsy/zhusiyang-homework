@@ -1,0 +1,8 @@
+D:\homework-ruan\Assignment5\OrderManagementSystem\bin\Debug\OrderManagementSystem.exe.config
+D:\homework-ruan\Assignment5\OrderManagementSystem\bin\Debug\OrderManagementSystem.exe
+D:\homework-ruan\Assignment5\OrderManagementSystem\bin\Debug\OrderManagementSystem.pdb
+D:\homework-ruan\Assignment5\OrderManagementSystem\obj\Debug\OrderManagementSystem.csproj.AssemblyReference.cache
+D:\homework-ruan\Assignment5\OrderManagementSystem\obj\Debug\OrderManagementSystem.csproj.SuggestedBindingRedirects.cache
+D:\homework-ruan\Assignment5\OrderManagementSystem\obj\Debug\OrderManagementSystem.csproj.CoreCompileInputs.cache
+D:\homework-ruan\Assignment5\OrderManagementSystem\obj\Debug\OrderManagementSystem.exe
+D:\homework-ruan\Assignment5\OrderManagementSystem\obj\Debug\OrderManagementSystem.pdb
