@@ -1,0 +1,688 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>加伊bky - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    
+        
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/css/mobile-common.min.css?v=ZBWq3OPQpKdP7jvC_UMCkC1a79tQGcXLPZwlftZaLVg" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/Kay-Larry/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/Kay-Larry/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/Kay-Larry/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 681160;
+        var currentBlogApp = 'Kay-Larry';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'BlackLowKey';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 2;
+        window.enableCodeLineNumber = true;
+        window.codeHighlightTheme = 'prism-vsc-dark-plus';
+        window.darkModeCodeHighlightTheme = 'prism-vsc-dark-plus';
+        window.isDarkCodeHighlightTheme = true;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-blacklowkey has-navbar">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://www.cnblogs.com/cmt/p/17320765.html" onclick="countCreativeClicks('M2-博客园')">
+                    园子的商业化努力-困境求助：开设捐助通道
+                </a>                
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'Kay-Larry', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        <link rel="stylesheet" href="https://blog-static.cnblogs.com/files/blogs/681160/animate.min.css">
+<link rel="stylesheet" href="https://blog-static.cnblogs.com/files/blogs/681160/style1.1.5.css?t=1672281359">
+<link rel="stylesheet" href="https://blog-static.cnblogs.com/files/blogs/681160/basic.css">
+<link rel="stylesheet" href="https://blog-static.cnblogs.com/files/blogs/681160/responsive0.0.1.css">
+
+
+    </div>
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/Kay-Larry/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/Kay-Larry/">加伊</a>
+</h1>
+<h2>前端和画画没什么分别</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/Kay-Larry/">
+首页</a>
+</li>
+<li>
+
+
+</li>
+<li>
+</li>
+<li>
+
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+
+
+
+
+		
+<div class="day pinned" role="article" aria-describedby="postlist_description_17000866">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/Kay-Larry/archive/2022/12/23.html"></a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle pinned-post" href="https://www.cnblogs.com/Kay-Larry/p/17000866.html">
+    <span>
+            <span class="pinned-post-mark">[置顶]</span>
+        前端程序员学python（爬虫向）(一文修到筑基期) （本文不含知识诅咒）
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17000866">
+摘要：            
+我踏马来辣 还有一件事： 本教程配合c语言中文网 python爬虫 教程 食用 本教程不适用于未成年人 一定要刷牙 本教程不存在知识诅咒 学完本教程即可进入筑基期 js 基础和本教程学习效率成正比 不要笑 暂时不要驾驶你的行李箱 本教程是针对前端程序员制定的 vscode是IDE大王，什么？你说vs        <a href="https://www.cnblogs.com/Kay-Larry/p/17000866.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-12-23 15:55
+加伊bky
+<span data-post-id="17000866" class="post-view-count">阅读(421)</span> 
+<span data-post-id="17000866" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17000866" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17000866" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17345972">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/Kay-Larry/archive/2023/04/23.html">2023年4月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/Kay-Larry/p/17345972.html">
+    <span>
+        可视化大屏的终极解决方案居然这么简单，vue-autofit一行全搞定！
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17345972">
+摘要：            <img src="https://img2023.cnblogs.com/blog/2375774/202304/2375774-20230423112237848-1660982724.png" alt="可视化大屏的终极解决方案居然这么简单，vue-autofit一行全搞定！" class="desc_img" />
+可视化大屏适配/自适应现状 可视化大屏的适配是一个老生常谈的话题了，现在其实不乏一些大佬开源的自适应插件、工具但是我为什么还要重复造轮子呢？因为目前市面上适配工具每一个都无法做到完美的效果，做出来的东西都差不多，最终实现效果都逃不出白边的手掌心，可以解决白边问题的，要么太过于复杂，要么会影响dom结        <a href="https://www.cnblogs.com/Kay-Larry/p/17345972.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-23 11:23
+加伊bky
+<span data-post-id="17345972" class="post-view-count">阅读(104)</span> 
+<span data-post-id="17345972" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17345972" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17345972" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17147584">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/Kay-Larry/archive/2023/02/23.html">2023年2月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/Kay-Larry/p/17147584.html">
+    <span>
+        前端程序员是怎么做物联网开发的
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17147584">
+摘要：            <img src="https://img2023.cnblogs.com/blog/2375774/202302/2375774-20230223130601088-677222293.png" alt="前端程序员是怎么做物联网开发的" class="desc_img" />
+前端程序员是怎么做物联网开发的 上图是我历时一周做的在线的温湿度可视化项目，可以查看截至目前往前一天的温度、湿度变化趋势，并且实时更新当前温湿度 本文可能含有知识诅咒 概述和基础讲解 该项目用到的技术有： 前端：jq、less、echarts、mqtt.js 后端：eggjs、egg-emqtt 数        <a href="https://www.cnblogs.com/Kay-Larry/p/17147584.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-02-23 13:07
+加伊bky
+<span data-post-id="17147584" class="post-view-count">阅读(560)</span> 
+<span data-post-id="17147584" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17147584" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17147584" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17010977">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/Kay-Larry/archive/2022/12/28.html">2022年12月28日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/Kay-Larry/p/17010977.html">
+    <span>
+        怎么开发前端才更优雅
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17010977">
+摘要：            
+本文主要讲述对命名规范、工具、插件的一些建议，具体内容参见【参见】字样的超链接 本文将带你调整开发姿势，先来看以下几点 让公司给你配备三台显示器，第一台用来看浏览器效果，第二台用来写代码，第三台用来看开发者工具 让公司给你配备电竞椅，要可以躺下的那种，方便中午睡午觉 让公司给你配备独立办公室，并且可        <a href="https://www.cnblogs.com/Kay-Larry/p/17010977.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-12-28 18:20
+加伊bky
+<span data-post-id="17010977" class="post-view-count">阅读(993)</span> 
+<span data-post-id="17010977" class="post-comment-count">评论(4)</span> 
+<span data-post-id="17010977" class="post-digg-count">推荐(3)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17010977" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17008078">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/Kay-Larry/archive/2022/12/27.html">2022年12月27日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/Kay-Larry/p/17008078.html">
+    <span>
+        一文学会浏览器插件（加入光荣的进化吧）（一文晋级璀璨钻石）（本文不含知识诅咒）
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17008078">
+摘要：            
+都2023年了，你还不会开发浏览器插件？ 注意：此教程针对chrome和chromium内核的浏览器制定的，且仅适用于前端开发者 在chrome地址栏输入chrome://extensions/，就进入了谷歌浏览器扩展程序控制面板，在这里可以装载一些插件，来扩展浏览器的功能，或者做一些自动化处理，由        <a href="https://www.cnblogs.com/Kay-Larry/p/17008078.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-12-27 14:53
+加伊bky
+<span data-post-id="17008078" class="post-view-count">阅读(467)</span> 
+<span data-post-id="17008078" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17008078" class="post-digg-count">推荐(2)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17008078" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17000866">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/Kay-Larry/archive/2022/12/23.html">2022年12月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/Kay-Larry/p/17000866.html">
+    <span>
+        前端程序员学python（爬虫向）(一文修到筑基期) （本文不含知识诅咒）
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17000866">
+摘要：            
+我踏马来辣 还有一件事： 本教程配合c语言中文网 python爬虫 教程 食用 本教程不适用于未成年人 一定要刷牙 本教程不存在知识诅咒 学完本教程即可进入筑基期 js 基础和本教程学习效率成正比 不要笑 暂时不要驾驶你的行李箱 本教程是针对前端程序员制定的 vscode是IDE大王，什么？你说vs        <a href="https://www.cnblogs.com/Kay-Larry/p/17000866.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-12-23 15:55
+加伊bky
+<span data-post-id="17000866" class="post-view-count">阅读(421)</span> 
+<span data-post-id="17000866" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17000866" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17000866" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16660266">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/Kay-Larry/archive/2022/09/06.html">2022年9月6日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/Kay-Larry/p/16660266.html">
+    <span>
+        swiper8.x在vue中的wtf
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16660266">
+摘要：            
+首先我是想开启鼠标滚动的效果，在官网上发现如下说法 引入就引入吧，引入路径还不说，在网上看其他教程发现路径是 引入完了，怎么办呢，又不会了，官网没有教程，网上的教程全是关于vue-awesome-swiper的，可是今天老夫铁了心只用官方的。 一阵搜索，搜到了一位和我一样倔强的老哥，老哥是这么用的         <a href="https://www.cnblogs.com/Kay-Larry/p/16660266.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-09-06 01:20
+加伊bky
+<span data-post-id="16660266" class="post-view-count">阅读(72)</span> 
+<span data-post-id="16660266" class="post-comment-count">评论(0)</span> 
+<span data-post-id="16660266" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16660266" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_15948420">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/Kay-Larry/archive/2022/03/01.html">2022年3月1日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/Kay-Larry/p/15948420.html">
+    <span>
+        nginx失效  nginx不起作用
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_15948420">
+摘要：            
+nginx失效的原因 今天大晚上的，服务器更新了，重启了，然后我重新开一下后端，nginx。 奇了个怪，一直给我报404，而且不是nginx给我报的啊，就是普通的404，完全404了。 我看nginx配置也正常，后端在我本地跑也正常，我开始怀疑是前端接口请求的不对了，但是这完全没理由吧。 突然想起来        <a href="https://www.cnblogs.com/Kay-Larry/p/15948420.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-03-01 03:47
+加伊bky
+<span data-post-id="15948420" class="post-view-count">阅读(406)</span> 
+<span data-post-id="15948420" class="post-comment-count">评论(0)</span> 
+<span data-post-id="15948420" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=15948420" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_15870110">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/Kay-Larry/archive/2022/02/08.html">2022年2月8日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/Kay-Larry/p/15870110.html">
+    <span>
+        js中的模糊搜索（ 正则表达式）
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_15870110">
+摘要：            
+此案例在vue中实现 搜索设备ID示例 &lt;input type=&quot;text&quot; name=&quot;&quot; placeholder=&quot;搜索设备ID&quot; v-model=&quot;searchData&quot; @input=&quot;search()&quot; /&gt; search() { if (this.searchData != &#39;&#39;) {         <a href="https://www.cnblogs.com/Kay-Larry/p/15870110.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-02-08 09:27
+加伊bky
+<span data-post-id="15870110" class="post-view-count">阅读(771)</span> 
+<span data-post-id="15870110" class="post-comment-count">评论(0)</span> 
+<span data-post-id="15870110" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=15870110" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_15715040">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/Kay-Larry/archive/2021/12/21.html">2021年12月21日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/Kay-Larry/p/15715040.html">
+    <span>
+        小程序限制分享转发的解决方案
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_15715040">
+摘要：            
+分享解决方案： 重叠按钮法，利用冒泡机制得知用户已确认分享，此时建立记录 即：在open-type=&quot;share&quot;的按钮（css相对定位）上嵌套一个带有点击事件的view，并设置绝对定位使其充满button，利用冒泡机制，在触发onShareAppMeassage的同时，触发自定义事件。 该记录包含        <a href="https://www.cnblogs.com/Kay-Larry/p/15715040.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2021-12-21 14:07
+加伊bky
+<span data-post-id="15715040" class="post-view-count">阅读(1112)</span> 
+<span data-post-id="15715040" class="post-comment-count">评论(0)</span> 
+<span data-post-id="15715040" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=15715040" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_15691646">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/Kay-Larry/archive/2021/12/15.html">2021年12月15日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/Kay-Larry/p/15691646.html">
+    <span>
+        js 字符串“http%3A%2F%2F”转换成http://详解 
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_15691646">
+摘要：            
+字符串“http%3A%2F%2F”转换成http://详解 我截获下来一个URL的字符串格式是“http%3A%2F%2F”，但是实际应该是http:// 而“%2F”对应的就是 / 如果仅仅是想把字符串http%3A%2F%2F转换成http://的话,用strstr()等字符串系列函数应该可以        <a href="https://www.cnblogs.com/Kay-Larry/p/15691646.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2021-12-15 10:50
+加伊bky
+<span data-post-id="15691646" class="post-view-count">阅读(1346)</span> 
+<span data-post-id="15691646" class="post-comment-count">评论(0)</span> 
+<span data-post-id="15691646" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=15691646" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+
+<div class="topicListFooter">
+    <div id="nav_next_page">
+        
+    <a href="https://www.cnblogs.com/Kay-Larry/?page=2">
+        下一页
+    </a>
+
+    </div>    
+</div>
+
+
+
+
+
+
+<script>
+    updatePostStats(
+        $(".post-view-count").map(function () { return this.dataset.postId }).get(),
+        function(id, count) { $(".post-view-count[data-post-id=" + id + "]").text("阅读(" + count + ")") },
+        function(id, count) { $(".post-comment-count[data-post-id=" + id + "]").text("评论(" + count + ")") },
+        function(id, count) { $(".post-digg-count[data-post-id=" + id + "]").text("推荐(" + count + ")") });
+</script>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 加伊bky
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULm2AM5pUImDQWaxWo7bx8k200UrBR6urfsC9wRaqLCMQCrV3CT85d2tlEFN6h-TlYlOEmxO86u9xtr8sb8Z_g4NJS3SuzmIl3bz11eWXSVFMwAK_kMHmFfkRROqeSsXXQM" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

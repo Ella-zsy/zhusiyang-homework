@@ -1,0 +1,892 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="description" content="Retrieving Objects from the Database find &amp;quot;find&amp;quot;是一种常用的数据库查询方法，在Rails中被用于从数据库中查找单个记录。它可以接收一" />
+    <meta property="og:description" content="Retrieving Objects from the Database find &amp;quot;find&amp;quot;是一种常用的数据库查询方法，在Rails中被用于从数据库中查找单个记录。它可以接收一" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>rails的接口查询详解 - 卓亦苇 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    
+        <link id="highlighter-theme-github" type="text/css" rel="stylesheet" href="/css/hljs/github.css?v=ja0z-lPRcUPYhi-sdtJJEKlXmCMywxJtCLxCQzKd2K0" />
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/zhuoblog/custom.css?v=GIkpf33IhR1B&#x2B;6vkGpCa85/gOwM=" />
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/SimpleMemory/bundle-simplememory-mobile-pure.min.css?v=ZBWq3OPQpKdP7jvC_UMCkC1a79tQGcXLPZwlftZaLVg" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/zhuoblog/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/zhuoblog/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/zhuoblog/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 724257;
+        var currentBlogApp = 'zhuoblog';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'SimpleMemory';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'github';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+        <script>
+            var currentPostDateAdded = '2023-04-23 12:29';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-simplememory no-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'zhuoblog', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        
+<!--鼠标点击效果-->
+<script src="https://blog-static.cnblogs.com/files/e-cat/cursor-effects.js" defer></script>
+    </div>
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/zhuoblog/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/zhuoblog/">卓亦苇</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/zhuoblog/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E5%8D%93%E4%BA%A6%E8%8B%87">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/zhuoblog/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/zhuoblog/p/17346208.html">
+    <span role="heading" aria-level="2">rails的接口查询详解</span>
+    
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<h1 id="retrieving-objects-from-the-database">Retrieving Objects from the Database</h1>
+<h3 id="find">find</h3>
+<p>"find"是一种常用的数据库查询方法，在Rails中被用于从数据库中查找单个记录。它可以接收一个主键作为参数，也可以接收一组条件参数。</p>
+<p>以下是"find"方法的使用方式：</p>
+<pre><code># 使用主键查找单个记录
+Model.find(1)
+
+# 使用条件参数查找单个记录
+Model.find_by(name: 'John')
+</code></pre>
+<p>在上面的示例中，"Model"是你需要查询记录的Rails模型，"find"方法可以接收一个主键作为参数，例如第一个示例中的"1"，以查找具有指定主键的记录。如果找不到这样的记录，"find"方法会引发一个"ActiveRecord::RecordNotFound"异常。</p>
+<p>"find"方法还可以接收一组条件参数，例如第二个示例中的"name: 'John'"，以查找满足这些条件的单个记录。如果找不到这样的记录，"find_by"方法会返回"nil"，而不是引发异常。</p>
+<p>总之，"find"方法是一个常用的用于从数据库中查找单个记录的方法。</p>
+<h3 id="take">take</h3>
+<pre><code class="language-ruby">irb&gt; customer = Customer.take
+=&gt; #&lt;Customer id: 1, first_name: "Lifo"&gt;
+</code></pre>
+<p>这行代码使用Active Record的<code>take</code>方法从数据库中检索一个<code>Customer</code>对象，并将其分配给名为<code>customer</code>的变量。<code>take</code>方法不接受参数，它将从数据库中随机选择一个对象，而不考虑任何特定的排序或筛选条件。</p>
+<p>如果数据库中没有任何<code>Customer</code>对象，则<code>customer</code>变量将被分配为<code>nil</code>。如果数据库中有多个<code>Customer</code>对象，则<code>take</code>方法将从这些对象中随机选择一个对象。</p>
+<p>这个代码片段可以用于在Rails应用程序中获取一个随机的客户端对象，并将其用于某些特定的任务。例如，如果我们有一个名为"Customer of the Day"的功能，可以使用<code>take</code>方法从数据库中随机选择一个客户端，并将其作为今天的"客户端之星"。</p>
+<p>需要注意的是，使用<code>take</code>方法时，不能保证总是返回相同的对象，因为它是从数据库中随机选择一个对象。如果需要按照特定的顺序或条件检索对象，则应使用其他查询方法，如<code>find</code>、<code>where</code>和<code>order</code>等。</p>
+<h3 id="first">first</h3>
+<p>在Active Record中，<code>first</code>是一种查询方法，它用于检索符合条件的第一个对象。它可以与其他查询方法（如<code>where</code>和<code>order</code>）一起使用，以指定特定的条件和顺序来检索对象。</p>
+<p>例如，我们可以使用<code>first</code>方法从数据库中检索第一个创建的<code>Product</code>对象。代码如下：</p>
+<pre><code class="language-ruby">@oldest_product = Product.order(created_at: :asc).first
+</code></pre>
+<p>这个代码片段使用了Active Record的<code>order</code>和<code>first</code>方法来构建查询。<code>order</code>方法按照创建时间（<code>created_at</code>）的升序排序，<code>first</code>方法返回第一个对象。</p>
+<p>在查询中，如果没有符合条件的对象，则<code>first</code>方法将返回<code>nil</code>。</p>
+<p><code>first</code>方法还可以接受一个可选参数，用于指定要返回的对象数量。例如，我们可以使用<code>first(5)</code>方法检索最早创建的5个<code>Product</code>对象。</p>
+<p>需要注意的是，<code>first</code>方法返回的对象可能会随着数据库中数据的变化而变化。如果需要按照特定的顺序或条件检索对象，则应使用其他查询方法，如<code>find</code>、<code>where</code>和<code>order</code>等。</p>
+<h3 id="last">last</h3>
+<p>在Active Record中，<code>last</code>是一种查询方法，它用于检索符合条件的最后一个对象。它可以与其他查询方法（如<code>where</code>和<code>order</code>）一起使用，以指定特定的条件和顺序来检索对象。</p>
+<p>例如，我们可以使用<code>last</code>方法从数据库中检索最后一个创建的<code>Product</code>对象。代码如下：</p>
+<pre><code class="language-ruby">@latest_product = Product.order(created_at: :desc).last
+</code></pre>
+<p>这个代码片段使用了Active Record的<code>order</code>和<code>last</code>方法来构建查询。<code>order</code>方法按照创建时间（<code>created_at</code>）的降序排序，<code>last</code>方法返回最后一个对象。</p>
+<p>在查询中，如果没有符合条件的对象，则<code>last</code>方法将返回<code>nil</code>。</p>
+<p><code>last</code>方法还可以接受一个可选参数，用于指定要返回的对象数量。例如，我们可以使用<code>last(5)</code>方法检索最近创建的5个<code>Product</code>对象。</p>
+<p>需要注意的是，<code>last</code>方法返回的对象可能会随着数据库中数据的变化而变化。如果需要按照特定的顺序或条件检索对象，则应使用其他查询方法，如<code>find</code>、<code>where</code>和<code>order</code>等。</p>
+<h3 id="find_by">find_by</h3>
+<p>在Active Record中，<code>find_by</code>是一种查询方法，它用于查找符合条件的第一个对象。与<code>where</code>方法不同的是，<code>find_by</code>返回的是一个对象而不是一个关系集合。如果没有符合条件的对象，则返回<code>nil</code>。</p>
+<p><code>find_by</code>方法需要传递一个参数，用于指定查询条件。查询条件可以是任何一个模型中定义的属性，例如：</p>
+<pre><code class="language-ruby">@product = Product.find_by(name: 'Widget')
+</code></pre>
+<p>这个查询将返回符合<code>name</code>属性为'Widget'的第一个<code>Product</code>对象。</p>
+<p>查询条件也可以是多个属性，例如：</p>
+<pre><code class="language-ruby">@product = Product.find_by(name: 'Widget', price: 10.99)
+</code></pre>
+<p>这个查询将返回符合<code>name</code>属性为'Widget'且<code>price</code>属性为10.99的第一个<code>Product</code>对象。</p>
+<p>需要注意的是，<code>find_by</code>方法只返回符合条件的第一个对象。如果需要返回所有符合条件的对象，则应使用<code>where</code>方法。</p>
+<p>另外，可以使用<code>find_by!</code>方法来查找符合条件的第一个对象，如果没有找到，则会抛出<code>ActiveRecord::RecordNotFound</code>异常。</p>
+<h3 id="find_each">find_each</h3>
+<p>在Active Record中，<code>find_each</code>是一种查询方法，它用于按批次检索大量记录。与<code>find</code>方法不同的是，<code>find_each</code>方法会将结果分批返回，以避免加载大量数据时内存不足的情况。</p>
+<p><code>find_each</code>方法需要传递一个块（block），块中的代码将应用于每个批次中的记录。例如：</p>
+<pre><code class="language-ruby">Product.find_each(batch_size: 500) do |product|
+  # 处理每个产品的代码
+end
+</code></pre>
+<p>这个代码片段将每个<code>Product</code>对象分批检索，每个批次中包含500个记录。对于每个批次中的记录，块中的代码将被调用一次。</p>
+<p><code>find_each</code>方法还可以接受其他选项，例如：</p>
+<ul>
+<li><code>start</code>：指定查询起始的记录ID，默认为1。</li>
+<li><code>finish</code>：指定查询结束的记录ID，默认为<code>nil</code>，表示查询到最后一条记录。</li>
+<li><code>batch_size</code>：指定每个批次中记录的数量，默认为1000。</li>
+<li><code>order</code>：指定记录的排序方式，默认为主键的升序排序。</li>
+</ul>
+<p>需要注意的是，<code>find_each</code>方法返回的结果是一个<code>Enumerator</code>对象。如果需要将结果作为数组返回，则应使用<code>to_a</code>方法，例如：</p>
+<pre><code class="language-ruby">products = Product.find_each(batch_size: 500).to_a
+</code></pre>
+<p>另外，<code>find_each</code>方法仅适用于基于主键的查询。如果需要使用其他查询条件，应使用<code>where</code>方法。</p>
+<p>假设我们有一个名为<code>Product</code>的模型，其中包含<code>id</code>、<code>name</code>和<code>price</code>属性。我们想要使用<code>find_each</code>方法检索<code>id</code>属性在2000到5000之间的所有产品，并按照价格（<code>price</code>）降序排序。我们可以这样实现：</p>
+<pre><code class="language-ruby">Product.where(id: 2000..5000).order(price: :desc).find_each(start: 2000, batch_size: 500) do |product|
+  # 处理每个产品的代码
+end
+</code></pre>
+<p>这个代码片段使用了<code>where</code>方法指定了查询条件，使用<code>order</code>方法指定了排序方式。同时，我们使用了<code>start</code>选项来指定起始的记录ID为2000，使用了<code>batch_size</code>选项来指定每个批次中包含500条记录。</p>
+<p>在块中，我们可以使用<code>product</code>变量访问每个批次中的记录，并执行必要的处理。</p>
+<p>需要注意的是，<code>find_each</code>方法返回的结果是一个<code>Enumerator</code>对象。如果需要将结果作为数组返回，则应使用<code>to_a</code>方法，例如：</p>
+<pre><code class="language-ruby">products = Product.where(id: 2000..5000).order(price: :desc).find_each(start: 2000, batch_size: 500).to_a
+</code></pre>
+<p>另外，<code>find_each</code>方法仅适用于基于主键的查询。如果需要使用其他查询条件，应使用<code>where</code>方法。</p>
+<h1 id="conditions">Conditions</h1>
+<h3 id="pure-string-conditions">Pure String Conditions</h3>
+<p>在Active Record中，可以使用“纯字符串条件”（Pure String Conditions）来指定查询条件。纯字符串条件是指用字符串表示的查询条件，可以在<code>where</code>方法中直接使用。</p>
+<p>例如，我们可以使用以下字符串条件来查询<code>Product</code>模型中价格在10到20之间的产品：</p>
+<pre><code class="language-ruby">Product.where("price BETWEEN 10 AND 20")
+</code></pre>
+<p>这个查询中，我们使用了字符串<code>"price BETWEEN 10 AND 20"</code>作为查询条件。这个字符串指定了价格在10到20之间的产品。使用<code>where</code>方法将这个字符串作为参数传递给<code>Product</code>模型，即可执行查询。</p>
+<p>需要注意的是，使用纯字符串条件时，应确保字符串中的查询语句是安全的，以避免SQL注入等安全问题。如果字符串中包含用户输入的内容，应使用参数化查询（Parameterized Queries）来保证查询的安全性。</p>
+<p>除了<code>where</code>方法，纯字符串条件还可以用于其他查询方法，如<code>find_by_sql</code>和<code>joins</code>等。但是，尽可能地使用Active Record的查询API（如<code>where</code>、<code>joins</code>、<code>group</code>、<code>order</code>等）来构建查询，可以使查询更易于阅读、维护和安全。</p>
+<h3 id="array-conditions">Array Conditions</h3>
+<p>在Active Record中，可以使用“数组条件”（Array Conditions）来指定查询条件。数组条件是指将查询条件表示为数组形式，可以在<code>where</code>方法中直接使用。</p>
+<p>例如，我们可以使用以下数组条件来查询<code>Product</code>模型中价格在10到20之间的产品：</p>
+<pre><code class="language-ruby">Product.where(price: 10..20)
+</code></pre>
+<p>这个查询中，我们使用了<code>price: 10..20</code>作为查询条件。这个条件指定了价格在10到20之间的产品。使用<code>where</code>方法将这个条件作为参数传递给<code>Product</code>模型，即可执行查询。</p>
+<p>数组条件还可以用于指定多个查询条件，例如：</p>
+<pre><code class="language-ruby">Product.where("name LIKE ?", "%widget%").where(price: 10..20)
+</code></pre>
+<p>这个查询中，我们使用了两个条件来查询产品。第一个条件使用了纯字符串条件，查询名称中包含“widget”的产品；第二个条件使用了数组条件，查询价格在10到20之间的产品。</p>
+<p>需要注意的是，数组条件只适用于等于（<code>=</code>）操作符和范围（<code>IN</code>）操作符。如果需要使用其他操作符，应使用纯字符串条件。</p>
+<p>另外，数组条件还可以用于指定NULL值的查询条件，例如：</p>
+<pre><code class="language-ruby">Product.where(price: nil)
+</code></pre>
+<p>这个查询将返回价格为空（NULL）的产品。要查询非空值，可以使用<code>where.not</code>方法，例如：</p>
+<pre><code class="language-ruby">Product.where.not(price: nil)
+</code></pre>
+<p>这个查询将返回价格非空的产品。</p>
+<p>总之，数组条件是一种方便、易于理解和安全的查询方法，可以使查询代码更加简洁和易于维护。</p>
+<h3 id="placeholder-conditions">Placeholder Conditions</h3>
+<p>在Active Record中，可以使用“占位符条件”（Placeholder Conditions）来指定查询条件。占位符条件是指使用<code>?</code>占位符来表示查询条件，可以在<code>where</code>方法中直接使用。</p>
+<p>例如，我们可以使用以下占位符条件来查询<code>Product</code>模型中价格在10到20之间的产品：</p>
+<pre><code class="language-ruby">Product.where("price BETWEEN ? AND ?", 10, 20)
+</code></pre>
+<p>这个查询中，我们使用了字符串<code>"price BETWEEN ? AND ?"</code>作为查询条件，其中<code>?</code>表示占位符。使用<code>where</code>方法将这个字符串和两个参数（10和20）作为参数传递给<code>Product</code>模型，即可执行查询。</p>
+<p>占位符条件还可以用于指定多个查询条件，例如：</p>
+<pre><code class="language-ruby">Product.where("name LIKE ? AND price BETWEEN ? AND ?", "%widget%", 10, 20)
+</code></pre>
+<p>这个查询中，我们使用了三个占位符来查询产品。第一个占位符表示名称中包含“widget”的产品；第二个占位符表示价格大于等于10的产品；第三个占位符表示价格小于等于20的产品。</p>
+<p>占位符条件可以有效地避免SQL注入等安全问题，因为查询条件中的值不会被直接拼接到查询语句中，而是使用占位符传递给数据库引擎进行处理。</p>
+<p>需要注意的是，占位符条件不能用于指定列名、表名等标识符，只能用于指定查询条件的值。如果需要使用列名或表名等标识符，应使用纯字符串条件。</p>
+<p>总之，占位符条件是一种方便、安全和可读性较高的查询方法，可以避免SQL注入等安全问题，建议在查询中使用。</p>
+<h3 id="conditions-that-use-like">Conditions That Use LIKE</h3>
+<p>在Active Record中，可以使用<code>LIKE</code>操作符和占位符条件来进行模糊查询。<code>LIKE</code>操作符用于匹配字符串，可以在<code>where</code>方法中直接使用。</p>
+<p>例如，我们可以使用以下条件来查询<code>Product</code>模型中名称包含“widget”的产品：</p>
+<pre><code class="language-ruby">Product.where("name LIKE ?", "%widget%")
+</code></pre>
+<p>这个查询中，我们使用了字符串<code>"name LIKE ?"</code>作为查询条件，其中<code>?</code>表示占位符。使用<code>where</code>方法将这个字符串和<code>"%widget%"</code>作为参数传递给<code>Product</code>模型，即可执行查询。<code>"%widget%"</code>表示名称中包含“widget”的字符串，<code>%</code>表示匹配任意字符。</p>
+<p><code>LIKE</code>操作符还支持以下通配符：</p>
+<ul>
+<li><code>%</code>：匹配任意字符（包括空格）。</li>
+<li><code>_</code>：匹配单个字符。</li>
+<li><code>[]</code>：匹配方括号内任意一个字符。</li>
+<li><code>[^]</code>：匹配不在方括号内的任意一个字符。</li>
+</ul>
+<p>例如，我们可以使用以下条件来查询名称以“w”开头、后面跟着两个任意字符、然后是“dget”的产品：</p>
+<pre><code class="language-ruby">Product.where("name LIKE ?", "w__dget")
+</code></pre>
+<p>这个查询中，我们使用了字符串<code>"name LIKE ?"</code>作为查询条件，其中<code>?</code>表示占位符。使用<code>where</code>方法将这个字符串和<code>"w__dget"</code>作为参数传递给<code>Product</code>模型，即可执行查询。<code>"w__dget"</code>中的两个下划线表示匹配两个任意字符。</p>
+<p>需要注意的是，<code>LIKE</code>操作符比较耗费计算资源，因为它需要对每条记录进行模式匹配。如果匹配的字符串很长或匹配的范围很大，查询性能可能会受到影响。</p>
+<p>总之，<code>LIKE</code>操作符是一种非常有用的查询条件，可以用来进行模糊查询。在使用<code>LIKE</code>操作符时，应该注意通配符的使用，以及查询性能的影响。</p>
+<h3 id="hash-conditions">Hash Conditions</h3>
+<p>在Active Record中，可以使用哈希条件（Hash Conditions）来指定查询条件。哈希条件是指使用哈希表（Hash）来表示查询条件，可以在<code>where</code>方法中直接使用。</p>
+<p>例如，我们可以使用以下哈希条件来查询<code>Product</code>模型中价格在10到20之间的产品：</p>
+<pre><code class="language-ruby">Product.where(price: 10..20)
+</code></pre>
+<p>这个查询中，我们使用了一个哈希表<code>{price: 10..20}</code>作为查询条件，其中<code>price</code>是列名，<code>10..20</code>表示价格在10到20之间的范围。使用<code>where</code>方法将这个哈希表作为参数传递给<code>Product</code>模型，即可执行查询。</p>
+<p>哈希条件还可以用于指定多个查询条件，例如：</p>
+<pre><code class="language-ruby">Product.where(name: "widget", price: 10..20)
+</code></pre>
+<p>这个查询中，我们使用了一个哈希表<code>{name: "widget", price: 10..20}</code>来查询产品。这个哈希表表示名称为“widget”且价格在10到20之间的产品。</p>
+<p>哈希条件的优点是可读性高，可以直接使用列名作为键名，不需要使用字符串或占位符。同时，哈希条件也可以指定多个查询条件，更加灵活。</p>
+<p>需要注意的是，哈希条件只能用于指定相等条件、范围条件和空值条件，不能用于指定其他类型的条件，例如模糊查询和复杂的逻辑查询。如果需要使用这些条件，应该使用字符串条件或其他类型的查询条件。</p>
+<p>总之，哈希条件是一种方便、可读性高的查询方法，可以用于指定相等条件、范围条件和空值条件。在查询中使用哈希条件可以使代码更加简洁、易读。</p>
+<h3 id="not-conditions">NOT Conditions</h3>
+<p>在Active Record中，可以使用<code>not</code>方法来对查询条件取反。<code>not</code>方法用于将查询条件取反，可以在<code>where</code>方法中使用。</p>
+<p>例如，我们可以使用以下条件来查询<code>Product</code>模型中不是价格在10到20之间的产品：</p>
+<pre><code class="language-ruby">Product.where.not(price: 10..20)
+</code></pre>
+<p>这个查询中，我们使用了<code>where.not</code>方法来表示价格不在10到20之间的条件。使用<code>where.not</code>方法将这个条件作为参数传递给<code>Product</code>模型，即可执行查询。</p>
+<p><code>not</code>方法还可以用于对复杂条件进行取反，例如：</p>
+<pre><code class="language-ruby">Product.where.not("name LIKE ?", "%widget%").where.not(price: 10..20)
+</code></pre>
+<p>这个查询中，我们使用了两个<code>where.not</code>方法来查询名称不包含“widget”且价格不在10到20之间的产品。第一个<code>where.not</code>方法使用字符串条件进行模糊查询，第二个<code>where.not</code>方法使用哈希条件表示价格不在10到20之间。使用<code>where.not</code>方法将这个条件作为参数传递给<code>Product</code>模型，即可执行查询。</p>
+<p>需要注意的是，<code>not</code>方法只能对简单条件和复杂条件的组合进行取反，不能对复杂的逻辑条件进行取反。如果需要对复杂的逻辑条件进行取反，应该使用逻辑运算符（例如<code>AND</code>、<code>OR</code>、<code>NOT</code>）来组合条件。</p>
+<p>总之，<code>not</code>方法是一种对查询条件取反的方法，可以用于简单条件和复杂条件的组合。在使用<code>not</code>方法时，应该注意条件的取反方式和逻辑关系，以避免出现查询错误。</p>
+<h3 id="or-conditions">OR Conditions</h3>
+<p>在Active Record中，可以使用<code>or</code>方法来对查询条件进行逻辑或（OR）运算。<code>or</code>方法用于将两个查询条件进行逻辑或运算，可以在<code>where</code>方法中使用。</p>
+<p>例如，我们可以使用以下条件来查询<code>Product</code>模型中价格小于10或价格大于20的产品：</p>
+<pre><code class="language-ruby">Product.where("price &lt; 10").or(Product.where("price &gt; 20"))
+</code></pre>
+<p>这个查询中，我们使用了<code>where</code>方法和<code>or</code>方法来查询价格小于10或价格大于20的产品。第一个<code>where</code>方法使用字符串条件查询价格小于10的产品，第二个<code>where</code>方法使用字符串条件查询价格大于20的产品。使用<code>or</code>方法将这两个查询条件进行逻辑或运算，即可得到价格小于10或价格大于20的产品列表。</p>
+<p><code>or</code>方法还可以和其他查询方法一起使用，例如：</p>
+<pre><code class="language-ruby">Product.where("name LIKE ?", "%widget%").or(Product.where("price &lt; 10"))
+</code></pre>
+<p>这个查询中，我们使用了<code>where</code>方法和<code>or</code>方法来查询名称包含“widget”或价格小于10的产品。第一个<code>where</code>方法使用字符串条件进行模糊查询，第二个<code>where</code>方法使用字符串条件查询价格小于10的产品。使用<code>or</code>方法将这两个查询条件进行逻辑或运算，即可得到名称包含“widget”或价格小于10的产品列表。</p>
+<p>需要注意的是，<code>or</code>方法只能用于两个查询条件的逻辑或运算，不能用于多个查询条件的逻辑或运算。如果需要对多个查询条件进行逻辑或运算，应该使用<code>where</code>方法和逻辑运算符（例如<code>OR</code>）来组合条件。</p>
+<p>总之，<code>or</code>方法是一种对查询条件进行逻辑或运算的方法，可以用于两个查询条件的组合。在使用<code>or</code>方法时，应该注意逻辑关系和条件的组合方式，以避免出现查询错误。</p>
+<h3 id="and-conditions">AND Conditions</h3>
+<p>在Active Record中，可以使用<code>where</code>方法对查询条件进行逻辑与（AND）运算。<code>where</code>方法用于将多个查询条件进行逻辑与运算，可以通过多次调用<code>where</code>方法来实现。</p>
+<p>例如，我们可以使用以下条件来查询<code>Product</code>模型中名称包含“widget”且价格在10到20之间的产品：</p>
+<pre><code class="language-ruby">Product.where("name LIKE ?", "%widget%").where(price: 10..20)
+</code></pre>
+<p>Product.where("name LIKE ?", "%widget%").where(price: 10..20)</p>
+<p>这个查询中，我们使用了两次<code>where</code>方法来查询名称包含“widget”且价格在10到20之间的产品。第一个<code>where</code>方法使用字符串条件进行模糊查询，第二个<code>where</code>方法使用哈希条件查询价格在10到20之间的产品。使用两次<code>where</code>方法将这两个查询条件进行逻辑与运算，即可得到名称包含“widget”且价格在10到20之间的产品列表。</p>
+<p><code>where</code>方法可以和其他查询方法一起使用，例如：</p>
+<pre><code class="language-ruby">Product.where("name LIKE ?", "%widget%").where.not(price: 10..20)
+</code></pre>
+<p>这个查询中，我们使用了两次<code>where</code>方法来查询名称包含“widget”且价格不在10到20之间的产品。第一个<code>where</code>方法使用字符串条件进行模糊查询，第二个<code>where</code>方法使用<code>not</code>方法将价格在10到20之间的条件取反。使用两次<code>where</code>方法将这两个查询条件进行逻辑与运算，即可得到名称包含“widget”且价格不在10到20之间的产品列表。</p>
+<p>需要注意的是，<code>where</code>方法可以多次调用来实现多个查询条件的逻辑与运算。在使用<code>where</code>方法时，应该注意逻辑关系和条件的组合方式，以避免出现查询错误。</p>
+<p>总之，<code>where</code>方法是一种对查询条件进行逻辑与运算的方法，可以通过多次调用来实现多个查询条件的组合。在使用<code>where</code>方法时，应该注意逻辑关系和条件的组合方式，以避免出现查询错误。</p>
+<h1 id="ordering">Ordering</h1>
+<p>在Active Record中，可以使用<code>order</code>方法来对查询结果进行排序。<code>order</code>方法用于按照指定的字段对查询结果进行排序，可以在<code>all</code>、<code>where</code>、<code>find_by</code>等查询方法中使用。</p>
+<p>例如，我们可以使用以下条件来查询<code>Product</code>模型中价格从低到高排序的产品：</p>
+<pre><code class="language-ruby">Product.order(price: :asc)
+</code></pre>
+<p>这个查询中，我们使用了<code>order</code>方法来对查询结果按照价格从低到高排序。使用哈希条件将排序字段和排序方式传递给<code>order</code>方法，即可对查询结果进行排序。</p>
+<p><code>order</code>方法还可以对多个字段进行排序，例如：</p>
+<pre><code class="language-ruby">Product.order(price: :asc, created_at: :desc)
+</code></pre>
+<p>这个查询中，我们使用了<code>order</code>方法来对查询结果先按照价格从低到高排序，再按照创建时间从新到旧排序。使用哈希条件将排序字段和排序方式传递给<code>order</code>方法，即可对查询结果进行多字段排序。</p>
+<p>需要注意的是，<code>order</code>方法只能对查询结果进行排序，不能对查询条件进行排序。如果需要对查询条件进行排序，应该使用<code>where</code>方法和排序字段来实现。</p>
+<p>总之，<code>order</code>方法是一种对查询结果进行排序的方法，可以按照指定的字段和排序方式对查询结果进行排序。在使用<code>order</code>方法时，应该注意排序字段和排序方式的传递方式，以得到正确的排序结果。</p>
+<h1 id="selecting-specific-fields">Selecting Specific Fields</h1>
+<p>在Active Record中，可以使用<code>select</code>方法来选择查询结果中的特定字段。<code>select</code>方法用于从查询结果中选择指定的字段，可以在<code>all</code>、<code>where</code>、<code>find_by</code>等查询方法中使用。</p>
+<p>例如，我们可以使用以下条件来查询<code>Product</code>模型中名称和价格字段的产品：</p>
+<pre><code class="language-ruby">Product.select(:name, :price)
+</code></pre>
+<p>这个查询中，我们使用了<code>select</code>方法来选择名称和价格字段。使用符号或字符串传递要选择的字段名给<code>select</code>方法，即可从查询结果中选择指定的字段。</p>
+<p><code>select</code>方法还可以选择计算字段或使用别名，例如：</p>
+<pre><code class="language-ruby">Product.select("name, price, price * 0.8 AS discounted_price")
+</code></pre>
+<p>这个查询中，我们使用了<code>select</code>方法来选择名称、价格和打折后价格（使用价格乘以0.8计算）。使用字符串传递要选择的字段名或计算表达式给<code>select</code>方法，即可从查询结果中选择指定的字段或计算字段。</p>
+<p>需要注意的是，<code>select</code>方法只能选择查询结果中已有的字段或计算字段，不能选择不存在的字段。如果需要选择不存在的字段，应该使用<code>select_raw</code>方法和SQL语句来实现。</p>
+<p>总之，<code>select</code>方法是一种从查询结果中选择特定字段的方法，可以选择已有的字段或计算字段，并使用别名来改变字段名。在使用<code>select</code>方法时，应该注意选择字段的名字和计算表达式的正确性，以得到正确的查询结果。</p>
+<h1 id="limit-and-offset">Limit and Offset</h1>
+<p>在Active Record中，可以使用<code>limit</code>和<code>offset</code>方法来限制查询结果的数量和偏移量。<code>limit</code>方法用于限制查询结果的数量，<code>offset</code>方法用于设置查询结果的偏移量，可以在<code>all</code>、<code>where</code>、<code>find_by</code>等查询方法中使用。</p>
+<p>例如，我们可以使用以下条件来查询<code>Product</code>模型中前10个产品：</p>
+<pre><code class="language-ruby">Product.limit(10)
+</code></pre>
+<p>这个查询中，我们使用了<code>limit</code>方法来限制查询结果的数量为10。使用整数传递要限制的数量给<code>limit</code>方法，即可对查询结果进行数量限制。</p>
+<p><code>offset</code>方法用于设置查询结果的偏移量，例如：</p>
+<pre><code class="language-ruby">Product.offset(10).limit(10)
+</code></pre>
+<p>这个查询中，我们使用了<code>offset</code>方法来设置查询结果的偏移量为10，然后使用<code>limit</code>方法来限制查询结果的数量为10。使用整数传递要设置的偏移量给<code>offset</code>方法，即可对查询结果进行偏移量设置。</p>
+<p>需要注意的是，<code>offset</code>和<code>limit</code>方法的调用顺序非常重要。如果先调用<code>limit</code>方法再调用<code>offset</code>方法，偏移量会被忽略，数量限制会应用于整个查询结果。因此，在使用<code>offset</code>和<code>limit</code>方法时，应该始终按照正确的顺序进行调用。</p>
+<p>总之，<code>limit</code>和<code>offset</code>方法是一种限制查询结果数量和偏移量的方法，可以对查询结果进行分页和限制。在使用这些方法时，应该注意调用的顺序和传递的参数，以得到正确的查询结果。</p>
+<h1 id="group">Group</h1>
+<p>在Active Record中，可以使用<code>group</code>方法来对查询结果进行分组。<code>group</code>方法用于按照指定的字段对查询结果进行分组，可以在<code>all</code>、<code>where</code>、<code>find_by</code>等查询方法中使用。</p>
+<p>例如，我们可以使用以下条件来查询<code>Order</code>模型中每个用户的总订单金额：</p>
+<pre><code class="language-ruby">Order.select("user_id, sum(price) as total_price").group(:user_id)
+</code></pre>
+<p>这个查询中，我们使用了<code>select</code>方法来选择用户ID和总订单金额字段，并使用<code>sum</code>函数来计算每个用户的总订单金额。然后使用<code>group</code>方法来按照用户ID对查询结果进行分组。</p>
+<p><code>group</code>方法还可以按照多个字段进行分组，例如：</p>
+<pre><code class="language-ruby">Order.select("user_id, product_id, sum(price) as total_price").group(:user_id, :product_id)
+</code></pre>
+<p>这个查询中，我们使用了<code>select</code>方法来选择用户ID、产品ID和总订单金额字段，并使用<code>sum</code>函数来计算每个用户和产品的总订单金额。然后使用<code>group</code>方法来按照用户ID和产品ID对查询结果进行分组。</p>
+<p>需要注意的是，<code>group</code>方法只能对查询结果进行分组，不能对查询条件进行分组。如果需要对查询条件进行分组，应该使用<code>having</code>方法和SQL语句来实现。</p>
+<p>总之，<code>group</code>方法是一种对查询结果进行分组的方法，可以按照指定的字段对查询结果进行分组，并使用聚合函数计算每个分组的值。在使用<code>group</code>方法时，应该注意选择分组的字段和聚合函数的正确性，以得到正确的查询结果。</p>
+<h1 id="having">Having</h1>
+<p>在Active Record中，可以使用<code>having</code>方法来对分组后的查询结果进行筛选。<code>having</code>方法用于在分组后对分组结果进行筛选，可以在<code>group</code>方法后使用。</p>
+<p>例如，我们可以使用以下条件来查询<code>Order</code>模型中每个用户的总订单金额大于100的用户ID和总订单金额：</p>
+<pre><code class="language-ruby">Order.select("user_id, sum(price) as total_price").group(:user_id).having("sum(price) &gt; 100")
+</code></pre>
+<p>这个查询中，我们使用了<code>select</code>方法来选择用户ID和总订单金额字段，并使用<code>sum</code>函数来计算每个用户的总订单金额。然后使用<code>group</code>方法来按照用户ID对查询结果进行分组。最后使用<code>having</code>方法来筛选总订单金额大于100的用户。</p>
+<p><code>having</code>方法还可以使用多个筛选条件，例如：</p>
+<pre><code class="language-ruby">Order.select("user_id, product_id, sum(price) as total_price").group(:user_id, :product_id).having("sum(price) &gt; 100 and count(*) &gt; 2")
+</code></pre>
+<p>这个查询中，我们使用了<code>select</code>方法来选择用户ID、产品ID和总订单金额字段，并使用<code>sum</code>函数来计算每个用户和产品的总订单金额。然后使用<code>group</code>方法来按照用户ID和产品ID对查询结果进行分组。最后使用<code>having</code>方法来筛选总订单金额大于100且订单数量大于2的用户和产品。</p>
+<p>需要注意的是，<code>having</code>方法只能在<code>group</code>方法后使用，用于对分组结果进行筛选。如果需要对查询条件进行筛选，应该使用<code>where</code>方法。</p>
+<p>总之，<code>having</code>方法是一种对分组后的查询结果进行筛选的方法，可以按照指定的条件对分组结果进行筛选。在使用<code>having</code>方法时，应该注意筛选条件的正确性，以得到正确的查询结果。</p>
+<h1 id="overriding-conditions">Overriding Conditions</h1>
+<h3 id="unscope">unscope</h3>
+<p>在Active Record中，可以使用<code>unscope</code>方法来覆盖查询条件。<code>unscope</code>方法用于从查询中删除指定的查询条件，可以在<code>where</code>、<code>order</code>、<code>group</code>等查询方法中使用。</p>
+<p>例如，我们可以使用以下条件来查询<code>Product</code>模型中所有价格大于20的产品，并覆盖查询条件来查询所有产品：</p>
+<pre><code class="language-ruby">Product.where("price &gt; 20").unscope(:where)
+</code></pre>
+<p>这个查询中，我们使用了<code>where</code>方法来筛选价格大于20的产品，然后使用<code>unscope</code>方法来覆盖查询条件，从而查询所有产品。使用<code>:where</code>符号作为参数传递给<code>unscope</code>方法，即可删除<code>where</code>查询条件。</p>
+<p><code>unscope</code>方法还可以覆盖其他查询条件，例如：</p>
+<pre><code class="language-ruby">Product.where("price &gt; 20").order(name: :asc).unscope(:where, :order)
+</code></pre>
+<p>这个查询中，我们使用了<code>where</code>方法来筛选价格大于20的产品，然后使用<code>order</code>方法来按照名称升序对查询结果进行排序。最后使用<code>unscope</code>方法来覆盖查询条件和排序条件，从而查询所有产品并按照默认顺序排序。</p>
+<p>需要注意的是，<code>unscope</code>方法会完全删除指定的查询条件，包括手动添加的查询条件和默认的查询条件。因此，在使用<code>unscope</code>方法时，应该注意查询条件的正确性，以避免删除错误的查询条件。</p>
+<p>总之，<code>unscope</code>方法是一种覆盖查询条件的方法，可以从查询中删除指定的查询条件，以达到覆盖查询的目的。在使用<code>unscope</code>方法时，应该注意删除的查询条件的正确性，以得到正确的查询结果。</p>
+<h3 id="only">only</h3>
+<p>在Active Record中，可以使用<code>only</code>方法来限制查询结果中包含的字段。<code>only</code>方法用于选择要包含在查询结果中的字段，可以在<code>select</code>方法后使用。</p>
+<p>例如，我们可以使用以下条件来查询<code>Product</code>模型中所有产品的名称和价格字段：</p>
+<pre><code class="language-ruby">Product.select(:name, :price)
+</code></pre>
+<p>这个查询中，我们使用了<code>select</code>方法来选择要包含在查询结果中的字段，即名称和价格字段。查询结果中只包含这两个字段，其他字段将被忽略。</p>
+<p><code>only</code>方法还可以选择其他字段，例如：</p>
+<pre><code class="language-ruby">Product.select(:name, :price).only(:name)
+</code></pre>
+<p>这个查询中，我们使用了<code>select</code>方法来选择要包含在查询结果中的字段，即名称和价格字段。然后使用<code>only</code>方法来限制查询结果中包含的字段，即只包含名称字段。价格字段将被忽略。</p>
+<p>需要注意的是，<code>only</code>方法只能限制查询结果中包含的字段，不能选择排除的字段。如果需要排除指定的字段，应该使用<code>select</code>方法和<code>except</code>方法。</p>
+<p>总之，<code>only</code>方法是一种限制查询结果中包含的字段的方法，可以选择要包含在查询结果中的字段，以达到查询所需字段的目的。在使用<code>only</code>方法时，应该注意选择的字段的正确性，以得到正确的查询结果。</p>
+<h3 id="reselect">reselect</h3>
+<p>在Active Record中，可以使用<code>reselect</code>方法来对查询结果进行重新选择。<code>reselect</code>方法用于重新选择要包含在查询结果中的字段，可以在<code>select</code>方法后使用。</p>
+<p>例如，我们可以使用以下条件来查询<code>Product</code>模型中所有产品的名称和价格字段，并重新选择只包含名称字段：</p>
+<pre><code class="language-ruby">Product.select(:name, :price).reselect(:name)
+</code></pre>
+<p>这个查询中，我们使用了<code>select</code>方法来选择要包含在查询结果中的字段，即名称和价格字段。然后使用<code>reselect</code>方法来重新选择要包含在查询结果中的字段，即只包含名称字段。价格字段将被忽略。</p>
+<p><code>reselect</code>方法还可以重新选择其他字段，例如：</p>
+<pre><code class="language-ruby">Product.select(:name, :price).reselect(:name, :description)
+</code></pre>
+<p>这个查询中，我们使用了<code>select</code>方法来选择要包含在查询结果中的字段，即名称和价格字段。然后使用<code>reselect</code>方法来重新选择要包含在查询结果中的字段，即名称和描述字段。价格字段将被忽略。</p>
+<p>需要注意的是，<code>reselect</code>方法会完全替换原来选择的字段，因此，如果需要保留原来选择的字段，应该将它们包含在重新选择的字段中。</p>
+<p>总之，<code>reselect</code>方法是一种对查询结果进行重新选择的方法，可以重新选择要包含在查询结果中的字段，以达到重新选择字段的目的。在使用<code>reselect</code>方法时，应该注意重新选择的字段的正确性，以得到正确的查询结果。</p>
+<h3 id="reorder">reorder</h3>
+<p>在Active Record中，可以使用<code>reorder</code>方法来重新排序查询结果。<code>reorder</code>方法用于重新指定查询结果的排序方式，可以在<code>order</code>方法后使用。</p>
+<p>例如，我们可以使用以下条件来查询<code>Product</code>模型中所有价格大于20的产品，并重新按照名称升序排序：</p>
+<pre><code class="language-ruby">Product.where("price &gt; 20").order(price: :desc).reorder(name: :asc)
+</code></pre>
+<p>这个查询中，我们使用了<code>where</code>方法来筛选价格大于20的产品，然后使用<code>order</code>方法来按照价格降序对查询结果进行排序。最后使用<code>reorder</code>方法来重新按照名称升序排序查询结果。</p>
+<p><code>reorder</code>方法还可以重新排序其他字段，例如：</p>
+<pre><code class="language-ruby">Product.where("price &gt; 20").order(price: :desc).reorder(price: :asc)
+</code></pre>
+<p>这个查询中，我们使用了<code>where</code>方法来筛选价格大于20的产品，然后使用<code>order</code>方法来按照价格降序对查询结果进行排序。最后使用<code>reorder</code>方法来重新按照价格升序排序查询结果。</p>
+<p>需要注意的是，<code>reorder</code>方法会完全替换原来的排序方式，因此，如果需要在原来的排序方式基础上进行重新排序，应该将原来的排序条件包含在重新排序的条件中。</p>
+<p>总之，<code>reorder</code>方法是一种对查询结果进行重新排序的方法，可以重新指定查询结果的排序方式，以达到重新排序的目的。在使用<code>reorder</code>方法时，应该注意重新排序的条件的正确性，以得到正确的查询结果。</p>
+<h3 id="reverse_order">reverse_order</h3>
+<p>在Active Record中，可以使用<code>reverse_order</code>方法来对查询结果进行反向排序。<code>reverse_order</code>方法用于对查询结果的排序方式进行反向排序，可以在<code>order</code>方法后使用。</p>
+<p>例如，我们可以使用以下条件来查询<code>Product</code>模型中所有产品，并按照价格降序排序：</p>
+<pre><code class="language-ruby">Product.order(price: :desc)
+</code></pre>
+<p>这个查询中，我们使用了<code>order</code>方法来按照价格降序对查询结果进行排序。</p>
+<p>现在，如果我们想要对查询结果按照价格升序排序，可以使用<code>reverse_order</code>方法：</p>
+<pre><code class="language-ruby">Product.order(price: :desc).reverse_order
+</code></pre>
+<p>这个查询中，我们使用了<code>order</code>方法来按照价格降序对查询结果进行排序，然后使用<code>reverse_order</code>方法来对排序方式进行反向排序，即按照价格升序排序。</p>
+<p>需要注意的是，<code>reverse_order</code>方法只是对排序方式进行反向排序，不会改变原来的排序条件。如果需要重新指定排序条件，应该使用<code>order</code>方法。</p>
+<p>总之，<code>reverse_order</code>方法是一种对查询结果进行反向排序的方法，可以对原来的排序方式进行反向排序，以达到反向排序的目的。在使用<code>reverse_order</code>方法时，应该注意原来的排序条件，以得到正确的查询结果。</p>
+<h3 id="rewhere">rewhere</h3>
+<p>在Active Record中，可以使用<code>rewhere</code>方法来对查询结果进行重新筛选。<code>rewhere</code>方法用于重新指定查询结果的筛选条件，可以在<code>where</code>方法后使用。</p>
+<p>例如，我们可以使用以下条件来查询<code>Product</code>模型中所有价格大于20的产品，并重新筛选价格大于30的产品：</p>
+<pre><code class="language-ruby">Product.where("price &gt; 20").rewhere("price &gt; 30")
+</code></pre>
+<p>这个查询中，我们使用了<code>where</code>方法来筛选价格大于20的产品，然后使用<code>rewhere</code>方法来重新筛选价格大于30的产品。</p>
+<p>需要注意的是，<code>rewhere</code>方法会完全替换原来的筛选条件，因此，如果需要在原来的筛选条件基础上进行重新筛选，应该将原来的筛选条件包含在重新筛选的条件中。</p>
+<p>总之，<code>rewhere</code>方法是一种对查询结果进行重新筛选的方法，可以重新指定查询结果的筛选条件，以达到重新筛选的目的。在使用<code>rewhere</code>方法时，应该注意重新筛选条件的正确性，以得到正确的查询结果。</p>
+<h1 id="null-relation">Null Relation</h1>
+<p>在Active Record中，"Null Relation"是一个空的关系对象，它表示在数据库中没有任何记录。它通常用作尚未定义的关系的占位符，或者作为构建更复杂查询的基础关系。</p>
+<p>可以使用<code>none</code>方法创建一个空的关系对象，它返回同类型的空关系：</p>
+<pre><code class="language-ruby">Product.none # 返回一个Product模型的空关系对象
+</code></pre>
+<p>空关系对象在大多数情况下像普通的关系对象一样，但是当查询时不会执行任何SQL查询。例如，对空关系对象调用<code>to_a</code>、<code>count</code>或<code>any?</code>方法将返回一个空数组或false：</p>
+<pre><code class="language-ruby">Product.none.to_a # 返回 []
+Product.none.count # 返回 0
+Product.none.any? # 返回 false
+</code></pre>
+<p>空关系对象通常用作构建更复杂查询的起点，通过在它们上面链接其他方法。例如，我们可以定义一个范围，它返回所有价格低于10美元的产品，从一个空的关系对象开始，然后添加其他条件：</p>
+<pre><code class="language-ruby">class Product &lt; ApplicationRecord
+  scope :cheap, -&gt; { none.where('price &lt; ?', 10) }
+end
+</code></pre>
+<p>总之，在Active Record中，空关系对象是一个空的关系对象，它表示在数据库中没有任何记录。它通常用作尚未定义的关系的占位符，或者作为构建更复杂查询的基础关系。</p>
+<h1 id="readonly-objects">Readonly Objects</h1>
+<p>在Active Record中，只读对象是从数据库检索出来的对象，可以像其他对象一样访问，但不能保存回数据库。这在需要防止对某些记录进行意外更新或强制执行只读权限的情况下很有用。</p>
+<p>要将对象标记为只读，可以在对象或检索对象的关系上使用<code>readonly!</code>方法：</p>
+<pre><code class="language-ruby">product = Product.find(1)
+product.readonly! # 将对象标记为只读
+
+products = Product.where(category: 'books')
+products.readonly! # 将关系标记为只读
+</code></pre>
+<p>一旦对象或关系被标记为只读，任何尝试更新或删除它们的操作都会引发<code>ActiveRecord::ReadOnlyRecord</code>异常。例如，如果尝试像这样更新只读对象：</p>
+<pre><code class="language-ruby">product = Product.find(1)
+product.readonly!
+product.update(name: 'New Name') # 抛出 ActiveRecord::ReadOnlyRecord 异常
+</code></pre>
+<p>您还可以使用<code>readonly</code>方法检索只读关系，而不修改底层记录：</p>
+<pre><code class="language-ruby">products = Product.where(category: 'books').readonly
+</code></pre>
+<p>此外，您可以在模型关联中设置<code>readonly</code>选项，以强制执行只读权限：</p>
+<pre><code class="language-ruby">class Order &lt; ApplicationRecord
+  has_many :line_items, readonly: true
+end
+</code></pre>
+<p>在此示例中，任何尝试修改订单的行项目都会引发<code>ActiveRecord::ReadOnlyRecord</code>异常。</p>
+<p>总之，在Active Record中，只读对象是可以像其他对象一样访问的对象，但不能保存回数据库。可以使用<code>readonly!</code>方法将它们标记为只读，任何尝试更新或删除它们的操作都会引发异常。此外，可以使用<code>readonly</code>方法和关联的<code>readonly</code>选项强制执行只读权限。</p>
+<h1 id="locking-records-for-update">Locking Records for Update</h1>
+<h3 id="optimistic-locking">Optimistic Locking</h3>
+<p>在Active Record中，乐观锁定是一种并发控制机制，它使用版本号或时间戳等标记来检测并发更新，并防止数据冲突或竞争条件。</p>
+<p>在Active Record中，可以使用<code>lock_version</code>属性或<code>updated_at</code>属性来实现乐观锁定。当使用乐观锁定时，每个记录都有一个版本号或时间戳，用于跟踪记录的修改历史。当尝试更新记录时，Active Record会检查版本号或时间戳是否与之前检索的值相同。如果不同，说明记录已经被其他并发用户更新，此时会抛出<code>ActiveRecord::StaleObjectError</code>异常，防止数据冲突。</p>
+<p>例如，以下代码使用<code>lock_version</code>属性实现乐观锁定。每次更新产品对象时，<code>lock_version</code>属性的值将自动增加，以便检测并发更新：</p>
+<pre><code class="language-ruby">product = Product.find(1)
+product.update(name: 'New Name') # lock_version automatically incremented
+</code></pre>
+<p>在此示例中，每次更新产品对象时，<code>lock_version</code>属性的值将自动增加，以便检测并发更新，如果发现其他并发用户已经更新了该记录，则会抛出<code>ActiveRecord::StaleObjectError</code>异常。</p>
+<p>可以在模型中使用<code>lock_optimistic</code>方法来启用乐观锁定。例如，以下代码在<code>Product</code>模型中启用乐观锁定：</p>
+<pre><code class="language-ruby">class Product &lt; ApplicationRecord
+  lock_optimistic
+end
+</code></pre>
+<p>在此示例中，<code>lock_optimistic</code>方法启用了乐观锁定，使用<code>updated_at</code>属性作为版本号。</p>
+<p>需要注意的是，乐观锁定并不能完全防止并发更新，因为在检查和更新之间仍然存在时间窗口，可能会导致竞争条件。因此，在使用乐观锁定时，需要谨慎处理并发更新的情况，例如使用重试机制或合并冲突的算法等。</p>
+<p>总之，在Active Record中，可以使用乐观锁定来检测并发更新，使用<code>lock_version</code>属性或<code>updated_at</code>属性来跟踪记录的版本号或时间戳。可以在模型中使用<code>lock_optimistic</code>方法来启用乐观锁定。需要注意的是，乐观锁定并不能完全防止并发更新，需要谨慎处理并发更新的情况。</p>
+<h3 id="pessimistic-locking">Pessimistic Locking</h3>
+<p>在Active Record中，悲观锁定是一种并发控制机制，它通过锁定记录来防止其他并发用户同时修改同一条记录。悲观锁定可以确保在更新期间不会发生数据冲突或竞争条件，但可能会影响应用程序的性能和响应时间。</p>
+<p>在Active Record中，可以使用<code>ActiveRecord::Base.transaction</code>方法在事务中实现悲观锁定，以确保在更新期间不会发生并发冲突。例如，以下代码将获取一个产品对象并在事务中将其锁定，然后将其价格增加10美元：</p>
+<pre><code class="language-ruby">Product.transaction do
+  product = Product.find(1)
+  product.lock! # 悲观锁定
+  product.update(price: product.price + 10)
+end
+</code></pre>
+<p>在此示例中，我们使用<code>lock!</code>方法将产品对象锁定，以确保在更新期间其他并发用户不能同时访问该记录。然后，我们使用<code>update</code>方法将产品价格增加10美元。</p>
+<p>还可以使用<code>with_lock</code>方法来在记录级别上进行悲观锁定。例如，以下代码将获取一个产品对象并在记录级别上将其锁定，然后将其价格增加10美元：</p>
+<pre><code class="language-ruby">product = Product.find(1)
+product.with_lock do
+  product.update(price: product.price + 10)
+end
+</code></pre>
+<p>在此示例中，我们使用<code>with_lock</code>方法在记录级别上锁定产品对象，并且只有在锁定期间才能更新该对象。然后，我们使用<code>update</code>方法将产品价格增加10美元。</p>
+<p>需要注意的是，悲观锁定可能会影响应用程序的性能和响应时间，因此应该谨慎使用。如果锁定的时间过长，可能会导致其他并发用户的请求超时或阻塞。</p>
+<p>总之，在Active Record中，可以使用悲观锁定机制为更新操作锁定记录，以防止并发用户同时修改同一条记录。可以使用<code>transaction</code>方法在事务中锁定记录，也可以使用<code>with_lock</code>方法在记录级别上悲观锁定记录。需要注意的是，悲观锁定可能会影响应用程序的性能和响应时间，因此应该谨慎使用。</p>
+<h1 id="joining-tables">Joining Tables</h1>
+<p>在关系型数据库中，表之间可以通过JOIN操作进行连接，以便从多个表中检索相关数据。在Active Record中，可以使用<code>joins</code>方法来执行表连接操作，并使用<code>select</code>方法选择要检索的列。</p>
+<p>以下是一个简单的例子，假设我们有两个表<code>users</code>和<code>posts</code>，每个用户可以发布多篇帖子：</p>
+<pre><code class="language-ruby">class User &lt; ApplicationRecord
+  has_many :posts
+end
+
+class Post &lt; ApplicationRecord
+  belongs_to :user
+end
+</code></pre>
+<p>我们可以使用<code>joins</code>方法将这两个表连接起来，并选择要检索的列：</p>
+<pre><code class="language-ruby">User.joins(:posts).select('users.name, posts.title')
+</code></pre>
+<p>在此示例中，我们使用<code>joins</code>方法将<code>users</code>和<code>posts</code>表连接起来，并使用<code>select</code>方法选择<code>users</code>表中的<code>name</code>列和<code>posts</code>表中的<code>title</code>列。这将返回一个包含<code>name</code>和<code>title</code>列的结果集，其中每个结果都是一个<code>User</code>对象和一个相关的<code>Post</code>对象。</p>
+<p>还可以在<code>joins</code>方法中使用字符串或符号来指定连接类型（例如<code>INNER JOIN</code>、<code>LEFT OUTER JOIN</code>等），以及条件表达式来指定连接条件。例如，以下代码使用<code>INNER JOIN</code>连接<code>users</code>和<code>posts</code>表，并使用<code>where</code>方法指定连接条件：</p>
+<pre><code class="language-ruby">User.joins('INNER JOIN posts ON users.id = posts.user_id').where('posts.published = ?', true)
+</code></pre>
+<p>在此示例中，我们使用<code>joins</code>方法和字符串来指定<code>INNER JOIN</code>连接类型和连接条件。然后，我们使用<code>where</code>方法指定了一个条件表达式，以筛选出已发布的帖子。</p>
+<p>总之，在Active Record中，可以使用<code>joins</code>方法执行表连接操作，并使用<code>select</code>方法选择要检索的列。可以使用字符串或符号来指定连接类型和条件表达式，以控制连接的行为。</p>
+<h1 id="eager-loading-associations">Eager Loading Associations</h1>
+<h3 id="includes">includes</h3>
+<p>在Active Record中，<code>includes</code>方法用于执行“eager loading”操作，以减少查询次数和提高性能。它可以同时加载主对象和其关联对象的数据，避免在每次访问关联对象时都执行一次查询操作。</p>
+<p><code>includes</code>方法可以接受一个或多个关联的名称，用于指定要加载的关联对象。例如，假设我们有一个<code>User</code>类，它与一个<code>Post</code>类相关联：</p>
+<pre><code class="language-ruby">class User &lt; ApplicationRecord
+  has_many :posts
+end
+
+class Post &lt; ApplicationRecord
+  belongs_to :user
+end
+</code></pre>
+<p>如果我们要加载一个用户及其所有帖子，我们可以使用<code>includes</code>方法来执行“eager loading”操作：</p>
+<pre><code class="language-ruby">user = User.includes(:posts).find(1)
+</code></pre>
+<p>在此示例中，我们使用<code>includes</code>方法来加载与用户对象相关联的所有帖子。这将执行两个查询：一个查询用户，另一个查询该用户的所有帖子。然后，我们可以访问<code>user.posts</code>属性，以访问所有帖子对象，而不必再执行额外的查询。</p>
+<p>需要注意的是，当使用<code>includes</code>方法时，如果没有使用<code>references</code>方法指定关联对象的表名，那么在执行查询时，Active Record可能会忽略关联对象的查询条件。这可能会导致在关联对象中返回未符合条件的数据。因此，在使用<code>includes</code>方法时，建议使用<code>references</code>方法以确保关联对象的查询条件得到正确的应用。</p>
+<p><code>includes</code>方法还可以接受一个块，在块中可以对关联对象进行进一步的操作。例如，以下代码将会加载所有文章的评论，并对每个评论进行排序：</p>
+<pre><code class="language-ruby">Post.includes(:comments) do
+  order('comments.created_at ASC')
+end
+</code></pre>
+<p>在此示例中，我们使用<code>includes</code>方法加载所有文章的评论，并使用块对每个评论进行排序。这将执行两个查询：一个查询文章，另一个查询所有评论。然后，我们可以访问<code>post.comments</code>属性，以访问所有评论对象，并确保它们按照创建时间升序排列。</p>
+<p>总之，在Active Record中，<code>includes</code>方法用于执行“eager loading”操作，以减少查询次数和提高性能。它可以同时加载主对象和其关联对象的数据，并可以接受一个或多个关联的名称。需要注意的是，在使用<code>includes</code>方法时，应该使用<code>references</code>方法指定关联对象的表名，以确保关联对象的查询条件得到正确的应用。</p>
+<h3 id="preload">preload</h3>
+<p>在Active Record中，<code>preload</code>方法用于预加载关联对象的数据，从而提高查询性能。与<code>includes</code>方法不同的是，<code>preload</code>方法会分别执行主对象和关联对象的查询，而不是使用SQL的JOIN语句将它们一起加载。这意味着，在使用<code>preload</code>方法时，如果访问关联对象的属性，将不会触发额外的数据库查询，而是使用预加载的数据来获取这些属性的值。</p>
+<p><code>preload</code>方法可以接受一个或多个关联的名称，用于指定要预加载的关联对象。例如，假设我们有一个<code>User</code>类，它与一个<code>Post</code>类相关联：</p>
+<pre><code class="language-ruby">class User &lt; ApplicationRecord
+  has_many :posts
+end
+
+class Post &lt; ApplicationRecord
+  belongs_to :user
+end
+</code></pre>
+<p>如果我们要预加载一个用户及其所有帖子，我们可以使用<code>preload</code>方法来执行预加载操作：</p>
+<pre><code class="language-ruby">user = User.preload(:posts).find(1)
+</code></pre>
+<p>在此示例中，我们使用<code>preload</code>方法预加载与用户对象相关联的所有帖子。这将执行两个查询：一个查询用户，另一个查询该用户的所有帖子。然后，我们可以访问<code>user.posts</code>属性，以访问所有帖子对象，而不必再执行额外的查询。</p>
+<p>需要注意的是，与<code>includes</code>方法不同，<code>preload</code>方法不会将关联对象的数据合并到主对象中。因此，在使用<code>preload</code>方法时，访问关联对象的属性将会触发额外的查询。如果需要访问关联对象的属性，建议使用<code>includes</code>方法。</p>
+<p>总之，在Active Record中，<code>preload</code>方法用于预加载关联对象的数据，从而提高查询性能。它可以接受一个或多个关联的名称，并会分别执行主对象和关联对象的查询。需要注意的是，在使用<code>preload</code>方法时，访问关联对象的属性将会触发额外的查询，因此建议使用<code>includes</code>方法。</p>
+<h3 id="eager_load">eager_load</h3>
+<p>在Active Record中，<code>eager_load</code>方法用于执行“eager loading”操作，类似于<code>includes</code>方法，但不同之处在于它使用SQL的JOIN语句将主对象和关联对象的数据一起加载，从而提高查询性能。与<code>preload</code>方法不同的是，<code>eager_load</code>方法会将关联对象的数据合并到主对象中，因此，在访问关联对象的属性时，不会触发额外的数据库查询。</p>
+<p><code>eager_load</code>方法可以接受一个或多个关联的名称，用于指定要加载的关联对象。例如，假设我们有一个<code>User</code>类，它与一个<code>Post</code>类相关联：</p>
+<pre><code class="language-ruby">class User &lt; ApplicationRecord
+  has_many :posts
+end
+
+class Post &lt; ApplicationRecord
+  belongs_to :user
+end
+</code></pre>
+<p>如果我们要加载一个用户及其所有帖子，我们可以使用<code>eager_load</code>方法来执行“eager loading”操作：</p>
+<pre><code class="language-ruby">user = User.eager_load(:posts).find(1)
+</code></pre>
+<p>在此示例中，我们使用<code>eager_load</code>方法执行与用户对象相关联的所有帖子的“eager loading”操作。这将执行一个JOIN查询，将用户和帖子的数据一起加载。然后，我们可以访问<code>user.posts</code>属性，以访问所有帖子对象，而不必再执行额外的查询。</p>
+<p>需要注意的是，与<code>includes</code>方法不同，<code>eager_load</code>方法不会将关联对象的数据预加载到主对象中。因此，在使用<code>eager_load</code>方法时，如果访问关联对象的属性，将会触发额外的查询。如果需要访问关联对象的属性，建议使用<code>preload</code>方法或<code>includes</code>方法。</p>
+<p>总之，在Active Record中，<code>eager_load</code>方法用于执行“eager loading”操作，以减少查询次数和提高性能。它可以接受一个或多个关联的名称，并使用SQL的JOIN语句将主对象和关联对象的数据一起加载。需要注意的是，在使用<code>eager_load</code>方法时，访问关联对象的属性将会触发额外的查询，因此建议使用<code>preload</code>方法或<code>includes</code>方法。</p>
+<h1 id="scopes">Scopes</h1>
+<p>Scopes是Active Record中的一种特殊方法，它用于定义查询条件，以便在查询数据库时重复使用。Scopes可以接受任意数量的参数，包括其他Scopes、Lambdas或其他可执行代码块，以便对查询结果进行进一步筛选和排序。</p>
+<p>Scopes通常作为类方法定义在Active Record模型中。例如，假设我们有一个<code>Product</code>类，其中包含一个<code>price</code>属性和一个<code>published</code>属性。我们可以在该类中定义一个Scopes，以便在查询价格低于某个值的已发布产品时重复使用：</p>
+<pre><code class="language-ruby">class Product &lt; ApplicationRecord
+  scope :published, -&gt; { where(published: true) }
+  scope :price_below, -&gt;(price) { where('price &lt; ?', price) }
+end
+</code></pre>
+<p>在此示例中，我们定义了两个Scopes：<code>published</code>和<code>price_below</code>。<code>published</code> Scope将筛选出已发布的产品，而<code>price_below</code> Scope将筛选出价格低于指定价格的产品。</p>
+<p>我们可以在查询时使用这些Scopes，例如：</p>
+<pre><code class="language-ruby">cheap_published_products = Product.published.price_below(50)
+</code></pre>
+<p>在此示例中，我们查询已发布产品的价格低于50的所有产品，通过链式调用<code>published</code>和<code>price_below</code> Scopes。</p>
+<p>需要注意的是，Scopes返回的是Active Record关系对象，而不是实际的查询结果。这意味着，我们可以在Scopes中继续使用其他查询方法，例如<code>order</code>、<code>limit</code>、<code>group</code>等，以进一步筛选和排序查询结果。</p>
+<p>总之，Scopes是Active Record中的一种特殊方法，用于定义查询条件，以便在查询数据库时重复使用。Scopes可以接受任意数量的参数，包括其他Scopes、Lambdas或其他可执行代码块，以便对查询结果进行进一步筛选和排序。使用Scopes可以使代码更易于维护和重用，并且可以提高查询性能。</p>
+<h1 id="enums">Enums</h1>
+<p>Enums是Active Record中的一个特性，它可以将某些属性的值映射为一个预定义的列表。使用Enums可以使代码更加清晰和可读，同时也可以避免在代码中使用魔法数字或字符串，从而减少出错的可能性。</p>
+<p>在Active Record中，Enums可以通过在模型中定义一个<code>enum</code>方法来定义。例如，假设我们有一个<code>Order</code>类，其中包含一个<code>status</code>属性，可以取<code>pending</code>、<code>processing</code>和<code>completed</code>三个值。我们可以在该类中定义一个Enum，以便将这些值映射为一个预定义的列表：</p>
+<pre><code class="language-ruby">class Order &lt; ApplicationRecord
+  enum status: [:pending, :processing, :completed]
+end
+</code></pre>
+<p>在此示例中，我们定义了一个名为<code>status</code>的Enum，它可以取三个值：<code>pending</code>、<code>processing</code>和<code>completed</code>。我们可以通过调用类方法来获取这些值：</p>
+<pre><code class="language-ruby">Order.statuses
+# =&gt; {"pending" =&gt; 0, "processing" =&gt; 1, "completed" =&gt; 2}
+</code></pre>
+<p>同时，也可以通过调用实例方法来获取当前属性的值：</p>
+<pre><code class="language-ruby">order = Order.first
+order.status
+# =&gt; "pending"
+</code></pre>
+<p>Enums还提供了一些方便的方法，例如<code>status_name</code>、<code>status_before_type_cast</code>等，可以帮助我们更方便地处理属性的值。例如，我们可以使用<code>status_name</code>方法将属性的值转换为一个可读的字符串：</p>
+<pre><code class="language-ruby">order = Order.first
+order.status_name
+# =&gt; "Pending"
+</code></pre>
+<p>需要注意的是，Enums的值是基于整数的，从0开始。因此，我们可以通过指定一个自定义的整数值来映射枚举值，例如：</p>
+<pre><code class="language-ruby">class Order &lt; ApplicationRecord
+  enum status: { pending: 1, processing: 2, completed: 3 }
+end
+</code></pre>
+<p>在此示例中，我们指定了自定义的整数值来映射枚举值。</p>
+<p>总之，Enums是Active Record中的一个特性，它可以将某些属性的值映射为一个预定义的列表。使用Enums可以使代码更加清晰和可读，同时也可以避免在代码中使用魔法数字或字符串，从而减少出错的可能性。在Active Record中，我们可以通过在模型中定义一个<code>enum</code>方法来定义Enums，并使用方便的方法来处理属性的值。</p>
+<h1 id="understanding-method-chaining">Understanding Method Chaining</h1>
+<p>方法链是一种编程技巧，在单个语句中链接多个方法调用。在Ruby和许多其他面向对象编程语言中，方法链是通过让每个方法返回调用它的对象来实现的，允许在同一语句中对同一对象调用另一个方法。</p>
+<p>方法链经常用于ActiveRecord，Ruby on Rails的ORM层，以简洁易读的方式构建数据库查询。例如，考虑以下代码：</p>
+<pre><code class="language-ruby">users = User.where(active: true).order(name: :asc).limit(10)
+</code></pre>
+<p>在此代码中，<code>where</code>、<code>order</code>和<code>limit</code>方法被链接在一起，以构建一个数据库查询，找到前10个按名称升序排序的活动用户。每个方法都在前一个方法的结果上调用，允许以清晰易读的方式构建复杂的数据库查询。</p>
+<p>方法链也可以在其他编程上下文中使用，以简化代码并使其更易读。例如，考虑以下代码：</p>
+<pre><code class="language-ruby">result = some_array.select(&amp;:even?).map(&amp;:to_s).join(',')
+</code></pre>
+<p>在此代码中，<code>select</code>、<code>map</code>和<code>join</code>方法被链接在一起，以选择数组中的偶数元素，将它们映射为字符串，并将它们连接成逗号分隔的字符串。<code>&amp;:even?</code>和<code>&amp;:to_s</code>语法是传递调用<code>even?</code>和<code>to_s</code>方法的块的简写形式，分别传递给<code>select</code>和<code>map</code>方法。</p>
+<p>方法链可以是简化代码和使其更易读的强大技术。但是，重要的是要谨慎使用它，不要在单个语句中链接太多的方法，因为这可能会使代码难以理解和调试。此外，需要注意方法链的性能影响，因为每个方法调用都可能增加开销并减慢程序的速度。</p>
+<h1 id="find-or-build-a-new-object">Find or Build a New Object</h1>
+<p>在Ruby on Rails中，有两个方法可以用来创建一个新的对象或者查找现有的对象：<code>find_or_initialize_by</code>和<code>find_or_create_by</code>。</p>
+<p><code>find_or_initialize_by</code>方法用于基于给定的属性查找数据库中的现有记录，如果找不到匹配的记录，则使用这些属性初始化一个新的记录。例如，考虑以下代码：</p>
+<pre><code class="language-ruby">user = User.find_or_initialize_by(email: "example@example.com")
+</code></pre>
+<p>在这个代码中，<code>find_or_initialize_by</code>在<code>User</code>模型中查找一个email为"example@example.com"的记录。如果找到匹配的记录，则返回该记录。否则，将使用email为"example@example.com"初始化一个新的<code>User</code>对象。</p>
+<p>另一方面，<code>find_or_create_by</code>方法用于基于给定的属性查找数据库中的现有记录，如果找不到匹配的记录，则使用这些属性创建一个新的记录。例如，考虑以下代码：</p>
+<pre><code class="language-ruby">user = User.find_or_create_by(email: "example@example.com")
+</code></pre>
+<p>在这个代码中，<code>find_or_create_by</code>在<code>User</code>模型中查找一个email为"example@example.com"的记录。如果找到匹配的记录，则返回该记录。否则，将创建一个新的<code>User</code>对象，并将其保存到数据库中，email为"example@example.com"。</p>
+<p>这两个方法在不同的情况下都可以有用。当您想检查记录是否存在，但不想在不存在时创建新记录时，可以使用<code>find_or_initialize_by</code>。另一方面，当您想确保具有给定属性的记录存在，并且如果不存在则想创建一个时，可以使用<code>find_or_create_by</code>。</p>
+<p>需要注意的是，这两种方法都依赖于传递给它们的属性来查找或创建对象。因此，需要确保这些属性是唯一的，并且可以用于在数据库中唯一地标识对象，例如在数据库表上使用唯一索引或约束。</p>
+
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="0.09418090093865741" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2023-04-23 12:29">2023-04-23 12:29</span>&nbsp;
+<a href="https://www.cnblogs.com/zhuoblog/">卓亦苇</a>&nbsp;
+阅读(<span id="post_view_count">16</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17346208" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(17346208);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '17346208', targetLink: 'https://www.cnblogs.com/zhuoblog/p/17346208.html', title: 'rails的接口查询详解' })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+
+<script>
+    var cb_entryId = 17346208, cb_entryCreatedDate = '2023-04-23 12:29', cb_postType = 1, cb_postTitle = 'rails的接口查询详解';
+    var allowComments = true, cb_blogId = 724257, cb_blogApp = 'zhuoblog', cb_blogUserGuid = 'b5c5a0ee-d6e8-4666-6ea3-08d9bb018860';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+            <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 卓亦苇
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULmtTIfz5YGqZhKlc6_GP5jfAHwzhC026qoa6TmHQhJxedU-GEEqi8E3u9HE6iURY-9-JHunvmUuiIvBsTtn54L9lEq1nIZj7Frh6U090SgSaDr9ajoHASQ_lCi7Fguss9M" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

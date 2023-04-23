@@ -1,0 +1,746 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="always" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>博客园 - 开发者的网上家园</title>
+        <meta name="keywords" content="开发者,程序员,博客园,程序猿,程序媛,极客,码农,编程,代码,软件开发,开源,IT网站,技术社区,Developer,Programmer,Coder,Geek,Coding,Code" />
+        <meta name="description" content="博客园是一个面向开发者的知识分享社区。自创建以来，博客园一直致力并专注于为开发者打造一个纯净的技术交流社区，推动并帮助开发者通过互联网分享知识，从而让更多开发者从中受益。博客园的使命是帮助开发者用代码改变世界。" />
+    <link rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    <link rel="Stylesheet" type="text/css" href="/css/aggsite.min.css?v=spN6C-gWRjhZqRnDoXRQxvkwtnjvSvg8tOtB-4CgD2o" />
+        <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://feed.cnblogs.com/blog/sitehome/rss" />
+    <script src="//common.cnblogs.com/script/jquery.js" type="text/javascript"></script>
+    <script src="/js/aggsite.min.js?v=Nrtmxs6gKuoUVDz2KeBiR8iBCU1I-yRQ-1jDGjNv-yk"></script>
+    <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            // googletag.defineSlot('/1090369/A1', [468, 60], 'div-gpt-ad-1547816814884-0').addService(googletag.pubads());
+            googletag.defineSlot('/1090369/B1', [300, 250], 'div-gpt-ad-1546331539224-0').addService(googletag.pubads());
+            googletag.defineSlot('/1090369/B2', [300, 250], 'div-gpt-ad-1539007469525-0').addService(googletag.pubads());
+            googletag.defineSlot('/1090369/B3', [300, 250], 'div-gpt-ad-1546331252242-0').addService(googletag.pubads());
+            googletag.defineSlot('/1090369/B4', [300, 250], 'div-gpt-ad-1546331385104-0').addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+
+        /**/</script>
+</head>
+<body>
+<div id="wrapper">
+    <div id="hd_info">
+        <div id="cnts">
+            <div id="site_nav_top">代码改变世界</div>
+            <div id="login_area"><span id="span_userinfo"></span></div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div id="header">
+        <p class="h_r_3"></p><p class="h_r_2"></p><p class="h_r_1"></p>
+        <div id="header_block">
+            <div id="logo">
+                <h1>
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园"><img src="/images/logo_small.gif" alt="博客园Logo" width="142" height="55" /></a>
+                </h1>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+        <p class="h_r_1"></p><p class="h_r_2"></p><p class="h_r_3"></p>
+    </div>
+    <div id="nav_menu"><a href="/">新版</a><a href="https://home.cnblogs.com/">园子</a><a href="https://news.cnblogs.com">新闻</a><a href="https://q.cnblogs.com/">博问</a><a href="https://ing.cnblogs.com/">闪存</a><a id="nav_legacy_brandzone" href="https://brands.cnblogs.com/">专区</a><a href="https://wz.cnblogs.com/">收藏</a><a href="https://job.cnblogs.com/">招聘</a><a href="https://edu.cnblogs.com/">班级</a><a href="https://zzk.cnblogs.com/">找找看</a></div>
+    <div id="main">
+        <div class="post_nav_block_wrapper">
+            <ul class="post_nav_block">
+                    <li><a href="/legacy/" id="tabnav_legacy" class="current_nav" title="">首页</a></li>
+                    <li><a href="/legacy/pick/" id="tabnav_legacypick" class="" title="编辑精选博文">精华</a></li>
+                    <li><a href="/legacy/candidate/" id="tabnav_legacycandidate" class="" title="候选区的博文">候选</a></li>
+                    <li><a href="/legacy/news/" id="tabnav_legacynews" class="" title="新闻频道最新新闻">新闻</a></li>
+                    <li><a href="/legacy/following" id="tabnav_legacyfollowing" class="" title="我关注博客的最新博文">关注</a></li>
+                    <li><a href="/legacy/aggsite/mycommented" id="tabnav_legacyaggsitemycommented" class="" title="我评论过的博文">我评</a></li>
+                    <li><a href="/legacy/aggsite/mydigged" id="tabnav_legacyaggsitemydigged" class="" title="我推荐过的博文">我赞</a></li>
+                    <li><a href="/legacy/subscription" id="tabnav_legacysubscription" class="" title="我订阅的博客">订阅</a></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+        <div class="rss_link" id="rss_block">
+<span id="posts_refresh_tips"></span><a id="posts_refresh" href="#" class="refresh" title="刷新博文列表" onclick="aggSite.loadCategoryPostList();return false">刷新</a><a href="http://feed.cnblogs.com/blog/sitehome/rss"><img src="//common.cnblogs.com/images/icon_rss.gif" alt="点击订阅" style="position:relative;top:2px;" title="订阅博客园文章" /></a>        </div>
+            <div id="headline_block" class="headline"><ul class="headline"><li class="editor_pick"><a href="https://www.cnblogs.com/huangxincheng/p/17336640.html" id="editor_pick_lnk" target="_blank"><span class="headline-label">【编辑推荐】</span>记一次 腾讯会议 的意外崩溃分析<span id="editor_pick_count"></span></a> <a href="/aggsite/headline" title="查看更多编辑推荐" class="right_more">»</a></li><li id="top_digged_post"><a href="https://www.cnblogs.com/peida/p/17339595.html" target="_blank" title="阅读2007, 评论12, 推荐19"><span class="headline-label">【最多推荐】</span>架构师，别再扯淡了！(12/2007)</a> <a href="/aggsite/topdigged24h" title="查看24小时推荐排行" class="right_more">»</a></li><li id="top_commented_post"><a href="https://www.cnblogs.com/huangxincheng/p/17345889.html" target="_blank" title="阅读338, 评论8, 推荐6"><span class="headline-label">【最多评论】</span>记一次 .NET 某外贸ERP 内存暴涨分析(8/338)</a> <a href="/aggsite/topcommented24h" title="查看24小时评论排行" class="right_more">»</a></li><li id="news_headline"><a href="https://news.cnblogs.com/n/740557/" target="_blank" title="阅读533, 评论0, 推荐1"><span class="headline-label">【新闻头条】</span>苹果WWDC前瞻：混合现实为主 多款新MacBook将发布(0/533)</a> <a href="https://news.cnblogs.com/" title="查看更多新闻" class="right_more">»</a></li></ul></div>
+
+        <div id="pager_top" style="display:none"></div>
+        <div id="post_list_tips" class="hide"></div>
+        
+        <div id="post_list">
+                <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('chillsrc',17346299,13897,1)">
+                <span class="diggnum" id="digg_count_17346299">0</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17346299" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/chillsrc/p/17346299.html" target="_blank"> abp(net core)+easyui+efcore实现仓储管理系统——组织管理升级之下(六十二) </a></h3>
+            <p class="post_item_summary">
+                在前面的文章中我们已经将abp(net core)+easyui+efcore实现的仓储管理系统升级到ABP7.3，今天我们对组织管理功能进行升级，并解决升级过后的一些问题。 ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/chillsrc/" class="lightblue">DotNet菜园</a>
+                发布于 2023-04-23 13:34
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/chillsrc/p/17346299.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/chillsrc/p/17346299.html" class="gray">阅读(110)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('24la',17344503,109201,1)">
+                <span class="diggnum" id="digg_count_17344503">1</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17344503" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/24la/p/mysql-proxysql-replication-manager-read-write-split-mha.html" target="_blank">mysql+proxysql+replication-manager的主从半同步复制+高可用+读写分离</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/24la/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/376147/20230423125720.png" alt="" /></a>                环境： AlmaLinux release 9.1 MySQL Community Server Ver 8.0.33 Replication Manager v2.2.40 for MariaDB 10.x and MySQL 5.7 Series ProxySQL version 2.5.1-9 ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/24la/" class="lightblue">逆水寒龙</a>
+                发布于 2023-04-23 12:53
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/24la/p/mysql-proxysql-replication-manager-read-write-split-mha.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/24la/p/mysql-proxysql-replication-manager-read-write-split-mha.html" class="gray">阅读(83)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('xiezhr',17343212,685650,1)">
+                <span class="diggnum" id="digg_count_17343212">1</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17343212" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/xiezhr/p/17343212.html" target="_blank">快速上手Linux核心命令（三）：文件和目录操作命令</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/xiezhr/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/2381533/20210501223456.png" alt="" /></a>                @(文件和目录操作命令) 前言 这期呢主要说一说Linux中文件与目录相关的命令，一共包含19个命令 cd 切换目录 1、简介 cd 是“change directory” 中每个单词的首字母，其功能是从当前目录切换到目标路径。 2、语法格式 cd [参数选项] [目标路径] 3、参数说明 这里呢只 ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/xiezhr/" class="lightblue">xiezhr</a>
+                发布于 2023-04-23 12:52
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/xiezhr/p/17343212.html#commentform" class="gray">
+                        评论(1)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/xiezhr/p/17343212.html" class="gray">阅读(102)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('wuhuacong',17346092,12391,1)">
+                <span class="diggnum" id="digg_count_17346092">2</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17346092" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/wuhuacong/p/17346092.html" target="_blank">基于SqlSugar的开发框架循序渐进介绍（28）-- 快速构建系统参数管理界面</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/wuhuacong/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/u8867.png" alt="" /></a>                在参照一些行业系统软件的时候，发现一个做的挺不错的系统功能-系统参数管理，相当于把任何一个基础的系统参数碎片化进行管理，每次可以读取一个值进行管理，这样有利于我们快速的处理业务需求，是一个挺好的功能。本篇随笔模拟这个功能，基于SqlSugar开发框架的基础上，利用代码生成工具快速生成系统参数管理界面... ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/wuhuacong/" class="lightblue">伍华聪</a>
+                发布于 2023-04-23 12:45
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/wuhuacong/p/17346092.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/wuhuacong/p/17346092.html" class="gray">阅读(136)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('kewei',17346228,76161,1)">
+                <span class="diggnum" id="digg_count_17346228">4</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17346228" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/kewei/p/17346228.html" target="_blank">使用ServiceSelf解决.NET应用程序做服务的难题</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/kewei/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/u160192.jpg" alt="" /></a>                1 ServiceSelf 为.NET 泛型主机的应用程序提供自安装为服务进程的能力，支持windows和linux平台。 功能 自我服务安装 自我服务卸载 自我服务日志监听 2 自我服务安装 虽然.NetCore提供了Microsoft.Extensions.Hosting.Systemd和Mic ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/kewei/" class="lightblue">jiulang</a>
+                发布于 2023-04-23 12:40
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/kewei/p/17346228.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/kewei/p/17346228.html" class="gray">阅读(97)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('zhuoblog',17346208,724257,1)">
+                <span class="diggnum" id="digg_count_17346208">1</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17346208" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/zhuoblog/p/17346208.html" target="_blank">rails的接口查询详解</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/zhuoblog/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/2689754/20211216230913.png" alt="" /></a>                Retrieving Objects from the Database find &quot;find&quot;是一种常用的数据库查询方法，在Rails中被用于从数据库中查找单个记录。它可以接收一个主键作为参数，也可以接收一组条件参数。 以下是&quot;find&quot;方法的使用方式： # 使用主键查找单个记录 Model.fi ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/zhuoblog/" class="lightblue">卓亦苇</a>
+                发布于 2023-04-23 12:29
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/zhuoblog/p/17346208.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/zhuoblog/p/17346208.html" class="gray">阅读(34)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('yywf',17330932,764320,1)">
+                <span class="diggnum" id="digg_count_17330932">2</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17330932" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/yywf/p/17330932.html" target="_blank">JVM调优笔记（一）--Nacos GC引发的服务批量下线问题</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/yywf/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/2958333/20220818213054.png" alt="" /></a>                故障背景 线上批量发服务下线的告警邮件，偶发nacos连接超时。采用了spring boot admin（以下称sba）进行服务监控。 原因分析 因为sba服务是基于nacos对其它服务进行监控，所以遇到这个问题，第一怀疑对象是nacos发生问题，但不清楚具体是什么问题。由于服务过一段事件会恢复，所 ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/yywf/" class="lightblue">雨叶微枫</a>
+                发布于 2023-04-23 12:02
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/yywf/p/17330932.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/yywf/p/17330932.html" class="gray">阅读(54)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('Kay-Larry',17345972,681160,1)">
+                <span class="diggnum" id="digg_count_17345972">2</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17345972" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/Kay-Larry/p/17345972.html" target="_blank">可视化大屏的终极解决方案居然这么简单，vue-autofit一行全搞定！</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/Kay-Larry/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/2375774/20210427164531.png" alt="" /></a>                可视化大屏适配/自适应现状 可视化大屏的适配是一个老生常谈的话题了，现在其实不乏一些大佬开源的自适应插件、工具但是我为什么还要重复造轮子呢？因为目前市面上适配工具每一个都无法做到完美的效果，做出来的东西都差不多，最终实现效果都逃不出白边的手掌心，可以解决白边问题的，要么太过于复杂，要么会影响dom结 ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/Kay-Larry/" class="lightblue">加伊bky</a>
+                发布于 2023-04-23 11:23
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/Kay-Larry/p/17345972.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/Kay-Larry/p/17345972.html" class="gray">阅读(245)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('huxiaofeng1029',17345947,730838,1)">
+                <span class="diggnum" id="digg_count_17345947">1</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17345947" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/huxiaofeng1029/p/17345947.html" target="_blank">DRF的filter组件</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/huxiaofeng1029/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/2709341/20230306162411.png" alt="" /></a>                DRF的Filter组件 如果某个API需要传递一些条件进行搜索，其实就在是URL后面通过GET传参即可，例如： /api/users?age=19&amp;category=12 在drf中filter组件可以支持条件搜索。 1. 自定义filter # models.py from django.db  ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/huxiaofeng1029/" class="lightblue">huxiaofeng</a>
+                发布于 2023-04-23 11:17
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/huxiaofeng1029/p/17345947.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/huxiaofeng1029/p/17345947.html" class="gray">阅读(28)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('huangxincheng',17345889,85195,1)">
+                <span class="diggnum" id="digg_count_17345889">6</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17345889" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/huangxincheng/p/17345889.html" target="_blank">记一次 .NET 某外贸ERP 内存暴涨分析</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/huangxincheng/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/214741/20200614104537.png" alt="" /></a>                一：背景 1. 讲故事 上周有位朋友找到我，说他的 API 被多次调用后出现了内存暴涨，让我帮忙看下是怎么回事？看样子是有些担心，但也不是特别担心，那既然找到我，就给他分析一下吧。 二：WinDbg 分析 1. 到底是哪里的泄露 这也是我一直在训练营灌输的理念，一定要知道是哪一边的暴涨，否则很可能就 ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/huangxincheng/" class="lightblue">一线码农</a>
+                发布于 2023-04-23 11:05
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/huangxincheng/p/17345889.html#commentform" class="gray">
+                        评论(8)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/huangxincheng/p/17345889.html" class="gray">阅读(338)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('yidengjiagou',17345831,755511,1)">
+                <span class="diggnum" id="digg_count_17345831">2</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17345831" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/yidengjiagou/p/17345831.html" target="_blank">详解Redis三大集群模式，轻松实现高可用！</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/yidengjiagou/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/734446/20220601223752.png" alt="" /></a>                Redis集群是一种通过将多个Redis节点连接在一起以实现高可用性、数据分片和负载均衡的技术。它允许Redis在不同节点上同时提供服务，提高整体性能和可靠性。根据搭建的方式和集群的特性，Redis集群主要有三种模式：主从复制模式（Master-Slave）、哨兵模式（Sentinel）和Clust... ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/yidengjiagou/" class="lightblue">一灯架构</a>
+                发布于 2023-04-23 10:48
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/yidengjiagou/p/17345831.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/yidengjiagou/p/17345831.html" class="gray">阅读(132)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('dk1024',17345832,488523,1)">
+                <span class="diggnum" id="digg_count_17345832">1</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17345832" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/dk1024/p/17345832.html" target="_blank">Mysql中如果建立了索引，索引所占的空间随着数据量增长而变大，这样无论写入还是查询，性能都会有所下降，怎么处理？</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/dk1024/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/1519601/20201023164052.png" alt="" /></a>                索引所占空间的增长确实会对MySQL数据库的写入性能和查询性能造成影响，这主要是由于索引数据过多时会导致磁盘I/O操作变得非常频繁，从而使性能下降。为此，可以采取以下几种方式来减缓这种影响： 1. 限制索引的大小：可以考虑为索引指定大小限制，在存储时仅存储指定大小内的数据。例如，在创建索引时可以使用 ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/dk1024/" class="lightblue">Dkwestworld</a>
+                发布于 2023-04-23 10:48
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/dk1024/p/17345832.html#commentform" class="gray">
+                        评论(3)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/dk1024/p/17345832.html" class="gray">阅读(151)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('wubolive',17345716,516592,1)">
+                <span class="diggnum" id="digg_count_17345716">4</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17345716" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/wubolive/p/17345716.html" target="_blank">利用Velero对K8S备份还原与集群迁移实战</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/wubolive/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/1686997/20230111102159.png" alt="" /></a>                Velero 是一款云原生时代的灾难恢复和迁移工具，采用 Go 语言编写，并在 github 上进行了开源，本文将介绍利用 velero 对集群应用进行备份、恢复和迁移 Kubernetes 集群资源和持久卷。 ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/wubolive/" class="lightblue">帝都攻城狮</a>
+                发布于 2023-04-23 10:23
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/wubolive/p/17345716.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/wubolive/p/17345716.html" class="gray">阅读(98)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('upfine',17343188,753406,1)">
+                <span class="diggnum" id="digg_count_17343188">0</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17343188" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/upfine/p/17343188.html" target="_blank">vulnhub靶场之ADROIT: 1.0.1</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/upfine/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/2834847/20220527101147.png" alt="" /></a>                准备： 攻击机：虚拟机kali、本机win10。 靶机：Adroit: 1.0.1，下载地址：https://download.vulnhub.com/adroit/Adroit-v1.0.1.ova，下载后直接vbox打开即可。 知识点：shell反弹（jar）、sql注入、简单的代码编写、逆向、 ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/upfine/" class="lightblue">upfine</a>
+                发布于 2023-04-23 09:48
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/upfine/p/17343188.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/upfine/p/17343188.html" class="gray">阅读(52)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('xiximayou',17345539,465208,1)">
+                <span class="diggnum" id="digg_count_17345539">1</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17345539" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/xiximayou/p/17345539.html" target="_blank">pytorch在有限的资源下部署大语言模型（以ChatGLM-6B为例）</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/xiximayou/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/1503039/20181002221853.png" alt="" /></a>                pytorch在有限的资源下部署大语言模型（以ChatGLM-6B为例） Part1知识准备 在PyTorch中加载预训练的模型时，通常的工作流程是这样的： my_model&#160;=&#160;ModelClass(...)state_dict&#160;=torch.load(checkpoint_file) 用简单的话 ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/xiximayou/" class="lightblue">西西嘛呦</a>
+                发布于 2023-04-23 09:38
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/xiximayou/p/17345539.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/xiximayou/p/17345539.html" class="gray">阅读(94)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('jimojianghu',17292277,361472,1)">
+                <span class="diggnum" id="digg_count_17292277">1</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17292277" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/jimojianghu/p/17292277.html" target="_blank">一文搞懂JavaScript数组的特性</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/jimojianghu/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/1148251/20211105101651.png" alt="" /></a>                前言 数组是几乎所有编程语言的基础语法，JavaScript因为语法特性，之前缺少一些集合类对象，对数组的使用就会更多一些，因此我们更需要理解数组知识。 然而大部分人对数组都已经非常熟悉了，所以本文将不会介绍数组的基础语法和用法，而是从JavaScript中数组的一些特殊之处入手，通过这些少有特性的 ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/jimojianghu/" class="lightblue">jimojianghu</a>
+                发布于 2023-04-23 09:35
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/jimojianghu/p/17292277.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/jimojianghu/p/17292277.html" class="gray">阅读(88)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('jingdongkeji',17345525,777127,1)">
+                <span class="diggnum" id="digg_count_17345525">0</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17345525" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/jingdongkeji/p/17345525.html" target="_blank">长连接Netty服务内存泄漏，看我如何一步步捉“虫”解决</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/jingdongkeji/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/3046120/20230316151957.png" alt="" /></a>                事情要回顾到双11.11备战前夕，在那个风雨交加的夜晚，一个急促的咚咚报警，惊破了电闪雷鸣的黑夜，将沉浸在梦香，熟睡的我惊醒。 ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/jingdongkeji/" class="lightblue">京东云技术团队</a>
+                发布于 2023-04-23 09:33
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/jingdongkeji/p/17345525.html#commentform" class="gray">
+                        评论(1)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/jingdongkeji/p/17345525.html" class="gray">阅读(143)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('Jcloud',17345515,760230,1)">
+                <span class="diggnum" id="digg_count_17345515">0</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17345515" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/Jcloud/p/17345515.html" target="_blank">京东小程序接入ARVR的技术方案和性能调优</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/Jcloud/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/2927063/20220714141437.png" alt="" /></a>                京东小程序是一个开放技术平台，正在被越来越多的头部品牌选择，用于站内私域流量的营销和运营。诸如各种日化、奢侈品等品牌对ARVR有较多的诉求，希望京东小程序引擎提供一些底层能力，叠加品牌自主的个性化开发和定制，以支持更加丰富的场景和玩法，比如AR试妆、试戴等。 ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/Jcloud/" class="lightblue">京东云开发者</a>
+                发布于 2023-04-23 09:29
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/Jcloud/p/17345515.html#commentform" class="gray">
+                        评论(1)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/Jcloud/p/17345515.html" class="gray">阅读(85)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('vivotech',17336929,498089,1)">
+                <span class="diggnum" id="digg_count_17336929">2</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17336929" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/vivotech/p/17336929.html" target="_blank">容易忽视的细节：Log4j 配置导致的零点接口严重超时</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/vivotech/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/1622697/20190307110826.png" alt="" /></a>                本文详细的记录了一次0点接口严重超时的问题排查经历。本文以作者自身视角极具代入感的描绘了从问题定位到具体的问题排查过程，并通过根因分析并最终解决问题。整个过程需要清晰的问题排查思路和丰富的问题处理经验，也离不开公司强大的调用链、和全方位的系统监控等基础设施。 ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/vivotech/" class="lightblue">vivo互联网技术</a>
+                发布于 2023-04-23 09:03
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/vivotech/p/17336929.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/vivotech/p/17336929.html" class="gray">阅读(150)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="post_item">
+        <div class="digg">
+            <div class="diggit" onclick="DiggPost('linuxpro',17344810,784767,1)">
+                <span class="diggnum" id="digg_count_17344810">0</span>
+            </div>
+            <div class="clear"></div>
+            <div id="digg_tip_17344810" class="digg_tip">
+                
+            </div>
+        </div>
+        <div class="post_item_body">
+            <h3><a class="titlelnk" href="https://www.cnblogs.com/linuxpro/p/17344810.html" target="_blank">RHEL 7配置HAProxy实现Web负载均衡</a></h3>
+            <p class="post_item_summary">
+<a href="https://www.cnblogs.com/linuxpro/" target="_blank"><img width="48" height="48" class="pfs" src="https://pic.cnblogs.com/face/3116468/20230226110054.png" alt="" /></a>                本文将简单介绍使用HAProxy实现web负载均衡，主要内容包括基于权重的轮询、为HAProxy配置https、配置http重定向为https、配置HAProxy使用独立日志。 一、测试环境 HAProxy： 主机名：RH7-HAProxyIP地址：192.168.10.20操作系统：Red Hat ...
+            </p>
+            <div class="post_item_foot">
+                <a href="https://www.cnblogs.com/linuxpro/" class="lightblue">linux_pro</a>
+                发布于 2023-04-23 08:15
+                <span class="article_comment">
+                    <a href="https://www.cnblogs.com/linuxpro/p/17344810.html#commentform" class="gray">
+                        评论(0)
+                    </a>
+                </span><span class="article_view"><a href="https://www.cnblogs.com/linuxpro/p/17344810.html" class="gray">阅读(110)</a></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+
+        </div>
+        <script>editorPickStat(); aggSite.user.getUserInfo();</script>
+        <script type="text/javascript">
+                var aggSiteModel = {"CategoryType":"SiteHome","ParentCategoryId":0,"CategoryId":808,"PageIndex":1,"TotalPostCount":4000,"ItemListActionName":"AggSitePostList"};
+            </script>
+        <div id="pager_bottom"><div id="paging_block"><div class="pager"><a href="/legacy" class="p_1 current" onclick="aggSite.loadCategoryPostList(1,20);buildPaging(1);return false;">1</a><a href="/legacy/sitehome/p/2" class="p_2 middle" onclick="aggSite.loadCategoryPostList(2,20);buildPaging(2);return false;">2</a><a href="/legacy/sitehome/p/3" class="p_3 middle" onclick="aggSite.loadCategoryPostList(3,20);buildPaging(3);return false;">3</a><a href="/legacy/sitehome/p/4" class="p_4 middle" onclick="aggSite.loadCategoryPostList(4,20);buildPaging(4);return false;">4</a><a href="/legacy/sitehome/p/5" class="p_5 middle" onclick="aggSite.loadCategoryPostList(5,20);buildPaging(5);return false;">5</a><a href="/legacy/sitehome/p/6" class="p_6 middle" onclick="aggSite.loadCategoryPostList(6,20);buildPaging(6);return false;">6</a><a href="/legacy/sitehome/p/7" class="p_7 middle" onclick="aggSite.loadCategoryPostList(7,20);buildPaging(7);return false;">7</a><a href="/legacy/sitehome/p/8" class="p_8 middle" onclick="aggSite.loadCategoryPostList(8,20);buildPaging(8);return false;">8</a><a href="/legacy/sitehome/p/9" class="p_9 middle" onclick="aggSite.loadCategoryPostList(9,20);buildPaging(9);return false;">9</a><a href="/legacy/sitehome/p/10" class="p_10 middle" onclick="aggSite.loadCategoryPostList(10,20);buildPaging(10);return false;">10</a><a href="/legacy/sitehome/p/11" class="p_11 middle" onclick="aggSite.loadCategoryPostList(11,20);buildPaging(11);return false;">11</a><span class="ellipsis">···</span><a href="/legacy/sitehome/p/200" class="p_200 last" onclick="aggSite.loadCategoryPostList(200,20);buildPaging(200);return false;">200</a><a href="/legacy/sitehome/p/2" onclick="aggSite.loadCategoryPostList(2,20);buildPaging(2);return false;">Next &gt;</a></div></div><script type="text/javascript">var pagingBuider={"OnlyLinkText":false,"TotalCount":4000,"PageIndex":1,"PageSize":20,"ShowPageCount":5,"SkipCount":0,"UrlFormat":"/legacy/sitehome/p/{0}","OnClickJsFunc":"aggSite.loadCategoryPostList()","FirstPageLink":"/legacy","AjaxUrl":"/AggSite/Pager","AjaxCallbak":null,"TopPagerId":"pager_top","IsRenderScript":true};function buildPaging(pageIndex){pagingBuider.PageIndex=pageIndex;$.ajax({url:pagingBuider.AjaxUrl,data:JSON.stringify(pagingBuider),type:'post',dataType:'text',contentType:'application/json; charset=utf-8',success:function (data) { $('#paging_block').html(data); var pagerTop=$('#pager_top');if(pageIndex>1){$(pagerTop).html(data).show();}else{$(pagerTop).hide();}}});}</script>
+</div>
+        <div id="side_nav">
+            
+    <div id="cate_title_block">
+    <div id="cate_title_title"><div class="cate_title">网站分类</div></div>
+    <ul id="cate_item">
+            <li id="cate_item_108698" onmouseover="cateShow(108698)" onmouseout="cateHidden(108698)">
+                <a href="/legacy/cate/108698/">.NET技术(4)</a>
+            </li>
+            <li id="cate_item_2" onmouseover="cateShow(2)" onmouseout="cateHidden(2)">
+                <a href="/legacy/cate/2/">后端开发(6)</a>
+            </li>
+            <li id="cate_item_108701" onmouseover="cateShow(108701)" onmouseout="cateHidden(108701)">
+                <a href="/legacy/cate/108701/">软件设计(0)</a>
+            </li>
+            <li id="cate_item_108703" onmouseover="cateShow(108703)" onmouseout="cateHidden(108703)">
+                <a href="/legacy/cate/108703/">前端开发(2)</a>
+            </li>
+            <li id="cate_item_108704" onmouseover="cateShow(108704)" onmouseout="cateHidden(108704)">
+                <a href="/legacy/cate/108704/">企业信息化(0)</a>
+            </li>
+            <li id="cate_item_108705" onmouseover="cateShow(108705)" onmouseout="cateHidden(108705)">
+                <a href="/legacy/cate/108705/">移动端开发(2)</a>
+            </li>
+            <li id="cate_item_108709" onmouseover="cateShow(108709)" onmouseout="cateHidden(108709)">
+                <a href="/legacy/cate/108709/">软件工程(0)</a>
+            </li>
+            <li id="cate_item_108712" onmouseover="cateShow(108712)" onmouseout="cateHidden(108712)">
+                <a href="/legacy/cate/108712/">数据库(4)</a>
+            </li>
+            <li id="cate_item_108724" onmouseover="cateShow(108724)" onmouseout="cateHidden(108724)">
+                <a href="/legacy/cate/108724/">操作系统(0)</a>
+            </li>
+            <li id="cate_item_4" onmouseover="cateShow(4)" onmouseout="cateHidden(4)">
+                <a href="/legacy/cate/4/">其他分类(9)</a>
+            </li>
+            <li id="cate_item_0" onmouseover="cateShow(0)" onmouseout="cateHidden(0)">
+                <a href="/legacy/cate/all/">所有随笔(728)</a>
+            </li>
+            <li id="cate_item_-1" onmouseover="cateShow(-1)" onmouseout="cateHidden(-1)">
+                <a href="/legacy/comment/">所有评论(161)</a>
+            </li>
+    </ul>
+    <div class="cate_bottom"></div>
+    <div id="cate_sub_block"></div>
+    <script type="text/javascript">var cateIdList = '108698,2,108701,108703,108704,108705,108709,108712,108724,4';aggSite.loadSubCategories();</script>
+</div>
+<div class="l_s"></div>
+<p class="r_l_3"></p><p class="r_l_2"></p><p class="r_l_1"></p>
+<div class="w_l">
+<h4>链接</h4>        
+<ul>
+    <li><a href="https://group.cnblogs.com/forum/public/" target="_blank">反馈或建议</a></li> 
+    <li><a href="//www.cnblogs.com/cmt/" target="_blank">官方博客</a></li>
+    <li><a href="/skins.aspx" target="_blank">博客模板</a></li>
+    <li><a href="http://www.blogjava.net/">Java博客</a></li>
+    <li><a href="http://www.cppblog.com/">C++博客</a></li>
+    <li><a href="//www.cnblogs.com/cmt/archive/2009/09/26/1574616.html">手机版</a></li>
+</ul>
+</div>
+<p class="r_l_1"></p><p class="r_l_2"></p><p class="r_l_3"></p>
+<div class="l_s"></div>
+<div id="user_stats"></div>
+<div class="l_s"></div>        
+<p class="r_l_3"></p><p class="r_l_2"></p><p class="r_l_1"></p>
+<div class="w_l">                
+<h4>统计信息</h4>
+<div id="site_stats"></div>      
+</div>
+<p class="r_l_1"></p><p class="r_l_2"></p><p class="r_l_3"></p>
+        </div>
+        <div id="side_right">
+                <div id="search_block">
+                    <div class="side_search">
+                        <input type="text" id="zzk_q" class="search_input" onkeydown="return zzk_go_enter(event);" tabindex="3" /><input onclick="zzk_go()" type="button" class="search_btn" value="找找看" />
+                    </div>
+                    <div id="google_search" class="side_search">
+                        <input type="text" id="google_search_q" class="search_input" onkeydown="return google_search_enter(event);" /><input type="button" value="Google" class="search_btn" onclick="return google_search();" />
+                    </div>
+                </div>
+            <div id="cnblogs_a1">
+            </div>
+            <div id="cnblogs_b1" class="sidebar-image">
+                <div id='div-gpt-ad-1546331539224-0' style='height:250px; width:300px;'>
+                    <script>
+                            googletag.cmd.push(function () { googletag.display('div-gpt-ad-1546331539224-0'); });
+                        </script>
+                </div>
+            </div>
+            <div id="ad_right_text" class="ad_right_text"></div>
+            <div id="side_right_block"></div>
+        </div>
+    </div>
+        <div id="footer">
+            <div class="footer_block">
+                <p class="r_b_3"></p><p class="r_b_2"></p><p class="r_b_1"></p><div id="friend_link" class="link-list friend-link">
+    友情链接：
+    <a href="//www.aliyun.com" target="_blank">阿里云</a>
+    <a href="//cloud.tencent.com/?cps_key=6a15b90f1178f38fb09b07f16943cf3e" target="_blank">腾讯云</a>
+    <a href="//www.zego.im/?source=cnblog&youlian" target="_blank">即构RTC</a>
+    <a href="//www.ctyun.cn/" target="_blank">天翼云</a>
+    <a href="//www.huaweicloud.com" target="_blank">华为云</a>
+    <a href="//cloud.baidu.com" target="_blank">百度云</a>
+    <a href="//www.shanhaibi.com/" target="_blank">山海鲸可视化</a>
+    <a href="//www.chinaz.com/" target="_blank">站长之家</a>
+    <a href="//wetest.qq.com/?from=links_cnblogs" target="_blank">腾讯WeTest</a>    
+</div>
+<p class="r_b_1"></p><p class="r_b_2"></p><p class="r_b_3"></p>
+            </div>
+        </div>
+    <div id="footer_bottom">
+        <div>Powered by .NET 7.0 on Kubernetes</div>
+        <div><a href="https://about.cnblogs.com/">关于博客园</a><a href="https://about.cnblogs.com/contact">联系我们</a><a href="https://about.cnblogs.com/ad">广告服务</a><span>&copy;2004-2023</span><a href="https://www.cnblogs.com/">博客园</a><span>保留所有权利</span><a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备09004260号-1</a></div>
+        <div class="beian"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010602011771" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="//common.cnblogs.com/images/ghs.png" style="float:left;" /><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">浙公网安备 33010602011771号</p></a></div>
+        <div class="report-contact">举报电话：0571-88079867，举报邮箱：contact@cnblogs.com <a href="http://www.shjbzx.cn" target="_blank"><img src="/images/jblogo.png" alt="" /></a></div>
+    </div>
+    <input type="hidden" id="antiforgery_token">
+</div>
+</body>
+</html>

@@ -1,0 +1,705 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>帝都攻城狮 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/simplememory/bundle-simplememory.min.css?v=SiaEEyuLLyqQ30U6p0_gAunDLOqZtbt7kF5APbDruVo" />
+        
+        
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/SimpleMemory/bundle-simplememory-mobile.min.css?v=foz1W_Fu2JAPmvBfSxSaxsHH-O7GuQn6sSOfgMtSLfY" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/wubolive/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/wubolive/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/wubolive/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 516592;
+        var currentBlogApp = 'wubolive';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'SimpleMemory';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = true;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = true;
+        window.enableMacStyleCodeBlock = true
+    </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-simplememory has-navbar">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://www.cnblogs.com/cmt/p/17320765.html" onclick="countCreativeClicks('M2-博客园')">
+                    园子的商业化努力-困境求助：开设捐助通道
+                </a>                
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'wubolive', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/wubolive/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/wubolive/">Wave</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/wubolive/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E5%B8%9D%E9%83%BD%E6%94%BB%E5%9F%8E%E7%8B%AE">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/wubolive/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+
+
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17345716">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/wubolive/archive/2023/04/23.html">2023年4月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/wubolive/p/17345716.html">
+    <span>
+        利用Velero对K8S备份还原与集群迁移实战
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17345716">
+摘要：            
+Velero 是一款云原生时代的灾难恢复和迁移工具，采用 Go 语言编写，并在 github 上进行了开源，本文将介绍利用 velero 对集群应用进行备份、恢复和迁移 Kubernetes 集群资源和持久卷。        <a href="https://www.cnblogs.com/wubolive/p/17345716.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-23 10:23
+帝都攻城狮
+<span data-post-id="17345716" class="post-view-count">阅读(97)</span> 
+<span data-post-id="17345716" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17345716" class="post-digg-count">推荐(4)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17345716" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17317586">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/wubolive/archive/2023/04/14.html">2023年4月14日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/wubolive/p/17317586.html">
+    <span>
+        如何轻松的下载海外镜像
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17317586">
+摘要：            
+在云计算和云原生环境下，我们会经常使用到海外镜像部署服务，如谷歌镜像仓库（k8s.gcr.io、gcr.io），还有RedHat镜像仓库（quay.io），遇到此类镜像仓库由于某种神秘力量，我们在国内是无法直接下载，本片文章将介绍如何在不魔法上网的情况下下载海外镜像。        <a href="https://www.cnblogs.com/wubolive/p/17317586.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-14 10:42
+帝都攻城狮
+<span data-post-id="17317586" class="post-view-count">阅读(129)</span> 
+<span data-post-id="17317586" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17317586" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17317586" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17306466">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/wubolive/archive/2023/04/11.html">2023年4月11日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/wubolive/p/17306466.html">
+    <span>
+        服务器实现端口转发的N种方式
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17306466">
+摘要：            
+在一些实际的场景里，我们需要通过利用一些端口转发工具，比如系统自带的命令行工具或第三方小软件，来绕过网络访问限制触及目标系统。下文为大家总结了linux系统和windows系统端口转发常用的一些方法。        <a href="https://www.cnblogs.com/wubolive/p/17306466.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-11 15:41
+帝都攻城狮
+<span data-post-id="17306466" class="post-view-count">阅读(549)</span> 
+<span data-post-id="17306466" class="post-comment-count">评论(3)</span> 
+<span data-post-id="17306466" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17306466" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17140058">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/wubolive/archive/2023/02/21.html">2023年2月21日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/wubolive/p/17140058.html">
+    <span>
+        利用kubeadm部署Kubernetes v1.22.10高可用集群
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17140058">
+摘要：            <img src="https://img2023.cnblogs.com/blog/1686997/202302/1686997-20230221102515671-1848477985.png" alt="利用kubeadm部署Kubernetes v1.22.10高可用集群" class="desc_img" />
+本文讲述如何利用Haproxy+Keepalived将服务作为静态pod运行的方式部署一套高可用的Kubernetes集群。        <a href="https://www.cnblogs.com/wubolive/p/17140058.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-02-21 10:28
+帝都攻城狮
+<span data-post-id="17140058" class="post-view-count">阅读(400)</span> 
+<span data-post-id="17140058" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17140058" class="post-digg-count">推荐(3)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17140058" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17010006">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/wubolive/archive/2022/12/28.html">2022年12月28日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/wubolive/p/17010006.html">
+    <span>
+        DSS+Linkis Ansible 单机一键安装脚本
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17010006">
+摘要：            
+为解决繁琐的部署流程，简化安装步骤，本脚本提供一键安装最新版本的DSS+Linkis环境；部署包中的软件采用我自己编译的安装包，并且为最新版本：DSS1.1.1 + Linkis1.3.0。        <a href="https://www.cnblogs.com/wubolive/p/17010006.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-12-28 14:01
+帝都攻城狮
+<span data-post-id="17010006" class="post-view-count">阅读(323)</span> 
+<span data-post-id="17010006" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17010006" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17010006" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16892600">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/wubolive/archive/2022/11/15.html">2022年11月15日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/wubolive/p/16892600.html">
+    <span>
+        Kubernetes固定Pod IP和Mac地址
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16892600">
+摘要：            
+使用两种方式解决Kubernetes Pod网络IP和Mac固定的问题。        <a href="https://www.cnblogs.com/wubolive/p/16892600.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-11-15 15:36
+帝都攻城狮
+<span data-post-id="16892600" class="post-view-count">阅读(1654)</span> 
+<span data-post-id="16892600" class="post-comment-count">评论(0)</span> 
+<span data-post-id="16892600" class="post-digg-count">推荐(2)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16892600" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16623681">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/wubolive/archive/2022/08/25.html">2022年8月25日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/wubolive/p/16623681.html">
+    <span>
+        CentOS 升级内核版本
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16623681">
+摘要：            
+内核下载地址： Kernel官网：https://www.kernel.org/ 阿里云：https://mirrors.aliyun.com/elrepo/kernel/el7/x86_64/RPMS/ elrepo镜像站：https://elrepo.org/linux/kernel/el7/x        <a href="https://www.cnblogs.com/wubolive/p/16623681.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-08-25 11:21
+帝都攻城狮
+<span data-post-id="16623681" class="post-view-count">阅读(180)</span> 
+<span data-post-id="16623681" class="post-comment-count">评论(0)</span> 
+<span data-post-id="16623681" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16623681" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16473292">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/wubolive/archive/2022/07/13.html">2022年7月13日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/wubolive/p/16473292.html">
+    <span>
+        边缘计算 KubeEdge+EdgeMash
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16473292">
+摘要：            
+KubeEdge是面向边缘计算场景、专为边云协同设计的业界首个云原生边缘计算框架，在 Kubernetes 原生的容器编排调度能力之上实现了边云之间的应用协同、资源协同、数据协同和设备协同等能力，完整打通了边缘计算中云、边、设备协同的场景。        <a href="https://www.cnblogs.com/wubolive/p/16473292.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-07-13 16:39
+帝都攻城狮
+<span data-post-id="16473292" class="post-view-count">阅读(1722)</span> 
+<span data-post-id="16473292" class="post-comment-count">评论(0)</span> 
+<span data-post-id="16473292" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16473292" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16205768">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/wubolive/archive/2022/04/29.html">2022年4月29日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/wubolive/p/16205768.html">
+    <span>
+        服务器安全加固 - Linux
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16205768">
+摘要：            
+一、账号和口令 1.1 禁用或删除无用账号 查看 /etc/passwd 文件查看是否有无用的账号，如果存在则删除，降低安全风险。 操作步骤： 使用命令&#160;userdel &lt;用户名&gt;&#160;删除不必要的账号。 使用命令&#160;passwd -l &lt;用户名&gt;&#160;锁定不必要的账号。 使用命令&#160;passwd -u &lt;用户        <a href="https://www.cnblogs.com/wubolive/p/16205768.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-04-29 10:41
+帝都攻城狮
+<span data-post-id="16205768" class="post-view-count">阅读(1070)</span> 
+<span data-post-id="16205768" class="post-comment-count">评论(0)</span> 
+<span data-post-id="16205768" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16205768" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_14248166">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/wubolive/archive/2022/03/14.html">2022年3月14日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/wubolive/p/14248166.html">
+    <span>
+        办公网段与Kubernetes Pod及Svc网络互通方案
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_14248166">
+摘要：            
+本文介绍通过相应配置将办公网与Kubernetes Pod和Svc网段互通，实现开发在电脑完成某个微服务模块开发后，能在本地电脑能注册到Kubernetes中开发环境的注册中心(Nacos)进行调试。        <a href="https://www.cnblogs.com/wubolive/p/14248166.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-03-14 11:32
+帝都攻城狮
+<span data-post-id="14248166" class="post-view-count">阅读(760)</span> 
+<span data-post-id="14248166" class="post-comment-count">评论(0)</span> 
+<span data-post-id="14248166" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=14248166" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+
+<div class="topicListFooter">
+    <div id="nav_next_page">
+        
+    <a href="https://www.cnblogs.com/wubolive/?page=2">
+        下一页
+    </a>
+
+    </div>    
+</div>
+
+
+
+
+
+
+<script>
+    updatePostStats(
+        $(".post-view-count").map(function () { return this.dataset.postId }).get(),
+        function(id, count) { $(".post-view-count[data-post-id=" + id + "]").text("阅读(" + count + ")") },
+        function(id, count) { $(".post-comment-count[data-post-id=" + id + "]").text("评论(" + count + ")") },
+        function(id, count) { $(".post-digg-count[data-post-id=" + id + "]").text("推荐(" + count + ")") });
+</script>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 帝都攻城狮
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    <div id="page_end_html">
+        <script language="javascript" type="text/javascript">
+// 生成目录索引列表
+// ref: http://www.cnblogs.com/wangqiguo/p/4355032.html
+// modified by: zzq
+function GenerateContentList()
+{
+    var mainContent = $('#cnblogs_post_body');
+    var h2_list = $('#cnblogs_post_body h2');//如果你的章节标题不是h2,只需要将这里的h2换掉即可
+
+    if(mainContent.length < 1)
+        return;
+ 
+    if(h2_list.length>0)
+    {
+        var content = '<a rel="nofollow noopener"  name="_labelTop"></a>';
+        content += '<div id="navCategory" style="color:#152e97;">';
+        content += '<p style="font-size:18px;"><b>目录</b></p>';
+        content += '<ul>';
+        for(var i=0; i<h2_list.length; i++)
+        {
+            var go_to_top = '<div style="text-align: right;"><a rel="nofollow noopener"  href="#_labelTop" style="color:#f68a33">回到顶部</a><a rel="nofollow noopener"  name="_label' + i + '"></a></div>';
+            $(h2_list[i]).before(go_to_top);
+            
+            var h3_list = $(h2_list[i]).nextAll("h3");
+            var li3_content = '';
+            for(var j=0; j<h3_list.length; j++)
+            {
+                var tmp = $(h3_list[j]).prevAll('h2').first();
+                if(!tmp.is(h2_list[i]))
+                    break;
+                var li3_anchor = '<a rel="nofollow noopener"  name="_label' + i + '_' + j + '"></a>';
+                $(h3_list[j]).before(li3_anchor);
+                li3_content += '<li><a rel="nofollow noopener"  href="#_label' + i + '_' + j + '">' + $(h3_list[j]).text() + '</a></li>';
+            }
+            
+            var li2_content = '';
+            if(li3_content.length > 0)
+                li2_content = '<li><a rel="nofollow noopener"  href="#_label' + i + '">' + $(h2_list[i]).text() + '</a><ul>' + li3_content + '</ul></li>';
+            else
+                li2_content = '<li><a rel="nofollow noopener"  href="#_label' + i + '">' + $(h2_list[i]).text() + '</a></li>';
+            content += li2_content;
+        }
+        content += '</ul>';
+        content += '</div><p>&nbsp;</p>';
+        content += '<hr style="height:1px;border:none;border-top:1px dashed #0066CC;"/>';
+        if($('#cnblogs_post_body').length != 0 )
+        {
+            $($('#cnblogs_post_body')[0]).prepend(content);
+        }
+    }   
+}
+
+GenerateContentList();
+</script>
+    </div>
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULnFIeDIl2LH96W2Fp_s1he5oJfNeLF0elKrylhSGYcBzRbx1Nd3wgulgA4jZCvjaSGhQ34C_Hyyv1PmYhQPsyRd3sWjdPlF1ub22x8OKW1weyDk-DIkOrQnpt3-hn-ARrA" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

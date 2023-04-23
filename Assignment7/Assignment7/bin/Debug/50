@@ -1,0 +1,696 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="description" content="DRF的Filter组件 如果某个API需要传递一些条件进行搜索，其实就在是URL后面通过GET传参即可，例如： /api/users?age=19&amp;amp;category=12 在drf中filt" />
+    <meta property="og:description" content="DRF的Filter组件 如果某个API需要传递一些条件进行搜索，其实就在是URL后面通过GET传参即可，例如： /api/users?age=19&amp;amp;category=12 在drf中filt" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>DRF的filter组件 - huxiaofeng - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/book/bundle-book.min.css?v=jeIWFbREsBywulLasTpkQaxky-lM6nSP4v7QSo89d0Y" />
+        <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="/css/hljs/cnblogs.css?v=5J1NDtbnnIr2Rc2SdhEMlMxD4l9Eydj88B31E7_NhS4" />
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/book/bundle-book-mobile.min.css?v=321Pkcnk9olIIUfBXbzLcb9xzuLVNc5RopWnoGejDh0" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/huxiaofeng1029/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/huxiaofeng1029/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/huxiaofeng1029/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 730838;
+        var currentBlogApp = 'huxiaofeng1029';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'BOOK';
+        var visitorUserId = '';
+        var hasCustomScript = false;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+        <script>
+            var currentPostDateAdded = '2023-04-23 11:17';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-book has-navbar">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://www.cnblogs.com/cmt/p/17320765.html" onclick="countCreativeClicks('M2-博客园')">
+                    园子的商业化努力-困境求助：开设捐助通道
+                </a>                
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'huxiaofeng1029', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <script type="text/javascript">
+	try {
+		if (screen.availWidth > 1200) {
+			document.getElementById("MainCss").href = '/skins/book/bundle-book-2.min.css';
+		}
+	} catch (e) { }
+</script>
+
+<div id="header">
+<div id="HeaderTitle">
+<div id="Title">
+<a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/huxiaofeng1029/">ifeng</a>
+
+</div>
+<div id="subTitle"></div>
+</div>
+</div>
+
+
+<div id="main">
+	<div id="post_detail">
+    <div class="post">
+        <h2>
+            
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huxiaofeng1029/p/17345947.html">
+    <span role="heading" aria-level="2">DRF的filter组件</span>
+    
+</a>
+
+        </h2>
+        <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<h1 id="drf的filter组件">DRF的Filter组件</h1>
+<p>如果某个API需要传递一些条件进行搜索，其实就在是URL后面通过GET传参即可，例如：</p>
+<pre><code>/api/users?age=19&amp;category=12
+</code></pre>
+<p>在drf中filter组件可以支持条件搜索。</p>
+<h2 id="1-自定义filter">1. 自定义filter</h2>
+<pre><code class="language-python"># models.py
+from django.db import models
+
+
+class Role(models.Model):
+    """ 角色表 """
+    title = models.CharField(verbose_name='名称', max_length=32)
+
+
+class Department(models.Model):
+    """ 部门表 """
+    title = models.CharField(verbose_name='名称', max_length=32)
+
+
+class UserInfo(models.Model):
+    username = models.CharField(verbose_name='用户名', max_length=32)
+    age = models.CharField(verbose_name='年龄', max_length=32)
+    level_choice = ((1, 'VIP'), (2, 'SVIP'), (3, 'PARTNER'))
+    level = models.SmallIntegerField(verbose_name='级别', choices=level_choice)
+    email = models.CharField(verbose_name='邮箱', max_length=32)
+
+    # 创建外键
+    depart = models.ForeignKey(verbose_name="部门", to="Department", on_delete=models.CASCADE)
+
+    # 多对多
+    roles = models.ManyToManyField(verbose_name="角色", to="Role")
+</code></pre>
+<pre><code class="language-python"># views.py
+from rest_framework import serializers
+from rest_framework.filters import BaseFilterBackend
+from rest_framework.viewsets import ModelViewSet
+
+from api import models
+
+
+# Create your views here.
+class UserSerializer(serializers.ModelSerializer):
+    level_text = serializers.CharField(source="get_level_display", read_only=True)
+    extra = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = models.UserInfo
+        fields = ['username', 'age', 'email', "level_text", 'extra']
+
+    def get_extra(self, obj):
+        return '我是多余的'
+
+
+# 自定义Filter
+class Filter1(BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        age = request.GET.get('age')  # 可以使用request.query_params
+        if not age:
+            return queryset
+        return queryset.filter(age=age)
+
+
+class Filter2(BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        id = request.query_params.get('id')
+        if not id:
+            return queryset
+        return queryset.filter(id=id)
+
+
+class UserView(ModelViewSet):
+    filter_backends = [Filter1, Filter2]  # 加入需要传递的Filter
+    queryset = models.UserInfo.objects.all()  # GenericAPIView这个类提供的变量
+    serializer_class = UserSerializer
+
+</code></pre>
+<blockquote>
+<p>返回值:</p>
+<p><img src="https://img2023.cnblogs.com/blog/2709341/202304/2709341-20230423111343573-1968296125.png" alt="" loading="lazy"></p>
+</blockquote>
+<h3 id="源码流程">源码流程</h3>
+<p><img src="https://img2023.cnblogs.com/blog/2709341/202304/2709341-20230423111408094-1451049143.png" alt="" loading="lazy"></p>
+<h2 id="2-第三方filter常用">2. 第三方filter(常用)</h2>
+<p>在drf开发中有一个常用的第三方过滤器：DjangoFilterBackend。</p>
+<pre><code>pip install django-filter
+</code></pre>
+<p>注册app：</p>
+<pre><code class="language-python">INSTALLED_APPS = [
+    ...
+    'django_filters',
+    ...
+]
+</code></pre>
+<h3 id="示例1-简单">示例1: 简单</h3>
+<p>视图配置和应用：</p>
+<pre><code class="language-python"># views.py
+from rest_framework import serializers
+from rest_framework.viewsets import ModelViewSet
+from django_filters.rest_framework import DjangoFilterBackend
+from app01 import models
+
+
+class UserModelSerializer(serializers.ModelSerializer):
+    level_text = serializers.CharField(
+        source="get_level_display",
+        read_only=True
+    )
+    extra = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = models.UserInfo
+        fields = ["username", "age", "email", "level_text", "extra"]
+
+    def get_extra(self, obj):
+        return 666
+
+
+class UserView(ModelViewSet):
+    filter_backends = [DjangoFilterBackend, ]
+    filterset_fields = ["id", "age", "email"]
+
+    queryset = models.UserInfo.objects.all()
+    serializer_class = UserModelSerializer
+
+    def perform_create(self, serializer):
+        """ 序列化：对请求的数据校验成功后，执行保存。"""
+        serializer.save(depart_id=1, password="123")
+
+</code></pre>
+<h3 id="示例2-复杂">示例2: 复杂</h3>
+<p>视图配置和应用（示例3）：</p>
+<pre><code class="language-python">from rest_framework import serializers
+from rest_framework.viewsets import ModelViewSet
+from django_filters.rest_framework import DjangoFilterBackend, OrderingFilter
+from django_filters import FilterSet, filters
+from app01 import models
+
+
+class UserModelSerializer(serializers.ModelSerializer):
+    level_text = serializers.CharField(
+        source="get_level_display",
+        read_only=True
+    )
+    depart_title = serializers.CharField(
+        source="depart.title",
+        read_only=True
+    )
+    extra = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = models.UserInfo
+        fields = ["id", "username", "age", "email", "level_text", "extra", "depart_title"]
+
+    def get_extra(self, obj):
+        return 666
+
+
+class MyFilterSet(FilterSet):
+    # /api/users/?min_id=2  -&gt; id&gt;=2
+    min_id = filters.NumberFilter(field_name='id', lookup_expr='gte')
+
+    # /api/users/?name=wupeiqi  -&gt; not ( username=wupeiqi )
+    name = filters.CharFilter(field_name="username", lookup_expr="exact", exclude=True)
+
+    # /api/users/?depart=xx     -&gt; depart__title like %xx%
+    depart = filters.CharFilter(field_name="depart__title", lookup_expr="contains")
+
+    # /api/users/?token=true      -&gt; "token" IS NULL
+    # /api/users/?token=false     -&gt; "token" IS NOT NULL
+    token = filters.BooleanFilter(field_name="token", lookup_expr="isnull")
+
+    # /api/users/?email=xx     -&gt; email like xx%
+    email = filters.CharFilter(field_name="email", lookup_expr="startswith")
+
+    # /api/users/?level=2&amp;level=1   -&gt; "level" = 1 OR "level" = 2（必须的是存在的数据，否则报错--&gt;内部有校验机制）
+    # level = filters.AllValuesMultipleFilter(field_name="level", lookup_expr="exact")
+    level = filters.MultipleChoiceFilter(field_name="level", lookup_expr="exact", choices=models.UserInfo.level_choices)
+
+    # /api/users/?age=18,20     -&gt; age in [18,20]
+    age = filters.BaseInFilter(field_name='age', lookup_expr="in")
+
+    # /api/users/?range_id_max=10&amp;range_id_min=1    -&gt; id BETWEEN 1 AND 10
+    range_id = filters.NumericRangeFilter(field_name='id', lookup_expr='range')
+
+    # /api/users/?ordering=id     -&gt; order by id asc
+    # /api/users/?ordering=-id     -&gt; order by id desc
+    # /api/users/?ordering=age     -&gt; order by age asc
+    # /api/users/?ordering=-age     -&gt; order by age desc
+    ordering = filters.OrderingFilter(fields=["id", "age"])
+
+    # /api/users/?size=1     -&gt; limit 1（自定义搜索）
+    size = filters.CharFilter(method='filter_size', distinct=False, required=False)
+    
+    class Meta:
+        model = models.UserInfo
+        fields = ["id", "min_id", "name", "depart", "email", "level", "age", 'range_id', "size", "ordering"]
+
+    def filter_size(self, queryset, name, value):
+        int_value = int(value)
+        return queryset[0:int_value]
+
+
+class UserView(ModelViewSet):
+    filter_backends = [DjangoFilterBackend, ]
+    filterset_class = MyFilterSet
+
+    queryset = models.UserInfo.objects.all()
+    serializer_class = UserModelSerializer
+
+    def perform_create(self, serializer):
+        """ 序列化：对请求的数据校验成功后，执行保存。"""
+        serializer.save(depart_id=1, password="123")
+
+</code></pre>
+<h3 id="补充">补充</h3>
+<p><code>lookup_expr</code>有很多常见选择：</p>
+<pre><code class="language-python">'exact': _(''),
+'iexact': _(''),
+
+'contains': _('contains'),
+'icontains': _('contains'),
+'startswith': _('starts with'),
+'istartswith': _('starts with'),
+'endswith': _('ends with'),  
+'iendswith': _('ends with'),
+    
+'gt': _('is greater than'),
+'gte': _('is greater than or equal to'),
+'lt': _('is less than'),
+'lte': _('is less than or equal to'),
+
+'in': _('is in'),
+'range': _('is in range'),
+'isnull': _(''),
+    
+'regex': _('matches regex'),
+'iregex': _('matches regex'),
+</code></pre>
+<p>全局配置和应用：</p>
+<pre><code class="language-python"># settings.py 全局配置
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend',]
+}
+</code></pre>
+<h2 id="3-内置filter">3. 内置filter</h2>
+<p>drf源码中内置了2个filter，分别是：</p>
+<ul>
+<li>
+<p>OrderingFilter，支持排序。</p>
+<pre><code class="language-python">from rest_framework import serializers
+from rest_framework.viewsets import ModelViewSet
+from app01 import models
+from rest_framework.filters import OrderingFilter
+
+
+class UserModelSerializer(serializers.ModelSerializer):
+    level_text = serializers.CharField(
+        source="get_level_display",
+        read_only=True
+    )
+    depart_title = serializers.CharField(
+        source="depart.title",
+        read_only=True
+    )
+    extra = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = models.UserInfo
+        fields = ["id", "username", "age", "email", "level_text", "extra", "depart_title"]
+
+    def get_extra(self, obj):
+        return 666
+
+
+class UserView(ModelViewSet):
+    filter_backends = [OrderingFilter, ]
+    # ?order=id
+    # ?order=-id
+    # ?order=age
+    ordering_fields = ["id", "age"]
+
+    queryset = models.UserInfo.objects.all()
+    serializer_class = UserModelSerializer
+
+    def perform_create(self, serializer):
+        """ 序列化：对请求的数据校验成功后，执行保存。"""
+        serializer.save(depart_id=1, password="123")
+</code></pre>
+</li>
+<li>
+<p>SearchFilter，支持模糊搜索。</p>
+<pre><code class="language-python">from rest_framework import serializers
+from rest_framework.viewsets import ModelViewSet
+from app01 import models
+from rest_framework.filters import SearchFilter
+
+
+class UserModelSerializer(serializers.ModelSerializer):
+    level_text = serializers.CharField(
+        source="get_level_display",
+        read_only=True
+    )
+    depart_title = serializers.CharField(
+        source="depart.title",
+        read_only=True
+    )
+    extra = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = models.UserInfo
+        fields = ["id", "username", "age", "email", "level_text", "extra", "depart_title"]
+
+    def get_extra(self, obj):
+        return 666
+
+
+class UserView(ModelViewSet):
+    filter_backends = [SearchFilter, ]
+    search_fields = ["id", "username", "age"]
+
+    queryset = models.UserInfo.objects.all()
+    serializer_class = UserModelSerializer
+
+    def perform_create(self, serializer):
+        """ 序列化：对请求的数据校验成功后，执行保存。"""
+        serializer.save(depart_id=1, password="123")
+
+</code></pre>
+<pre><code class="language-python">"app01_userinfo"."id" LIKE %18% ESCAPE '\' 
+OR 
+"app01_userinfo"."username" LIKE %18% ESCAPE '\' 
+OR 
+"app01_userinfo"."age" LIKE %18% ESCAPE '\'
+</code></pre>
+</li>
+</ul>
+
+</div>
+<div id="MySignature" role="contentinfo">
+    <p>本文来自博客园，作者：{Max}，仅供学习和参考</p>
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+        <p class="postfoot">
+            posted on 
+<span id="post-date" data-last-update-days="0.14418857136458332" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2023-04-23 11:17">2023-04-23 11:17</span>&nbsp;
+<a href="https://www.cnblogs.com/huxiaofeng1029/">huxiaofeng</a>&nbsp;
+阅读(<span id="post_view_count">19</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17345947" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(17345947);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '17345947', targetLink: 'https://www.cnblogs.com/huxiaofeng1029/p/17345947.html', title: 'DRF的filter组件' })">举报</a>
+
+        </p>
+    </div>
+</div>
+
+
+
+<script>
+    var cb_entryId = 17345947, cb_entryCreatedDate = '2023-04-23 11:17', cb_postType = 1, cb_postTitle = 'DRF的filter组件';
+    var allowComments = true, cb_blogId = 730838, cb_blogApp = 'huxiaofeng1029', cb_blogUserGuid = '60b08db8-6d68-4b8c-ff89-08d9c7614df9';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+            <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+
+
+	<p id="footer">
+	Powered by: 
+	<br />
+	
+	<a href="https://www.cnblogs.com/" id="footer_site_link">博客园</a>
+	<br />
+	Copyright &copy; 2023 huxiaofeng
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+</p>
+
+
+</div>
+<div id="rightmenu">
+	
+		<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>
+		
+<h3>导航</h3>
+<ul>
+			<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+			<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/huxiaofeng1029/">
+首页</a>
+</li>
+			<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+			<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/huxiaofeng">
+联系</a></li>
+			<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/huxiaofeng1029/rss/">
+订阅</a>
+<a id="blog_nav_rss_image" href="https://www.cnblogs.com/huxiaofeng1029/rss/">
+    <img src="/skins/book/images/xml.gif" alt="订阅" />
+</a></li>
+			<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		<div id="sidebar_news" class="newsItem">
+    
+<h3>公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+		<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+	
+</div>
+			
+			
+			
+			
+			 
+
+	
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULl_uhGz17vtdUhdxfQQXd8D1XsAbTNTIYRCuhbrOzDAeWUkzrMg-bVmx-pMtVx0Zi3JlXwu9ewnJ0AHwLEOkJXsshT7w1plm4Rjxi0t8dBfIcjx6e3sBOVP17SNshFAlto" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

@@ -1,0 +1,649 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>jimojianghu - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/simplememory/bundle-simplememory.min.css?v=SiaEEyuLLyqQ30U6p0_gAunDLOqZtbt7kF5APbDruVo" />
+        
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/SimpleMemory/bundle-simplememory-mobile.min.css?v=foz1W_Fu2JAPmvBfSxSaxsHH-O7GuQn6sSOfgMtSLfY" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/jimojianghu/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/jimojianghu/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/jimojianghu/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 361472;
+        var currentBlogApp = 'jimojianghu';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'SimpleMemory';
+        var visitorUserId = '';
+        var hasCustomScript = false;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-simplememory has-navbar">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://www.cnblogs.com/cmt/p/17320765.html" onclick="countCreativeClicks('M2-博客园')">
+                    园子的商业化努力-困境求助：开设捐助通道
+                </a>                
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'jimojianghu', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/jimojianghu/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/jimojianghu/">jimojianghu</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/jimojianghu/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/jimojianghu">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/jimojianghu/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+
+
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17292277">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/jimojianghu/archive/2023/04/23.html">2023年4月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jimojianghu/p/17292277.html">
+    <span>
+        一文搞懂JavaScript数组的特性
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17292277">
+摘要：            
+前言 数组是几乎所有编程语言的基础语法，JavaScript因为语法特性，之前缺少一些集合类对象，对数组的使用就会更多一些，因此我们更需要理解数组知识。 然而大部分人对数组都已经非常熟悉了，所以本文将不会介绍数组的基础语法和用法，而是从JavaScript中数组的一些特殊之处入手，通过这些少有特性的        <a href="https://www.cnblogs.com/jimojianghu/p/17292277.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-23 09:35
+jimojianghu
+<span data-post-id="17292277" class="post-view-count">阅读(74)</span> 
+<span data-post-id="17292277" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17292277" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17292277" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17292223">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/jimojianghu/archive/2023/04/13.html">2023年4月13日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jimojianghu/p/17292223.html">
+    <span>
+        Nuxtjs实现服务端渲染和静态化站点
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17292223">
+摘要：            
+本文将介绍如何使用Nuxtjs对vue项目进行ssr和静态化处理。 Nuxtjs简单介绍 首先，我们简单了解下Nuxtjs框架，Nuxt.js是一个基于Vue的通用框架，主要用于解决Vue项目的服务端渲染(SSR)。 它本质上是一个Vue框架，增加一层node服务，通过对客户端/服务端的抽象封装，使        <a href="https://www.cnblogs.com/jimojianghu/p/17292223.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-13 11:49
+jimojianghu
+<span data-post-id="17292223" class="post-view-count">阅读(141)</span> 
+<span data-post-id="17292223" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17292223" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17292223" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17292100">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/jimojianghu/archive/2023/04/10.html">2023年4月10日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jimojianghu/p/17292100.html">
+    <span>
+        CSS样式中颜色与颜色值的应用
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17292100">
+摘要：            
+使用CSS描绘页面样式时，颜色是其中不可或缺的，无论是对文本、背景还是边框、阴影，我们都写过无数代码用来增添颜色。而为了让网页的色彩表现更出色，我们很有必要完整梳理下CSS中的色彩。 要讲清楚CSS中的颜色，离不开颜色模型的概念，这是我们需要先了解的。 颜色模型 颜色模型计算机中用来描述颜色的数学模        <a href="https://www.cnblogs.com/jimojianghu/p/17292100.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-10 11:18
+jimojianghu
+<span data-post-id="17292100" class="post-view-count">阅读(216)</span> 
+<span data-post-id="17292100" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17292100" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17292100" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17291942">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/jimojianghu/archive/2023/04/06.html">2023年4月6日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jimojianghu/p/17291942.html">
+    <span>
+        CSS伪元素详解以及伪元素与伪类的区别
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17291942">
+摘要：            
+前面已经介绍过CSS伪类的知识，具体可见前文 CSS伪类知识详解。 伪元素常常被误解为伪类，主要在于他们的语法相似，都是对于选择器功能的扩展，相似程度很高导致被混淆。 本文通过详细介绍伪元素和常见的使用方法，最后也会分析下伪元素与伪类的基本区别。 基本描述 CSS伪元素也是应用于选择器的关键字，允许        <a href="https://www.cnblogs.com/jimojianghu/p/17291942.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-06 10:41
+jimojianghu
+<span data-post-id="17291942" class="post-view-count">阅读(215)</span> 
+<span data-post-id="17291942" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17291942" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17291942" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17054828">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/jimojianghu/archive/2023/02/03.html">2023年2月3日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jimojianghu/p/17054828.html">
+    <span>
+        CSS-@规则(At-rules)常用语法使用总结
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17054828">
+摘要：            
+At-rules规则是目前CSS中一种常见的语法规则，它使用一个&quot;@&quot;符号加一个关键词定义，后面跟上语法区块，如果没有则以分号结束即可。 这种规则一般用于标识文档、引入外部样式、条件判断等等，本文是对该规则的使用总结。 常用规则 @import @import 主要用于从其他样式表导入新的样式规则，        <a href="https://www.cnblogs.com/jimojianghu/p/17054828.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-02-03 10:12
+jimojianghu
+<span data-post-id="17054828" class="post-view-count">阅读(246)</span> 
+<span data-post-id="17054828" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17054828" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17054828" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17054789">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/jimojianghu/archive/2023/01/28.html">2023年1月28日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jimojianghu/p/17054789.html">
+    <span>
+        转义字符在前端开发中的详细介绍
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17054789">
+摘要：            
+说起转义字符，大家最先想到的肯定是使用反斜杠，这也是我们最常见的，很多编程语言都支持。 转义字符从字面上讲，就是能够转变字符原本的意义，得到新的字符。常用在特殊字符的显示以及特定的编码环境中。 除了反斜杠以外，在前端开发中，还有其他几种转义字符，也是较常见的，本文将对这些做一个总结。 字符串中的转义        <a href="https://www.cnblogs.com/jimojianghu/p/17054789.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-01-28 09:21
+jimojianghu
+<span data-post-id="17054789" class="post-view-count">阅读(563)</span> 
+<span data-post-id="17054789" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17054789" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17054789" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16933441">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/jimojianghu/archive/2023/01/16.html">2023年1月16日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jimojianghu/p/16933441.html">
+    <span>
+        node和npm如何升级版本
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16933441">
+摘要：            
+node和npm在某种意义上，早已成为当前前端开发中不可或缺的工具。 本文将介绍如何进行node和npm的版本升级和指定等等操作。 查看node和npm版本： node -v npm -v 清除npm缓存： npm cache clean -f 如何升级npm 当只需要简单的升级 npm 的时候，可        <a href="https://www.cnblogs.com/jimojianghu/p/16933441.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-01-16 10:10
+jimojianghu
+<span data-post-id="16933441" class="post-view-count">阅读(11352)</span> 
+<span data-post-id="16933441" class="post-comment-count">评论(0)</span> 
+<span data-post-id="16933441" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16933441" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16933454">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/jimojianghu/archive/2022/12/01.html">2022年12月1日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jimojianghu/p/16933454.html">
+    <span>
+        JavaScript中的Error错误对象与自定义错误类型
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16933454">
+摘要：            
+Error Error是JavaScript语言中的一个标准的内置对象，专门用于处理JS开发中的运行时错误。 当我们的JS代码在运行过程中发生错误的话，就会抛出Error对象，整个程序将会中断在错误发生的代码处，不再继续执行，这也是错误类型必须重视的原因：它会导致页面无法显示或者功能失效。 Erro        <a href="https://www.cnblogs.com/jimojianghu/p/16933454.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-12-01 10:49
+jimojianghu
+<span data-post-id="16933454" class="post-view-count">阅读(242)</span> 
+<span data-post-id="16933454" class="post-comment-count">评论(0)</span> 
+<span data-post-id="16933454" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16933454" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16933413">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/jimojianghu/archive/2022/11/29.html">2022年11月29日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jimojianghu/p/16933413.html">
+    <span>
+        CSS伪类使用详解
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16933413">
+摘要：            
+基本描述 CSS伪类是很常用的功能，主要应用于选择器的关键字，用来改变被选择元素的特殊状态下的样式。 伪类类似于普通CSS类的用法，是对CSS选择器的一种扩展，增强选择器的功能。 目前可用的伪类有大概40多个，少部分有兼容性问题。我们比较常见的，如::hover、:root、:first-child        <a href="https://www.cnblogs.com/jimojianghu/p/16933413.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-11-29 09:37
+jimojianghu
+<span data-post-id="16933413" class="post-view-count">阅读(617)</span> 
+<span data-post-id="16933413" class="post-comment-count">评论(0)</span> 
+<span data-post-id="16933413" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16933413" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_15932500">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/jimojianghu/archive/2022/11/10.html">2022年11月10日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jimojianghu/p/15932500.html">
+    <span>
+        docker+nginx 安装部署修改资源目录配置文件和容器端口信息
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_15932500">
+摘要：            
+查看docker镜像 可以先查看docker下是否存在nginx镜像，使用如下这些命令查看： docker images: 列出所有镜像。 docker images nginx: 列出所有nginx镜像，不同版本等等。 docker search nginx: 搜索查看所有nginx镜像信息。 拉        <a href="https://www.cnblogs.com/jimojianghu/p/15932500.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-11-10 09:44
+jimojianghu
+<span data-post-id="15932500" class="post-view-count">阅读(1422)</span> 
+<span data-post-id="15932500" class="post-comment-count">评论(0)</span> 
+<span data-post-id="15932500" class="post-digg-count">推荐(3)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=15932500" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+
+<div class="topicListFooter">
+    <div id="nav_next_page">
+        
+    <a href="https://www.cnblogs.com/jimojianghu/?page=2">
+        下一页
+    </a>
+
+    </div>    
+</div>
+
+
+
+
+
+
+<script>
+    updatePostStats(
+        $(".post-view-count").map(function () { return this.dataset.postId }).get(),
+        function(id, count) { $(".post-view-count[data-post-id=" + id + "]").text("阅读(" + count + ")") },
+        function(id, count) { $(".post-comment-count[data-post-id=" + id + "]").text("评论(" + count + ")") },
+        function(id, count) { $(".post-digg-count[data-post-id=" + id + "]").text("推荐(" + count + ")") });
+</script>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 jimojianghu
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULnL2GUkJqWIELFPl-mzZmy9Ave8wIOOgrYSjVPJt3Yf1Rld022vldSds6tJqVPf4dGiFvOFh9xTA61ChInua8s08xaFue1XK6fvIPd7OImgae3Qh393k0vI2-TGov-_vPo" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

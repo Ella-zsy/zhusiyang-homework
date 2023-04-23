@@ -1,0 +1,580 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="description" content="hi，我是熵减，见字如面。 对于从事软件开发的工程们来说，都有一个成为架构师的梦想。 可以说，不想当架构师的程序员，不是好的工程师，人人都想成为架构师。 而为什么要成为架构师，可能每一个人都有不一样的" />
+    <meta property="og:description" content="hi，我是熵减，见字如面。 对于从事软件开发的工程们来说，都有一个成为架构师的梦想。 可以说，不想当架构师的程序员，不是好的工程师，人人都想成为架构师。 而为什么要成为架构师，可能每一个人都有不一样的" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>架构师，别再扯淡了！ - peida - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/codinglife/bundle-codinglife.min.css?v=KhEfknsQdc0P-l_JHvJ4M5MpHxCqROySGNshnHAGUg4" />
+        <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="/css/hljs/cnblogs.css?v=5J1NDtbnnIr2Rc2SdhEMlMxD4l9Eydj88B31E7_NhS4" />
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/codinglife/bundle-codinglife-mobile.min.css?v=olw5cvIxb0V5dzf8QCwjbQOun53qoeKpUHSNhnOfVBU" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/peida/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/peida/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/peida/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 38044;
+        var currentBlogApp = 'peida';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'CodingLife';
+        var visitorUserId = '';
+        var hasCustomScript = false;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+        <script>
+            var currentPostDateAdded = '2023-04-21 10:56';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-codinglife has-navbar">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://www.cnblogs.com/cmt/p/17320765.html" onclick="countCreativeClicks('M2-博客园')">
+                    园子的商业化努力-困境求助：开设捐助通道
+                </a>                
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'peida', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/peida/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/peida/">竹子-博客-熵减黑客</a>
+</h1>
+<h2>阅读、思考、践行和输出。用熵减思维开启成长之路。</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/peida/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/peida">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/peida/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/peida/p/17339595.html">
+    <span role="heading" aria-level="2">架构师，别再扯淡了！</span>
+    
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<p>hi，我是熵减，见字如面。</p>
+<p>对于从事软件开发的工程们来说，都有一个成为架构师的梦想。</p>
+<p>可以说，不想当架构师的程序员，不是好的工程师，人人都想成为架构师。</p>
+<p>而为什么要成为架构师，可能每一个人都有不一样的理解和出发点。譬如，有的人觉得架构师是一个非常高大上的职位，或者架构师能够获得不错的报酬，或者架构师在行业内更有声誉等等，不一而足。</p>
+<p>所以，我们对架构师的预期目的和理解认知，对程序员职业的发展来说，还是比较重要的。同时，对组织的成长，也是有一定的意义的。</p>
+<p>今天，我来聊聊对架构师的一些想法和思考吧。</p>
+<h1 id="什么是架构师">什么是架构师</h1>
+<p><strong>软件架构师是在在软件开发领域中非常重要的角色，其负责设计和管理软件系统的整体架构。</strong></p>
+<p>作为软件的架构师，需要综合考虑软件系统的各个方面，包括性能、安全、可维护性、可扩展性等，以及与其他系统的集成等方面，从而设计出满足客户需求、具有高质量和可维护性的软件系统架构。</p>
+<p>具体来说，在软件设计和开发过程中，需要在软件开发周期的早期阶段就参与到项目中，与需求方沟通需求，分析需求，评估技术可行性，根据需求和技术可行性，设计软件系统的整体结构和各个组件之间的交互关系，制定技术规范和标准，为开发人员提供技术指导和支持。</p>
+<p>此外，架构师还需要关注软件系统的整体性能、安全和可维护性等方面，提出优化建议，确保软件系统的质量和可靠性。</p>
+<p>可见，<strong>架构师是软件开发团队中至关重要角色，需要承担至关重要的责任</strong>，他们的工作会直接影响软件持续交付的质量和效能。</p>
+<h1 id="架构师的职责">架构师的职责</h1>
+<p>作为一名架构师，在项目和团队中，是要承担责任，承担解决问题的责任，规划系统的目标，方案和迭代路径等。</p>
+<p>其具体的职责，可以总结为以下几点：</p>
+<ul>
+<li><strong>对系统的整体架构设计负责</strong>：架构师负责分析客户需求和业务流程，根据技术可行性和可扩展性等方面的要求，设计出软件系统的整体结构和各个组件之间的交互关系，制定技术规范和标准，并提供技术指导和支持。</li>
+<li><strong>对系统的可靠性和质量负责</strong>：架构师需要关注软件系统的整体性能、安全和可维护性等方面，提出优化建议，确保软件系统的质量和可靠性。</li>
+<li><strong>对系统的可扩展和适应性负责</strong>：架构师需要考虑软件系统的未来发展和变化，确保软件系统具有良好的可扩展性和适应性，能够随着业务的变化而进行扩展和修改。</li>
+<li><strong>对团队的协作和沟通负责</strong>：架构师需要与开发团队和其他相关团队进行沟通和协作，确保整个团队在软件开发周期中紧密协作，高效完成工作。</li>
+</ul>
+<p>可见，在软件团队中，架构师是扮演着至关重要的角色，他们的职责和作用不仅是设计和管理软件系统的整体架构，还包括确保软件系统的可靠性和质量，维护软件系统的可扩展性和适应性，促进团队沟通和协作等方面。</p>
+<h1 id="常见的架构师类型">常见的架构师类型</h1>
+<p>现在，在人才市场上，有各种各样的架构师的职位需求，诸如：</p>
+<ul>
+<li><strong>软件架构师</strong>：软件架构师负责软件系统的整体设计和架构，需要对软件系统的各个方面（如业务流程、数据存储、系统安全等）有深入的理解和把握，能够通过优化设计和提出技术方案等方式，提高软件系统的质量和可靠性。</li>
+<li><strong>技术架构师</strong>：主要负责技术选型和技术架构的设计，需要对新技术进行研究和评估，确保选用的技术能够满足系统的性能和可扩展性要求。</li>
+<li><strong>数据架构师</strong>：主要负责数据架构的设计和优化，包括数据库设计、数据模型设计、数据仓库设计等方面的内容，需要对数据管理和数据安全有深入的了解。</li>
+<li><strong>云架构师</strong>：主要负责云平台的架构设计和实现，包括云计算、云存储、云安全等方面的内容，需要对云技术和云服务有深入的了解。</li>
+<li><strong>安全架构师</strong>：负责设计、规划和实施系统的安全架构，以保护系统和数据不受恶意攻击、非法访问和数据泄漏等安全威胁。安全架构师需要了解安全策略、安全协议、安全标准和加密算法等相关知识，同时还需要具备风险评估、漏洞分析、安全审计和安全监控等方面的技能。</li>
+<li><strong>业务架构师</strong>：负责分析、规划和设计企业的业务架构，以支持企业战略和业务发展。业务架构师需要了解业务流程、业务规则、业务需求和业务价值等相关知识，同时还需要具备业务建模、业务流程优化、业务数据分析和业务治理等方面的技能。</li>
+<li><strong>企业级架构师</strong>：主要负责企业级软件应用的整体架构规划和设计，包括硬件、软件、数据等方面的内容。</li>
+<li><strong>解决方案架构师</strong>：主要负责客户解决方案的架构设计和实现，需要深入了解客户的业务需求和技术现状，提供符合客户需求的解决方案。</li>
+</ul>
+<p>当然，这个清单还会无限的增加，AI架构师，算法架构师等等。</p>
+<p>不同类型的架构师，需要具备不同的技能和专业知识，但会存在着共同点，<strong>都需要具备深入的技术知识和对整体系统架构有全面的了解和把握。</strong></p>
+<h1 id="那些扯淡的架构师">那些扯淡的架构师</h1>
+<p>上面我们了解了什么是架构师，架构师的职责和架构师的一些类型这些内容，对架构师有了一个初步的了解。</p>
+<p>接下来，我们就说说一下在软件团队中存在的一些反例：那些扯淡型的架构师。</p>
+<p>扯淡的架构师，通常用来形容那些没有实际能力和经验，却通过夸夸其谈和空泛的理论来掩盖自己的无能和不足的“架构师”。</p>
+<p>首先，我们来看被人严重诟病的3个架构师的样板：</p>
+<ul>
+<li><strong>PPT架构师</strong>：指那些只会用PPT画图，但实际上并没有真正掌握技术和架构设计的人。他们通常会使用各种花哨的图表和动画来描述自己的“架构设计”，但缺乏实际的可行性和可操作性。</li>
+<li><strong>框架架构师</strong>：指那些过分依赖于各种框架和工具，而不是根据具体的业务需求和技术特点来设计系统架构的人。他们可能会过度使用某个框架或者模式，导致系统过度复杂和难以维护，同时也限制了开发团队的技术自由度和创造力。</li>
+<li><strong>画饼架构师</strong>：指那些只会在理论层面上讨论架构设计，但没有真正投入到实际的开发和运维工作中去的人。他们可能会热衷于各种研究和学习，但缺乏实践和验证的经验，导致其设计的架构无法落地和实现。</li>
+</ul>
+<p>架构师对软件系统的重要性不言而喻，而一个不合格的架构师可能会带来一系列的问题。</p>
+<p><strong>架构师的本质是承担解决问题的责任。</strong> 不合格的架构师却无法解决问题，且自身也成为了一个问题。</p>
+<h1 id="在扯淡的那些表现形式">在扯淡的那些表现形式</h1>
+<p>如何识别你的架构师是在承担责任，还是仅仅在夸夸其谈呢？</p>
+<p>下面列出了一些常见的扯淡的表现形式：</p>
+<ul>
+<li><strong>过度的设计</strong>：扯淡的架构师会为了设计一个完美的系统而过度设计，将关注点放在架构设计的完美性上，而忽略了实际项目的需求和成本。这种过度设计可能会导致系统复杂性增加，开发周期延长，以及对团队资源的浪费。</li>
+<li><strong>盲目追技术</strong>：扯淡的架构师会将技术的新颖性和潮流性视为优先考虑的因素，忽略了实际业务需求和团队技术水平。他们会为了使用最新技术而盲目地采用一些不成熟的技术或者并不适合当前业务场景的技术，给团队和项目带来风险。</li>
+<li><strong>缺乏业务理解</strong>：扯淡的架构师可能缺乏对业务的深入理解，只注重技术的实现，而忽略了业务的重要性。这种情况下，架构设计可能会与实际业务场景不相符，导致系统的效率低下，用户体验不佳，以及项目的失败。</li>
+<li><strong>缺乏实践经验</strong>：架构师需要具备丰富的实践经验，才能设计出稳定、高效、可扩展和可维护的系统架构。但是，有些架构师可能没有足够的实践经验，只是凭借一些理论知识和工具使用经验来设计系统架构。这样往往会导致设计出来的架构不够实际可行，缺乏实用性和可行性。</li>
+<li><strong>缺乏沟通合作</strong>：扯淡的架构师可能会过于自我中心，不愿意与团队成员进行沟通和合作。他们会忽略团队其他成员的建议和反馈，而单方面地做出决策，导致团队合作效率降低，甚至出现冲突和摩擦。</li>
+<li><strong>忽略可维护性</strong>：扯淡的架构师可能会忽略系统的可维护性，将注意力放在架构的设计和开发上，而忽略了系统的日常维护和后续升级的问题。这可能会导致系统难以维护，出现故障和漏洞，增加团队的工作量和负担。</li>
+<li><strong>过度依赖工具框架</strong>：扯淡架构师可能会过度依赖工具和框架，忽略了技术背后的原理和本质。这样会导致架构设计缺乏灵活性和可扩展性，对于一些特定的业务场景和需求无法满足，以及对技术人员的技术素养提出了较高的要求。</li>
+</ul>
+<p>可见，架构师扯淡的表现形式有很多，其中涉及到技术能力、思维方式、责任心、全面性、实践经验以及沟通和协作能力等方面。</p>
+<h1 id="造成架构师扯淡的原因">造成架构师扯淡的原因</h1>
+<p>造成架构师扯淡的原因主要有两个方面：架构师自身和组织团队。具体如下：</p>
+<h2 id="个人原因">个人原因</h2>
+<p>以下是一些架构师自身上的一些不足，导致无法落到实处的原因：</p>
+<ul>
+<li>
+<p><strong>缺乏技术深度和广度</strong>：架构师需要具备广泛的技术知识和深入的技术理解，如果缺乏这些，就难以对系统进行有效的架构设计和决策。</p>
+</li>
+<li>
+<p><strong>缺乏对业务的深入理解</strong>：架构师需要深入了解业务需求和业务流程，以便能够设计出符合业务需求的系统架构。如果缺乏业务理解，就很难做到这一点。</p>
+</li>
+<li>
+<p><strong>缺乏团队合作精神</strong>：架构师需要和其他团队成员合作，包括开发人员、测试人员、运维人员等等。如果缺乏团队合作精神，就难以与其他团队成员有效沟通和协作，影响到系统的整体质量。</p>
+</li>
+<li>
+<p><strong>缺乏责任心</strong>：架构师需要对系统的整体设计和决策承担责任。如果缺乏责任心，就可能会出现推卸责任、不负责任等不良行为。</p>
+</li>
+<li>
+<p><strong>缺乏更新迭代意识</strong>：技术在不断更新迭代，架构师需要保持对技术的关注和学习，以便及时应对技术变化和提高自身技能水平。如果缺乏更新迭代意识，就容易过时和被淘汰。</p>
+</li>
+<li>
+<p><strong>缺乏全局视野</strong>：架构师需要具备全局视野，能够将整个系统作为一个整体来考虑，而不是局限于某个模块或部分。如果缺乏全局视野，就难以设计出高质量的系统架构。</p>
+</li>
+</ul>
+<h2 id="组织原因">组织原因</h2>
+<p>除了架构师自身的原因，在组织设计和团队管理上的一些问题，也很容导致架构师成为扯淡的角色，具体如下：</p>
+<ul>
+<li>
+<p><strong>没有明确的职责和权利</strong>：如果组织对架构师的职责和权利没有明确的定义，或者架构师没有足够的权利来影响项目和决策，那么他们可能会感到无助和无控制感，从而扯淡化自己的角色。</p>
+</li>
+<li>
+<p><strong>缺乏有效的沟通和合作</strong>：如果团队成员之间缺乏有效的沟通和合作，那么架构师可能会感到难以与其他团队成员协作，从而扯淡化自己的角色。此外，如果架构师没有足够的时间和机会与其他团队成员交流，也会导致扯淡化。</p>
+</li>
+<li>
+<p><strong>管理层的不支持</strong>：如果管理层不重视架构师的角色，或者没有给予足够的支持，那么架构师可能会感到自己的工作被忽视和低估，从而扯淡化自己的角色。</p>
+</li>
+<li>
+<p><strong>团队缺乏目标和方向</strong>：如果组织没有明确的目标和方向，那么架构师可能会感到自己的工作没有明确的目标，从而扯淡化自己的角色。此外，如果组织对架构师的期望不明确，也会导致扯淡化。</p>
+</li>
+<li>
+<p><strong>组织架构设计不合理</strong>：如果组织将架构师岗位化，设置为专职的架构师和架构师部门，那他们就会和具体的研发工程团队之间缺乏有效的沟通和协作，或者他们被视为高高在上的存在，这样可能会导致扯淡架构师的产生。</p>
+</li>
+</ul>
+<p>所以，在组织的设计和团队的管理上，也需要考虑如何上架构的角色和职责落到实处，避免成为团队的摆设和瓶颈，让架构师的能力，正真的为团队提供持续的价值。</p>
+<h1 id="扯淡架构师的危害">扯淡架构师的危害</h1>
+<p>不接地气，不承担责任的扯淡型架构师，其危害性表现在两个方面：一是对团队的危害，二是对自身职业的危害。</p>
+<p>具体如下：</p>
+<h2 id="对团队的危害">对团队的危害</h2>
+<p>不能躬身入局的架构师，对团队的危害有如下的5个方面，具体如下：</p>
+<ul>
+<li>
+<p><strong>技术决策的混乱</strong>：扯淡的架构师会导致技术决策的混乱，造成整个团队的技术方向偏离原有的目标，导致开发效率低下、项目延期、质量下降等问题。</p>
+</li>
+<li>
+<p><strong>缺乏技术领导力</strong>：扯淡的架构师会导致团队缺乏技术领导力，无法对技术方向和开发流程进行有效的引导和管理，从而无法发挥团队的最大潜力。</p>
+</li>
+<li>
+<p><strong>建立不良的技术文化</strong>：架构师扯淡化还会导致不良的技术文化在团队中蔓延，包括代码随意、缺乏规范、无法进行有效的代码审查等问题，这些问题会直接影响到团队的开发效率和质量。</p>
+</li>
+<li>
+<p><strong>影响员工的工作积极性</strong>：扯淡的架构师化会影响到员工的工作积极性，因为员工可能会感到困惑和迷茫，不知道应该如何进行开发工作，从而降低工作的效率和积极性。</p>
+</li>
+<li>
+<p><strong>损害团队的声誉和信誉</strong>：扯淡的架构师会损害团队的声誉和信誉，因为项目延期、质量不佳等问题会影响到团队的口碑和形象，从而影响到未来的发展和业务拓展。</p>
+</li>
+</ul>
+<h2 id="对自身的危害">对自身的危害</h2>
+<p>一个夸夸其谈的架构师，不但会给团队带来伤害，对其自身也由不小的负面影响，具体如下：</p>
+<ul>
+<li>
+<p><strong>技能退化</strong>：架构师扯淡化通常表现为对技术的忽视或者片面理解，导致架构师的技能难以得到提高和提升，无法跟上行业的发展和变化。</p>
+</li>
+<li>
+<p><strong>影响声誉</strong>：只扯淡的架构师，通常不会受到同行和业内人士的认可和尊重，从而影响自己在行业中的声誉和职业发展。</p>
+</li>
+<li>
+<p><strong>没有成就感</strong>：扯淡的架构师往往会走在错误的道路上，无法为团队和公司做出有意义的贡献，导致自己缺乏成就感和自我价值感。</p>
+</li>
+<li>
+<p><strong>职业前景受限</strong>：架构师的职业发展需要具备全面的技能和能力，扯淡的架构师缺乏这些基础条件，因此职业前景会受到限制，无法实现个人职业目标。</p>
+</li>
+</ul>
+<p>总之，只会扯淡的架构师，会对个人职业发展产生非常严重的影响，因此架构师必须时刻保持对技术的敬畏和对工作的热爱，不断学习和提高自己的技能和能力。</p>
+<h1 id="如何成为一个优秀架构师">如何成为一个优秀架构师</h1>
+<p>工程师如何才能成为一名不扯淡的架构师呢？</p>
+<p>我认为主要有两个方面：一是对架构师有一个清晰的认知，而是要有一些有效的方法。</p>
+<p>下面具体来说说我的理解：</p>
+<h2 id="架构是一项工程技能">架构是一项工程技能</h2>
+<p>首先，要理解的一点是：架构是软件工程中的一项核心技能。</p>
+<p>架构设计，因为涵盖了软件系统设计和开发中最关键的方面，诸如：</p>
+<ul>
+<li>
+<p><strong>系统的可靠性</strong>：架构师需要确保系统在运行时是可靠的，即能够满足用户需求，稳定运行，不会出现崩溃、死循环等问题。</p>
+</li>
+<li>
+<p><strong>系统的可扩展性</strong>：架构师需要考虑系统未来的发展和扩展，设计出具备良好扩展性的架构，以应对未来的业务需求变化。</p>
+</li>
+<li>
+<p><strong>系统的性能</strong>：架构师需要确保系统在运行时能够保持良好的性能，以提高用户的使用体验。</p>
+</li>
+<li>
+<p><strong>系统的安全性</strong>：架构师需要确保系统在运行时能够保持良好的安全性，以保护用户的数据和隐私。</p>
+</li>
+<li>
+<p><strong>系统的可维护性</strong>：架构师需要确保系统在运行时能够保持良好的可维护性，即能够方便地进行维护和更新，以降低维护成本。</p>
+</li>
+</ul>
+<p>可见，架构师是不能脱离技术，也不能脱离实际业务，更不能脱离具体的团队。架构师在设计和开发软件系统的过程中，需要考虑到这些多个方面的因素，才能设计出一个既能够满足业务需求，又具备良好性能、可扩展性、安全性和可维护性的架构。</p>
+<h2 id="架构师是一个角色不是一个职位">架构师是一个角色，不是一个职位</h2>
+<p>正如本文一开始所说，架构师是软件开发中的一个责任角色，而不是一个高大上的职位头衔。如果我们将架构师职位化，就很容造成误解和误用，让架构师陷入扯淡的危局之中。</p>
+<p>架构师的职位化，有以下3个方面的危害：</p>
+<ul>
+<li>
+<p><strong>限制了架构师的角色</strong>：将架构师职位化可能会限制架构师的角色，使其只关注与职位相对应的任务和职责，而忽略了跨职能团队合作和领导能力的重要性。架构师可能会陷入“职位”的框架中，而忘记了其临时性和灵活性。</p>
+</li>
+<li>
+<p><strong>对职位要求的过度强调</strong>：将架构师职位化可能会导致过度强调职位要求，如学历、工作年限等，而忽略了架构师的实际能力和经验。这可能会造成人才浪费，使一些有实际经验但没有符合职位要求的人才无法发挥其潜力。</p>
+</li>
+<li>
+<p><strong>市场对职位的误解</strong>：将架构师职位化可能会导致市场对职位的误解，使架构师的角色被视为一种固定的职业。这可能会降低架构师的灵活性和创造力，使其无法适应不断变化的技术和业务需求。</p>
+</li>
+</ul>
+<p>在软件开发过程中，如果将架构师视为一种责任角色，会让架构师本人更注重其跨职能团队合作和领导能力的培养，同时也会让团队能够培养人才梯队。</p>
+<h2 id="成为优秀架构师的方法">成为优秀架构师的方法</h2>
+<p>作为工程师个体来说，如何成为真正的优秀的具有架构思维和能力的高级别技术型人才呢？</p>
+<p>下面我总结一些可行的方法和建议：</p>
+<ul>
+<li>
+<p><strong>系统化学习</strong>：成为一名优秀的架构师需要系统化的学习，涵盖技术、领域知识、方法论等多个方面。可以通过参加培训、读书、做项目等方式来学习。</p>
+</li>
+<li>
+<p><strong>多做实践</strong>：架构师不仅要学习理论知识，还需要在实践中不断提高自己。可以通过参加项目、写代码等方式来提升自己的实践能力。</p>
+</li>
+<li>
+<p><strong>不断反思</strong>：作为一名架构师，需要不断反思自己的设计方案和决策是否合理，并进行总结和改进。</p>
+</li>
+<li>
+<p><strong>注重团队合作</strong>：架构师不仅仅是技术专家，还需要具备领导能力和团队合作能力，能够与其他团队成员合作，推动项目的顺利进行。</p>
+</li>
+<li>
+<p><strong>保持技术敏感度</strong>：架构师需要关注技术的新动态，保持敏感度，及时了解新技术的优劣，并在实践中进行验证。</p>
+</li>
+<li>
+<p><strong>提高业务素养</strong>：架构师需要具备一定的业务素养，能够了解业务需求和业务流程，从而设计出更符合业务需求的系统架构。</p>
+</li>
+<li>
+<p><strong>持续学习</strong>：技术的发展是日新月异的，作为一名优秀的架构师需要保持持续学习的态度，不断更新自己的知识和技能。</p>
+</li>
+</ul>
+<p>成为一名具有架构思维和能力的工程师和领域专家，需要具备系统化的学习、多实践、不断反思、注重团队合作、保持技术敏感度、提高业务素养和持续学习等多方面的能力和素质。</p>
+<h1 id="写在最后">写在最后</h1>
+<p>随着软件行业的不断发展，软件架构师这一角色，也越来越受到企业和从业者们所热捧。</p>
+<p>作为工程团队中的核心角色之一，架构师需要具备多方面的技能和素质，以保证系统的稳定性、可扩展性和安全性等方面的需求。</p>
+<p>然而，一些对架构师的不够全面的理解和预期，也很容易造成诸如PPT架构师、框架架构师等扯谈性的岗位大量的存在，这会对整个团队和系统造成不良影响，甚至会导致项目的失败。</p>
+<p>造成架构师扯淡的原因很多，其中既有个人原因，也有组织管理和设计上的原因。为了避免这种情况的发生，我们需要共同努力：一方面工程师们要提升工程的架构能力，人人都能成为架构师；另一方面，也需要工程在组织设计和团队管理上，让架构师能够真正的落到实处去解决问题。</p>
+<p><strong>架构是一项重要的工程能力，架构师是一个责任角色。</strong></p>
+<p>架构师，只有躬身入局，才能超越扯淡的困局。</p>
+<hr>
+<p>阅读，思考，练习，分享，日日不断之功。</p>
+<p>嗯，写完了。</p>
+<p>新的一天，加油哦 (ง •̀_•́)ง</p>
+
+</div>
+<div id="MySignature" role="contentinfo">
+    <h2> 关注 熵减黑客 ，一起学习成长 </h2>
+<br>
+<img src="https://files-cdn.cnblogs.com/files/peida/shangjianheike.bmp" alt="熵减黑客" width="800" height="300">
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="2.1587472625405093" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2023-04-21 10:56">2023-04-21 10:56</span>&nbsp;
+<a href="https://www.cnblogs.com/peida/">peida</a>&nbsp;
+阅读(<span id="post_view_count">2007</span>)&nbsp;
+评论(<span id="post_comment_count">12</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17339595" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(17339595);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '17339595', targetLink: 'https://www.cnblogs.com/peida/p/17339595.html', title: '架构师，别再扯淡了！' })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+
+<script>
+    var cb_entryId = 17339595, cb_entryCreatedDate = '2023-04-21 10:56', cb_postType = 1, cb_postTitle = '架构师，别再扯淡了！';
+    var allowComments = true, cb_blogId = 38044, cb_blogApp = 'peida', cb_blogUserGuid = '0f3e420b-63cf-dd11-9e4d-001cf0cd104b';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+            <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 peida
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULlnGtCdpL0gwsJsL-WJuQ3y96JawNCEOQRh5oOOs7t3z11BrFl0_izB8isXQXXArfcPXKpvVGX-huXYwOdloH8A8rEZybAu3ivLnUBWt6fZehHMtjHzhvwDydan6ggwl-8" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

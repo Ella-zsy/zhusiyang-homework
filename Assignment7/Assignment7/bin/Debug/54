@@ -1,0 +1,671 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>一灯架构 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/codinglife/bundle-codinglife.min.css?v=KhEfknsQdc0P-l_JHvJ4M5MpHxCqROySGNshnHAGUg4" />
+        
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/yidengjiagou/custom.css?v=9VBlmAx1UekuHocx2z3hY0qvDuo=" />
+    <link type="text/css" rel="stylesheet" href="/css/fonts/Consolas.min.css" />
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/codinglife/bundle-codinglife-mobile.min.css?v=olw5cvIxb0V5dzf8QCwjbQOun53qoeKpUHSNhnOfVBU" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/yidengjiagou/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/yidengjiagou/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/yidengjiagou/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 755511;
+        var currentBlogApp = 'yidengjiagou';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'CodingLife';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 1;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'atelier-estuary-light';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-codinglife no-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'yidengjiagou', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/yidengjiagou/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/yidengjiagou/">一灯架构</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/yidengjiagou/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E4%B8%80%E7%81%AF%E6%9E%B6%E6%9E%84">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/yidengjiagou/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+
+
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17345831">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/yidengjiagou/archive/2023/04/23.html">2023年4月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/yidengjiagou/p/17345831.html">
+    <span>
+        详解Redis三大集群模式，轻松实现高可用！
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17345831">
+摘要：            <img src="https://img2023.cnblogs.com/blog/734446/202304/734446-20230423104729288-1537615624.png" alt="详解Redis三大集群模式，轻松实现高可用！" class="desc_img" />
+Redis集群是一种通过将多个Redis节点连接在一起以实现高可用性、数据分片和负载均衡的技术。它允许Redis在不同节点上同时提供服务，提高整体性能和可靠性。根据搭建的方式和集群的特性，Redis集群主要有三种模式：主从复制模式（Master-Slave）、哨兵模式（Sentinel）和Cluster模式。        <a href="https://www.cnblogs.com/yidengjiagou/p/17345831.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-23 10:48
+一灯架构
+<span data-post-id="17345831" class="post-view-count">阅读(0)</span> 
+<span data-post-id="17345831" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17345831" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17345831" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17335884">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/yidengjiagou/archive/2023/04/20.html">2023年4月20日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/yidengjiagou/p/17335884.html">
+    <span>
+        彻底搞懂Redis持久化机制，轻松应对工作面试
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17335884">
+摘要：            <img src="https://img2023.cnblogs.com/blog/734446/202304/734446-20230420103101008-1791141267.png" alt="彻底搞懂Redis持久化机制，轻松应对工作面试" class="desc_img" />
+Redis是基于内存存储的数据库，如果遇到服务重启或者崩溃，内存中的数据将会被清空。所以为了确保数据安全性和可靠性，我们需要将内存中的数据持久化到磁盘上。
+持久化不仅可以防止由于系统故障、重启或者其他原因导致的数据丢失。还可以用于备份、数据恢复和迁移等操作。        <a href="https://www.cnblogs.com/yidengjiagou/p/17335884.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-20 10:31
+一灯架构
+<span data-post-id="17335884" class="post-view-count">阅读(378)</span> 
+<span data-post-id="17335884" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17335884" class="post-digg-count">推荐(3)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17335884" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17324974">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/yidengjiagou/archive/2023/04/17.html">2023年4月17日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/yidengjiagou/p/17324974.html">
+    <span>
+        Redis性能瓶颈揭秘：如何优化大key问题？
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17324974">
+摘要：            <img src="https://img2023.cnblogs.com/blog/734446/202304/734446-20230417101935419-413341715.png" alt="Redis性能瓶颈揭秘：如何优化大key问题？" class="desc_img" />
+Redis大key问题指的是某个key对应的value值所占的内存空间比较大，导致Redis的性能下降、内存不足、数据不均衡以及主从同步延迟等问题。
+到底多大的数据量才算是大key？        <a href="https://www.cnblogs.com/yidengjiagou/p/17324974.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-17 10:20
+一灯架构
+<span data-post-id="17324974" class="post-view-count">阅读(426)</span> 
+<span data-post-id="17324974" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17324974" class="post-digg-count">推荐(4)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17324974" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17312772">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/yidengjiagou/archive/2023/04/13.html">2023年4月13日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/yidengjiagou/p/17312772.html">
+    <span>
+        Redis为什么能抗住10万并发？揭秘性能优越的背后原因
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17312772">
+摘要：            <img src="https://img2023.cnblogs.com/blog/734446/202304/734446-20230413105839315-1541083171.png" alt="Redis为什么能抗住10万并发？揭秘性能优越的背后原因" class="desc_img" />
+Redis是一个开源的，基于内存的，高性能的键值型数据库。它支持多种数据结构，包含五种基本类型 String（字符串）、Hash（哈希）、List（列表）、Set（集合）、Zset（有序集合），和三种特殊类型 Geo（地理位置）、HyperLogLog（基数统计）、Bitmaps（位图），可以满足各种应用场景的需求。        <a href="https://www.cnblogs.com/yidengjiagou/p/17312772.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-13 11:09
+一灯架构
+<span data-post-id="17312772" class="post-view-count">阅读(1331)</span> 
+<span data-post-id="17312772" class="post-comment-count">评论(4)</span> 
+<span data-post-id="17312772" class="post-digg-count">推荐(3)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17312772" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17305653">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/yidengjiagou/archive/2023/04/11.html">2023年4月11日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/yidengjiagou/p/17305653.html">
+    <span>
+        深度剖析Redis九种数据结构实现原理，建议收藏
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17305653">
+摘要：            <img src="https://img2023.cnblogs.com/blog/734446/202304/734446-20230411111538026-2114315146.png" alt="深度剖析Redis九种数据结构实现原理，建议收藏" class="desc_img" />
+Redis 是一个高性能的键值存储系统，支持多种数据结构。
+包含五种基本类型 String（字符串）、Hash（哈希）、List（列表）、Set（集合）、Zset（有序集合），和三种特殊类型 Geo（地理位置）、HyperLogLog（基数统计）、Bitmaps（位图）。        <a href="https://www.cnblogs.com/yidengjiagou/p/17305653.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-11 11:16
+一灯架构
+<span data-post-id="17305653" class="post-view-count">阅读(458)</span> 
+<span data-post-id="17305653" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17305653" class="post-digg-count">推荐(3)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17305653" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17301968">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/yidengjiagou/archive/2023/04/10.html">2023年4月10日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/yidengjiagou/p/17301968.html">
+    <span>
+        【绩效季】遇到一个好领导有多重要，从被打差绩效到收获成长
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17301968">
+摘要：            <img src="https://img2023.cnblogs.com/blog/734446/202304/734446-20230410101149334-760204513.png" alt="【绩效季】遇到一个好领导有多重要，从被打差绩效到收获成长" class="desc_img" />
+在职场中，被打差绩效是每个人都难免会遇到的情况。此时，我们通常会感到焦虑、失落，甚至愤怒，心中充满疑问——难道我这一年就白白付出了吗？然而，如果我们主动与领导沟通，或许能够找到答案，解除自我怀疑，甚至对未来职业发展大有裨益。        <a href="https://www.cnblogs.com/yidengjiagou/p/17301968.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-10 10:12
+一灯架构
+<span data-post-id="17301968" class="post-view-count">阅读(1857)</span> 
+<span data-post-id="17301968" class="post-comment-count">评论(16)</span> 
+<span data-post-id="17301968" class="post-digg-count">推荐(6)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17301968" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17239149">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/yidengjiagou/archive/2023/03/21.html">2023年3月21日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/yidengjiagou/p/17239149.html">
+    <span>
+        为什么Redis不直接使用C语言的字符串？看完直接吊打面试官！
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17239149">
+摘要：            <img src="https://img2023.cnblogs.com/blog/734446/202303/734446-20230321104316787-2006829483.png" alt="为什么Redis不直接使用C语言的字符串？看完直接吊打面试官！" class="desc_img" />
+众所周知Redis有以下几种常见的数据类型 String（字符串）、List（列表）、Set（集合）、Hash（哈希）、Sorted set（有序集合）、Stream（流）、Geo（地理空间索引）、Bitmap（位图）、HyperLogLog（基数统计）等。
+
+我们最常用的就是String（字符串）类型，String类型既可以存储字符串，也可以存储数字，甚至可以直接进行数值运算。        <a href="https://www.cnblogs.com/yidengjiagou/p/17239149.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-03-21 10:45
+一灯架构
+<span data-post-id="17239149" class="post-view-count">阅读(52)</span> 
+<span data-post-id="17239149" class="post-comment-count">评论(1)</span> 
+<span data-post-id="17239149" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17239149" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16919232">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/yidengjiagou/archive/2022/11/23.html">2022年11月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/yidengjiagou/p/16919232.html">
+    <span>
+        Java阻塞队列中的异类，SynchronousQueue底层实现原理剖析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16919232">
+摘要：            <img src="https://img2022.cnblogs.com/blog/734446/202211/734446-20221123174307540-156720058.png" alt="Java阻塞队列中的异类，SynchronousQueue底层实现原理剖析" class="desc_img" />
+上篇文章谈到BlockingQueue的使用场景，并重点分析了ArrayBlockingQueue的实现原理，了解到ArrayBlockingQueue底层是基于数组实现的阻塞队列。
+
+但是BlockingQueue的实现类中，有一种阻塞队列比较特殊，就是SynchronousQueue（同步移交队列），队列长度为0。        <a href="https://www.cnblogs.com/yidengjiagou/p/16919232.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-11-23 17:43
+一灯架构
+<span data-post-id="16919232" class="post-view-count">阅读(263)</span> 
+<span data-post-id="16919232" class="post-comment-count">评论(1)</span> 
+<span data-post-id="16919232" class="post-digg-count">推荐(3)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16919232" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16902327">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/yidengjiagou/archive/2022/11/18.html">2022年11月18日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/yidengjiagou/p/16902327.html">
+    <span>
+         面试官不按套路，竟然问我Java线程池是怎么统计线程空闲时间？
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16902327">
+摘要：            <img src="https://img2022.cnblogs.com/blog/734446/202211/734446-20221118101321427-1771118687.png" alt=" 面试官不按套路，竟然问我Java线程池是怎么统计线程空闲时间？" class="desc_img" />
+面试官： 小伙子，我看你简历上写的项目中用到了线程池，你知道线程池是怎样实现复用线程的？
+这面试官是不是想坑我？是不是摆明了不让我通过？
+难道你不应该问线程池有哪些核心参数？每个参数具体作用是什么？        <a href="https://www.cnblogs.com/yidengjiagou/p/16902327.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-11-18 10:14
+一灯架构
+<span data-post-id="16902327" class="post-view-count">阅读(1521)</span> 
+<span data-post-id="16902327" class="post-comment-count">评论(13)</span> 
+<span data-post-id="16902327" class="post-digg-count">推荐(4)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16902327" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16895061">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/yidengjiagou/archive/2022/11/16.html">2022年11月16日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/yidengjiagou/p/16895061.html">
+    <span>
+        还不懂Java线程池实现原理，看这一篇文章就够了
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16895061">
+摘要：            <img src="https://img2022.cnblogs.com/blog/734446/202211/734446-20221116103015712-609172633.png" alt="还不懂Java线程池实现原理，看这一篇文章就够了" class="desc_img" />
+线程池无论是工作还是面试都是必备的技能，但是很多人对于线程池的实现原理却一知半解，并不了解线程池内部的工作原理，今天一灯就带大家一块剖析线程池底层实现原理。        <a href="https://www.cnblogs.com/yidengjiagou/p/16895061.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-11-16 10:30
+一灯架构
+<span data-post-id="16895061" class="post-view-count">阅读(755)</span> 
+<span data-post-id="16895061" class="post-comment-count">评论(1)</span> 
+<span data-post-id="16895061" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16895061" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+
+<div class="topicListFooter">
+    <div id="nav_next_page">
+        
+    <a href="https://www.cnblogs.com/yidengjiagou/?page=2">
+        下一页
+    </a>
+
+    </div>    
+</div>
+
+
+
+
+
+
+<script>
+    updatePostStats(
+        $(".post-view-count").map(function () { return this.dataset.postId }).get(),
+        function(id, count) { $(".post-view-count[data-post-id=" + id + "]").text("阅读(" + count + ")") },
+        function(id, count) { $(".post-comment-count[data-post-id=" + id + "]").text("评论(" + count + ")") },
+        function(id, count) { $(".post-digg-count[data-post-id=" + id + "]").text("推荐(" + count + ")") });
+</script>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 一灯架构
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    <div id="page_end_html">
+        <link href="//blog-static.cnblogs.com/files/enjoy233/nav.my-right.css" rel="stylesheet">
+<script type="text/javascript" src="//files.cnblogs.com/files/enjoy233/nav.my.js"></script>
+
+<div class="scrollBtn" id="scrollBtn">
+    <ul class="clearfix">
+        <li class="sB-home">
+            <a rel="nofollow noopener"  href="http://www.cnblogs.com/enjoy233" class="ff-t" title="首页"></a>
+        </li>
+        <li class="sB-comment">
+            <a rel="nofollow noopener"  href="#blog-comments-placeholder" onclick="$('#tbCommentBody').focus();" class="ff-t" title="添加评论"></a>
+        </li>
+        <li class="sB-share"><a rel="nofollow noopener"  onclick="if(cb_entryId !=undefined){AddToWz(cb_entryId)}" href="javascript:void(0);" title="收藏"></a></li>
+        <li class="sB-goTop" id="goTop" style="display: list-item;">
+            <a rel="nofollow noopener"  href="#top" title="回顶部"></a>
+        </li>
+    </ul>
+</div>
+    </div>
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULn5s5LJTZNB44nUEyysMDsdtBD9l4L_pGwT7oFYr5tJW3vt4jOIr0-2bElEV4VB0C8emh-pn5mGqvzU1TbG1wc79AK_n2URlnMjo4jtBmnk17RvX1ilWykDh4UaqKJRL18" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

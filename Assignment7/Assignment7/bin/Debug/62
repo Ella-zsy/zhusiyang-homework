@@ -1,0 +1,940 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>西西嘛呦 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/darkgreentrip/bundle-darkgreentrip.min.css?v=OEdqELF7t8yNp68xYs-VSvQS8Pu8C7L1Cq-HRkJtKsA" />
+        
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/xiximayou/custom.css?v=Rm8VIpuerqAq&#x2B;P0NihMc03WwrwA=" />
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/darkgreentrip/bundle-darkgreentrip-mobile.min.css?v=7cLCtXL6v2rk4VV2a2Hpku4lE15h5DLVX2iTkYporNw" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/xiximayou/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/xiximayou/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/xiximayou/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 465208;
+        var currentBlogApp = 'xiximayou';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'darkgreentrip';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = true;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-darkgreentrip no-navbar mathjax2">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'xiximayou', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        <a href="https://github.com/taishan1994">  
+<img style="position: fixed; top: 0; right: 0; border: 0; z-index:9999;" 
+     src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" 
+     alt="Fork me on GitHub">
+</a>
+<script type="text/javascript">
+/* 鼠标特效 */
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("❤JAVA❤","❤C++❤","❤C❤","❤PYTHON❤","❤GO❤","❤LINUX❤","❤HTML❤","❤CSS❤","❤JS❤","❤PYTORCH❤","❤MXNET❤","❤TF❤");
+        var $i = $("<span></span>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "rgb("+~~(255*Math.random())+","+~~(255*Math.random())+","+~~(255*Math.random())+")"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+</script>
+<link  type="text/css" rel="stylesheet" href="https://files.cnblogs.com/files/hafiz/feedback.css">
+
+<!--导航设置-->
+<script type="text/javascript">
+var BlogDirectory = {
+    /*
+        获取元素位置，距浏览器左边界的距离（left）和距浏览器上边界的距离（top）
+    */
+    getElementPosition:function (ele) {        
+        var topPosition = 0;
+        var leftPosition = 0;
+        while (ele){              
+            topPosition += ele.offsetTop;
+            leftPosition += ele.offsetLeft;        
+            ele = ele.offsetParent;     
+        }  
+        return {top:topPosition, left:leftPosition}; 
+    },
+
+    /*
+    获取滚动条当前位置
+    */
+    getScrollBarPosition:function () {
+        var scrollBarPosition = document.body.scrollTop || document.documentElement.scrollTop;
+        return  scrollBarPosition;
+    },
+    
+    /*
+    移动滚动条，finalPos 为目的位置，internal 为移动速度
+    */
+    moveScrollBar:function(finalpos, interval) {
+
+        //若不支持此方法，则退出
+        if(!window.scrollTo) {
+            return false;
+        }
+
+        //窗体滚动时，禁用鼠标滚轮
+        window.onmousewheel = function(){
+            return false;
+        };
+          
+        //清除计时
+        if (document.body.movement) { 
+            clearTimeout(document.body.movement); 
+        } 
+
+        var currentpos =BlogDirectory.getScrollBarPosition();//获取滚动条当前位置
+
+        var dist = 0; 
+        if (currentpos == finalpos) {//到达预定位置，则解禁鼠标滚轮，并退出
+            window.onmousewheel = function(){
+                return true;
+            }
+            return true; 
+        } 
+        if (currentpos < finalpos) {//未到达，则计算下一步所要移动的距离
+            dist = Math.ceil((finalpos - currentpos)/10); 
+            currentpos += dist; 
+        } 
+        if (currentpos > finalpos) { 
+            dist = Math.ceil((currentpos - finalpos)/10); 
+            currentpos -= dist; 
+        }
+        
+        var scrTop = BlogDirectory.getScrollBarPosition();//获取滚动条当前位置
+        window.scrollTo(0, currentpos);//移动窗口
+        if(BlogDirectory.getScrollBarPosition() == scrTop)//若已到底部，则解禁鼠标滚轮，并退出
+        {
+            window.onmousewheel = function(){
+                return true;
+            }
+            return true;
+        }
+        
+        //进行下一步移动
+        var repeat = "BlogDirectory.moveScrollBar(" + finalpos + "," + interval + ")"; 
+        document.body.movement = setTimeout(repeat, interval); 
+    },
+    
+    htmlDecode:function (text){
+        var temp = document.createElement("div");
+        temp.innerHTML = text;
+        var output = temp.innerText || temp.textContent;
+        temp = null;
+        return output;
+    },
+
+    /*
+    创建博客目录，
+    id表示包含博文正文的 div 容器的 id，
+    mt 和 st 分别表示主标题和次级标题的标签名称（如 H2、H3，大写或小写都可以！），
+    interval 表示移动的速度
+    */
+    createBlogDirectory:function (id, mt, st, interval){
+         //获取博文正文div容器
+        var elem = document.getElementById(id);
+        if(!elem) return false;
+        //获取div中所有元素结点
+        var nodes = elem.getElementsByTagName("*");
+        //创建博客目录的div容器
+        var divSideBar = document.createElement('DIV');
+        divSideBar.className = 'uprightsideBar';
+        divSideBar.setAttribute('id', 'uprightsideBar');
+        var divSideBarTab = document.createElement('DIV');
+        divSideBarTab.setAttribute('id', 'sideBarTab');
+        divSideBar.appendChild(divSideBarTab);
+        var h2 = document.createElement('H2');
+        divSideBarTab.appendChild(h2);
+        var txt = document.createTextNode('目录导航');
+        h2.appendChild(txt);
+        var divSideBarContents = document.createElement('DIV');
+        divSideBarContents.style.display = 'none';
+        divSideBarContents.setAttribute('id', 'sideBarContents');
+        divSideBar.appendChild(divSideBarContents);
+        //创建自定义列表
+        var dlist = document.createElement("dl");
+        divSideBarContents.appendChild(dlist);
+        var num = 0;//统计找到的mt和st
+        mt = mt.toUpperCase();//转化成大写
+        st = st.toUpperCase();//转化成大写
+        //遍历所有元素结点
+        for(var i=0; i<nodes.length; i++)
+        {
+            if(nodes[i].nodeName == mt|| nodes[i].nodeName == st)    
+            {
+                //获取标题文本
+                var nodetext = nodes[i].innerHTML.replace(/<\/?[^>]+>/g,"");//innerHTML里面的内容可能有HTML标签，所以用正则表达式去除HTML的标签
+                nodetext = nodetext.replace(/&nbsp;/ig, "");//替换掉所有的&nbsp;
+                nodetext = BlogDirectory.htmlDecode(nodetext);
+                //插入锚        
+                nodes[i].setAttribute("id", "blogTitle" + num);
+                var item;
+                switch(nodes[i].nodeName)
+                {
+                    case mt:    //若为主标题 
+                        item = document.createElement("dt");
+                        break;
+                    case st:    //若为子标题
+                        item = document.createElement("dd");
+                        break;
+                }
+                
+                //创建锚链接
+                var itemtext = document.createTextNode(nodetext);
+                item.appendChild(itemtext);
+                item.setAttribute("name", num);
+                item.onclick = function(){        //添加鼠标点击触发函数
+                    var pos = BlogDirectory.getElementPosition(document.getElementById("blogTitle" + this.getAttribute("name")));
+                    if(!BlogDirectory.moveScrollBar(pos.top, interval)) return false;
+                };            
+                
+                //将自定义表项加入自定义列表中
+                dlist.appendChild(item);
+                num++;
+            }
+        }
+        
+        if(num == 0) return false; 
+        /*鼠标进入时的事件处理*/
+        divSideBarTab.onmouseenter = function(){
+            divSideBarContents.style.display = 'block';
+        }
+        /*鼠标离开时的事件处理*/
+        divSideBar.onmouseleave = function() {
+            divSideBarContents.style.display = 'none';
+        }
+
+        document.body.appendChild(divSideBar);
+    }
+    
+};
+
+window.onload=function(){
+    /*页面加载完成之后生成博客目录*/
+    BlogDirectory.createBlogDirectory("cnblogs_post_body","h1","h2",20);
+}
+</script>
+
+
+<script>
+    L2Dwidget.init({
+        "model": {
+            jsonPath: "https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json",
+            "scale": 1
+        },
+        "display": {
+            "position": "left",
+            "width": 150,
+            "height": 300,
+            "hOffset": 0,
+            "vOffset": -20
+        },
+        "mobile": {
+            "show": true,
+            "scale": 0.5
+        },
+        "react": {
+            "opacityDefault": 0.7,
+            "opacityOnHover": 0.2
+        }
+    });
+</script>
+    </div>
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/xiximayou/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/xiximayou/">西西嘛呦</a>
+</h1>
+<h2><br>
+从自己能做到的开始，一件件来，缓慢而坚定地前进，尽力而为
+</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/xiximayou/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E8%A5%BF%E8%A5%BF%E5%98%9B%E5%91%A6">
+联系</a></li>
+<li>
+
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+
+
+
+
+		
+<div class="day pinned" role="article" aria-describedby="postlist_description_12728644">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/xiximayou/archive/2020/04/18.html"></a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle pinned-post" href="https://www.cnblogs.com/xiximayou/p/12728644.html">
+    <span>
+            <span class="pinned-post-mark">[置顶]</span>
+        【论文笔记】张航和李沐等提出：ResNeSt: Split-Attention Networks（ResNet改进版本）
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_12728644">
+摘要：            
+github地址：https://github.com/zhanghang1989/ResNeSt 论文地址：https://hangzhang.org/files/resnest.pdf 2020.06.23 张航视频讲解ResNeSt：https://www.bilibili.com/video        <a href="https://www.cnblogs.com/xiximayou/p/12728644.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2020-04-18 22:27
+西西嘛呦
+<span data-post-id="12728644" class="post-view-count">阅读(21629)</span> 
+<span data-post-id="12728644" class="post-comment-count">评论(3)</span> 
+<span data-post-id="12728644" class="post-digg-count">推荐(6)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=12728644" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17345539">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/xiximayou/archive/2023/04/23.html">2023年4月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/xiximayou/p/17345539.html">
+    <span>
+        pytorch在有限的资源下部署大语言模型（以ChatGLM-6B为例）
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17345539">
+摘要：            
+pytorch在有限的资源下部署大语言模型（以ChatGLM-6B为例） Part1知识准备 在PyTorch中加载预训练的模型时，通常的工作流程是这样的： my_model&#160;=&#160;ModelClass(...)state_dict&#160;=torch.load(checkpoint_file) 用简单的话        <a href="https://www.cnblogs.com/xiximayou/p/17345539.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-23 09:38
+西西嘛呦
+<span data-post-id="17345539" class="post-view-count">阅读(86)</span> 
+<span data-post-id="17345539" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17345539" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17345539" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17340154">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/xiximayou/archive/2023/04/21.html">2023年4月21日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/xiximayou/p/17340402.html">
+    <span>
+        GPT-NER：通过大型语言模型的命名实体识别
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17340402">
+摘要：            
+讲在前面，chatgpt出来的时候就想过将其利用在信息抽取方面，后续也发现了不少基于这种大语言模型的信息抽取的论文，比如之前收集过的： https://github.com/cocacola-lab/GPT4IEhttps://github.com/RidongHan/Evaluation-of-C        <a href="https://www.cnblogs.com/xiximayou/p/17340402.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-21 15:02
+西西嘛呦
+<span data-post-id="17340402" class="post-view-count">阅读(116)</span> 
+<span data-post-id="17340402" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17340402" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17340402" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/xiximayou/p/17340154.html">
+    <span>
+        怎么裁剪LLM（大语言模型）的vocab（词表）？
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17340154">
+摘要：            
+怎么裁剪LLM（大语言模型）的vocab（词表）？ Part1前言 对于一些多语言的大语言模型而言，它的词表往往很大。在下游使用这些模型的时候，可能我们不需要其它的一些语言，例如只需要中文和英文，此时，我们可以对其vocab进行裁剪，既可以大大减少参数量，也能够保留模型的性能，接下来以Bloom模型        <a href="https://www.cnblogs.com/xiximayou/p/17340154.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-21 14:03
+西西嘛呦
+<span data-post-id="17340154" class="post-view-count">阅读(9)</span> 
+<span data-post-id="17340154" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17340154" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17340154" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17337142">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/xiximayou/archive/2023/04/20.html">2023年4月20日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/xiximayou/p/17338032.html">
+    <span>
+        你也可以动手参数有效微调：LoRA、Prefix Tuning、P-Tuning、Prompt Tuning
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17338032">
+摘要：            
+Part1前言 随着大语言模型的流行，如何让大模型在消费级GPU上进行微调训练成为了热点。掌握参数有效微调成为每个自然语言处理工程师必不可少的技能，正好hugging face开源了一个PEFT库，让我们也能够自己动手去了解参数有效微调。接下来以中文情感分析（二分类）去了解下参数有效微调。 使用的方        <a href="https://www.cnblogs.com/xiximayou/p/17338032.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-20 19:10
+西西嘛呦
+<span data-post-id="17338032" class="post-view-count">阅读(16)</span> 
+<span data-post-id="17338032" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17338032" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17338032" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/xiximayou/p/17337142.html">
+    <span>
+        DyLoRA：使用动态无搜索低秩适应的预训练模型的参数有效微调
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17337142">
+摘要：            
+又一个针对LoRA的改进方法： DyLoRA: Parameter-Efficient Tuning of Pretrained Models using Dynamic Search-Free Low Rank Adaptation https://arxiv.org/pdf/2210.07558        <a href="https://www.cnblogs.com/xiximayou/p/17337142.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-20 15:46
+西西嘛呦
+<span data-post-id="17337142" class="post-view-count">阅读(46)</span> 
+<span data-post-id="17337142" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17337142" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17337142" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17329675">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/xiximayou/archive/2023/04/18.html">2023年4月18日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/xiximayou/p/17330410.html">
+    <span>
+        Chinese-LLaMA-Alpaca技术报告
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17330410">
+摘要：            
+EFFICIENT AND EFFECTIVE TEXT ENCODING FOR CHINESE LL AMA AND ALPACA https://arxiv.org/pdf/2304.08177v1.pdf https://github.com/ymcui/Chinese-LLaMA-Alpa        <a href="https://www.cnblogs.com/xiximayou/p/17330410.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-18 17:25
+西西嘛呦
+<span data-post-id="17330410" class="post-view-count">阅读(34)</span> 
+<span data-post-id="17330410" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17330410" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17330410" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/xiximayou/p/17329882.html">
+    <span>
+        走向更好的指令伴随的汉语语言模型：研究训练数据和评估的影响
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17329882">
+摘要：            
+Towards Better Instruction Following Language Models for Chinese: Investigating the Impact of Training Data and Evaluation 论文地址：https://arxiv.org/pdf/        <a href="https://www.cnblogs.com/xiximayou/p/17329882.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-18 15:52
+西西嘛呦
+<span data-post-id="17329882" class="post-view-count">阅读(10)</span> 
+<span data-post-id="17329882" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17329882" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17329882" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/xiximayou/p/17329675.html">
+    <span>
+        COIG：开源四类中文指令语料库
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17329675">
+摘要：            
+CHINESE OPEN INSTRUCTION GENERALIST: A PRELIMINARY RELEASE 论文：https://arxiv.org/pdf/2304.07987v1.pdf 数据地址：https://huggingface.co/datasets/BAAI/COIG Pa        <a href="https://www.cnblogs.com/xiximayou/p/17329675.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-18 15:11
+西西嘛呦
+<span data-post-id="17329675" class="post-view-count">阅读(150)</span> 
+<span data-post-id="17329675" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17329675" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17329675" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17295434">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/xiximayou/archive/2023/04/07.html">2023年4月7日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/xiximayou/p/17296256.html">
+    <span>
+        用GPT4进行指令微调
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17296256">
+摘要：            
+用GPT4进行指令微调 INSTRUCTION TUNING WITH GPT-4 论文：https://arxiv.org/pdf/2304.03277.pdf 代码：https://instruction-tuning-with-gpt-4.github.io/ 前言 之前的工作表明，使用机器生        <a href="https://www.cnblogs.com/xiximayou/p/17296256.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-07 15:09
+西西嘛呦
+<span data-post-id="17296256" class="post-view-count">阅读(161)</span> 
+<span data-post-id="17296256" class="post-comment-count">评论(3)</span> 
+<span data-post-id="17296256" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17296256" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/xiximayou/p/17295434.html">
+    <span>
+        LLaMA：开放和高效的基础语言模型
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17295434">
+摘要：            
+LLaMA：开放和高效的基础语言模型 https://arxiv.org/pdf/2302.13971.pdf https://github.com/facebookresearch/llama Part1前言 我们介绍了LLaMA，这是一个参数范围从7B到65B的基础语言模型集合。我们在数以万亿计        <a href="https://www.cnblogs.com/xiximayou/p/17295434.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-07 10:44
+西西嘛呦
+<span data-post-id="17295434" class="post-view-count">阅读(284)</span> 
+<span data-post-id="17295434" class="post-comment-count">评论(5)</span> 
+<span data-post-id="17295434" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17295434" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+
+<div class="topicListFooter">
+    <div id="nav_next_page">
+        
+    <a href="https://www.cnblogs.com/xiximayou/?page=2">
+        下一页
+    </a>
+
+    </div>    
+</div>
+
+
+
+
+
+
+<script>
+    updatePostStats(
+        $(".post-view-count").map(function () { return this.dataset.postId }).get(),
+        function(id, count) { $(".post-view-count[data-post-id=" + id + "]").text("阅读(" + count + ")") },
+        function(id, count) { $(".post-comment-count[data-post-id=" + id + "]").text("评论(" + count + ")") },
+        function(id, count) { $(".post-digg-count[data-post-id=" + id + "]").text("推荐(" + count + ")") });
+</script>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 西西嘛呦
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    <div id="page_end_html">
+        <script type="text/javascript">
+   window.onload = function () {
+                var minSize = 10; //最小字体
+                var maxSize = 20;//最大字体
+                var newOne = 600; //生成雪花间隔
+                var flakColor = "#f5f5f5fa"; //雪花颜色
+                var flak = $("<div></div>").css({position:"absolute","top":"0px"}).html("✽");//定义一个雪花
+                var dhight = $(window).height(); //定义视图高度
+                var dw =$(window).width()-80; //定义视图宽度
+                setInterval(function(){
+                var sizeflak = minSize+Math.random()*maxSize; //产生大小不等的雪花
+                var startLeft = Math.random()*dw; //雪花生成是随机的left值
+                var startOpacity = 0.7+Math.random()*0.3; //随机透明度
+                var endTop= dhight-100; //雪花停止top的位置
+                var endLeft= Math.random()*dw; //雪花停止的left位置
+                var durationfull = 5000+Math.random()*3000; //雪花飘落速度不同
+                flak.clone().appendTo($("body")).css({
+                "left":startLeft ,
+                "opacity":startOpacity,
+                "font-size":sizeflak,
+                "color":flakColor
+                }).animate({
+                "top":endTop,
+                "left":endLeft,
+                "apacity":0.1
+                },durationfull,function(){
+                $(this).remove()
+                });
+                },newOne);
+            }
+ </script>
+
+
+<script type="text/javascript">
+$(function(){
+    $('#blogTitle h1').addClass('bounceInLeft animated');
+    $('#blogTitle h2').addClass('bounceInRight animated');
+    // 删除反对按钮
+    //$('.buryit').remove();
+    initCommentData();
+});
+function initCommentData() {
+    $('.feedbackItem').each(function() {
+        var text = $(this).find('.feedbackListSubtitle .layer').text();
+        // 将楼层信息放到data里面
+        // $(this).find('.blog_comment_body').attr('data-louceng', text.replace(/^#/g, ''));
+        if($(this).find('.feedbackListSubtitle .louzhu').length>0) $(this).addClass('myself');
+        var avatar = $(this).find('> .feedbackCon > span').html() || 'http://pic.cnitblog.com/face/sample_face.gif';
+        $(this).find('> .feedbackCon > .blog_comment_body').append('<img class="user-avatar" src="'+avatar+'"/>')
+    });
+}
+
+$(document).ajaxComplete(function(event, xhr, settings) {
+  // 监听获取评论ajax事件
+  if(settings.url.indexOf('/mvc/blog/GetComments.aspx') >= 0) {
+    initCommentData();
+  }
+});
+</script>
+<span id="back-to-top"><a rel="nofollow noopener"  href="#top"><img id="mypic" src="https://images.cnblogs.com/cnblogs_com/xiximayou/1643158/t_200207035556top.png" /></a></span>
+
+
+<script type="text/javascript" src="https://s4.cnzz.com/z_stat.php?id=1279004310&web_id=1279004310"></script>
+
+    </div>
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULkYcZyzE9LfqWwe_sRRT8mKLSDu_RJyIvoycD4nlKPVCcUK1jO_w0wwx4ZmxUDZ0l1fuf6-wM6blXVG7hH85I8JHGTGFE5pZNL8CBIESAjeglt60oCTKMxeKOxyBoHegR0" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

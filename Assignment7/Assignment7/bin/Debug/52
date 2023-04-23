@@ -1,0 +1,824 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>一线码农 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/imetro_hd/bundle-imetro_hd.min.css?v=hPOB5phQOImv1Eoze7tPbU-UCEJ9Y9W9C29GBRpBf24" />
+        
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/huangxincheng/custom.css?v=qCwvwmEm1ZtPIqAjWw3cb1l/1fY=" />
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/imetro_hd/bundle-imetro_hd-mobile.min.css?v=Yo5rOUFsRu8UW46vSFCEYekmBW8XCpQWj-KlsYlwc4U" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/huangxincheng/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/huangxincheng/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/huangxincheng/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 85195;
+        var currentBlogApp = 'huangxincheng';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'iMetro_HD';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-imetro_hd no-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'huangxincheng', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/huangxincheng/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/huangxincheng/"></a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/huangxincheng/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E4%B8%80%E7%BA%BF%E7%A0%81%E5%86%9C">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/huangxincheng/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+
+
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17345889">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/04/23.html">2023年4月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17345889.html">
+    <span>
+        记一次 .NET 某外贸ERP 内存暴涨分析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17345889">
+摘要：            
+一：背景 1. 讲故事 上周有位朋友找到我，说他的 API 被多次调用后出现了内存暴涨，让我帮忙看下是怎么回事？看样子是有些担心，但也不是特别担心，那既然找到我，就给他分析一下吧。 二：WinDbg 分析 1. 到底是哪里的泄露 这也是我一直在训练营灌输的理念，一定要知道是哪一边的暴涨，否则很可能就        <a href="https://www.cnblogs.com/huangxincheng/p/17345889.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-23 11:05
+一线码农
+<span data-post-id="17345889" class="post-view-count">阅读(208)</span> 
+<span data-post-id="17345889" class="post-comment-count">评论(8)</span> 
+<span data-post-id="17345889" class="post-digg-count">推荐(3)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17345889" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17336640">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/04/20.html">2023年4月20日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17336640.html">
+    <span>
+        记一次 腾讯会议 的意外崩溃分析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17336640">
+摘要：            
+一：背景 1. 讲故事 前段时间在用 腾讯会议 直播的时候，居然意外崩溃了，还好不是在训练营上课，不然又得重录了，崩完之后发现 腾讯会议 的 bugreport 组件会自动生成一个 minidump，截图如下： 作为一个.NET高级调试的技术博主，非 .NET 的程序也得要研究研究哈&#128516;&#128516;&#128516;，有        <a href="https://www.cnblogs.com/huangxincheng/p/17336640.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-20 14:10
+一线码农
+<span data-post-id="17336640" class="post-view-count">阅读(2175)</span> 
+<span data-post-id="17336640" class="post-comment-count">评论(3)</span> 
+<span data-post-id="17336640" class="post-digg-count">推荐(21)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17336640" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17328225">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/04/18.html">2023年4月18日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17328225.html">
+    <span>
+        记一次 .NET某医疗器械清洗系统 卡死分析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17328225">
+摘要：            
+一：背景 1. 讲故事 前段时间协助训练营里的一位朋友分析了一个程序卡死的问题，回过头来看这个案例比较经典，这篇稍微整理一下供后来者少踩坑吧。 二：WinDbg 分析 1. 为什么会卡死 因为是窗体程序，理所当然就是看主线程此时正在做什么? 可以用 ~0s ; k 看一下便知。 0:000&gt; k #        <a href="https://www.cnblogs.com/huangxincheng/p/17328225.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-18 08:17
+一线码农
+<span data-post-id="17328225" class="post-view-count">阅读(2883)</span> 
+<span data-post-id="17328225" class="post-comment-count">评论(13)</span> 
+<span data-post-id="17328225" class="post-digg-count">推荐(20)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17328225" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17292169">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/04/06.html">2023年4月6日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17292169.html">
+    <span>
+        记一次 .NET 某设备监控系统 死锁分析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17292169">
+摘要：            
+一：背景 1. 讲故事 上周看了一位训练营朋友的dump，据朋友说他的程序卡死了，看完之后发现是一例经典的死锁问题，蛮有意思，这个案例算是学习 .NET高级调试 入门级的案例，这里和大家分享一下。 二：WinDbg 分析 1. 程序为什么会卡死 因为是窗体程序，所以看主线程的线程栈就好了，如果卡在         <a href="https://www.cnblogs.com/huangxincheng/p/17292169.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-06 11:03
+一线码农
+<span data-post-id="17292169" class="post-view-count">阅读(803)</span> 
+<span data-post-id="17292169" class="post-comment-count">评论(1)</span> 
+<span data-post-id="17292169" class="post-digg-count">推荐(6)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17292169" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17282019">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/04/03.html">2023年4月3日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17282019.html">
+    <span>
+        记一次 .NET 某手术室行为信息系统 内存泄露分析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17282019">
+摘要：            
+一：背景 1. 讲故事 昨天有位朋友找到我，说他的程序内存存在泄露导致系统特别卡，大地址也开了，让我帮忙看一下怎么回事？今天上午看了下dump，感觉挺有意思，在我的分析之旅中此类问题也蛮少见，算是完善一下体系吧。 二：WinDbg 分析 1. 到底是哪里的泄露 在.NET高级调试训练营中，我多次告诉        <a href="https://www.cnblogs.com/huangxincheng/p/17282019.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-03 08:42
+一线码农
+<span data-post-id="17282019" class="post-view-count">阅读(1892)</span> 
+<span data-post-id="17282019" class="post-comment-count">评论(4)</span> 
+<span data-post-id="17282019" class="post-digg-count">推荐(9)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17282019" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17272068">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/03/30.html">2023年3月30日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17272068.html">
+    <span>
+        记一次 .NET 某传感器采集系统 线程爆高分析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17272068">
+摘要：            
+一：背景 1. 讲故事 前段时间有位朋友微信找到我，说他的程序使用 hsl 库之后，采集 plc 时内存溢出，让我帮忙看一下怎么回事，哈哈，貌似是分析之旅中的第二次和 hsl 打交道，既然找到我，那就上 windbg 说话吧。 二：WinDbg 分析 1. 为什么会内存溢出 简单观察程序的提交内存之        <a href="https://www.cnblogs.com/huangxincheng/p/17272068.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-03-30 11:52
+一线码农
+<span data-post-id="17272068" class="post-view-count">阅读(2215)</span> 
+<span data-post-id="17272068" class="post-comment-count">评论(15)</span> 
+<span data-post-id="17272068" class="post-digg-count">推荐(15)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17272068" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17264057">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/03/28.html">2023年3月28日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17264057.html">
+    <span>
+        我的合肥 .NET 俱乐部线下活动之旅
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17264057">
+摘要：            
+一：背景 我是一个性格比较内向的人，天然抵触这种线下面对面的大型活动，我害怕上台之后紧张到语无伦次（有过类似经历），越语无伦次又会让我更紧张，刚好谋得程序员这种工作又特别适合我这种性格的人，所以没有刻意改变这种内向的动力，大概在 2020 年 .NET 俱乐部的祝主席邀请我做主题分享的时候，我也很干        <a href="https://www.cnblogs.com/huangxincheng/p/17264057.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-03-28 10:15
+一线码农
+<span data-post-id="17264057" class="post-view-count">阅读(2361)</span> 
+<span data-post-id="17264057" class="post-comment-count">评论(14)</span> 
+<span data-post-id="17264057" class="post-digg-count">推荐(41)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17264057" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17260332">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/03/27.html">2023年3月27日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17260332.html">
+    <span>
+        记一次 .NET 某企业 ERP网站系统 崩溃分析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17260332">
+摘要：            
+一：背景 1. 讲故事 前段时间收到了一个朋友的求助，说他的ERP网站系统会出现偶发性崩溃，找了好久也没找到是什么原因，让我帮忙看下，其实崩溃好说，用 procdump 自动抓一个就好，拿到 dump 之后，接下来就是一顿分析了。 二：WinDbg 分析 1. 是什么导致的崩溃 windbg 有一个        <a href="https://www.cnblogs.com/huangxincheng/p/17260332.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-03-27 09:01
+一线码农
+<span data-post-id="17260332" class="post-view-count">阅读(1703)</span> 
+<span data-post-id="17260332" class="post-comment-count">评论(4)</span> 
+<span data-post-id="17260332" class="post-digg-count">推荐(17)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17260332" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17250240">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/03/24.html">2023年3月24日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17250240.html">
+    <span>
+        如何提取 x64 程序那些易失的方法参数 
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17250240">
+摘要：            
+一：背景 1. 讲故事 最近经常遇到有朋友反馈，在 x64 环境下如何提取线程栈中的方法参数，熟悉 x64 调用协定的朋友应该知道，这种协定范围下，方法的前四个参数都是用寄存器传递的，比如rcx，rdx，r8d，r9d 四个寄存器，由于寄存器存值的临时性，它的值容易被后面的逻辑给征用了，那这种情况下        <a href="https://www.cnblogs.com/huangxincheng/p/17250240.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-03-24 09:12
+一线码农
+<span data-post-id="17250240" class="post-view-count">阅读(892)</span> 
+<span data-post-id="17250240" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17250240" class="post-digg-count">推荐(4)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17250240" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17248323">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/03/23.html">2023年3月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17248323.html">
+    <span>
+        记一次 .NET 某医疗住院系统 崩溃分析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17248323">
+摘要：            
+一：背景 1. 讲故事 最近收到了两起程序崩溃的dump，查了下都是经典的 double free 造成的，蛮有意思，这里就抽一篇出来分享一下经验供后面的学习者避坑吧。 二：WinDbg 分析 1. 崩溃点在哪里 windbg 带了一个自动化分析命令 !analyze -v 可以帮助我们找到崩溃时的        <a href="https://www.cnblogs.com/huangxincheng/p/17248323.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-03-23 17:43
+一线码农
+<span data-post-id="17248323" class="post-view-count">阅读(731)</span> 
+<span data-post-id="17248323" class="post-comment-count">评论(1)</span> 
+<span data-post-id="17248323" class="post-digg-count">推荐(5)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17248323" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17214154">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/03/14.html">2023年3月14日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17214154.html">
+    <span>
+        记一次 .NET某汽车零件采集系统 卡死分析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17214154">
+摘要：            
+一：背景 1. 讲故事 前段时间有位朋友在微信上找到我，说他的程序会出现一些偶发卡死的情况，让我帮忙看下是怎么回事，刚好朋友也抓到了dump，就让朋友把 dump 丢给我，接下来用 windbg 探究下到底咋回事。 二：WinDbg 分析 1. 程序真的卡死吗 因为是一个 winform 程序，验证        <a href="https://www.cnblogs.com/huangxincheng/p/17214154.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-03-14 10:49
+一线码农
+<span data-post-id="17214154" class="post-view-count">阅读(2818)</span> 
+<span data-post-id="17214154" class="post-comment-count">评论(3)</span> 
+<span data-post-id="17214154" class="post-digg-count">推荐(15)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17214154" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17159384">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/02/27.html">2023年2月27日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17159384.html">
+    <span>
+        记一次 .NET某家装ERP系统 内存暴涨分析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17159384">
+摘要：            
+一：背景 1. 讲故事 前段时间微信上有一位老朋友找到我，说他的程序跑着跑着内存会突然爆高，有时候会下去，有什么会下不去，怀疑是不是某些情况下存在内存泄露，让我帮忙分析一下，其实内存泄露方面的问题还是比较好解决的，看过这个dump之后觉得还是有一定的分享价值，拿出来和大家分享一下吧。 二：WinDb        <a href="https://www.cnblogs.com/huangxincheng/p/17159384.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-02-27 13:38
+一线码农
+<span data-post-id="17159384" class="post-view-count">阅读(4027)</span> 
+<span data-post-id="17159384" class="post-comment-count">评论(8)</span> 
+<span data-post-id="17159384" class="post-digg-count">推荐(47)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17159384" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17139891">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/02/21.html">2023年2月21日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17139891.html">
+    <span>
+        记一次 .NET 某医保平台 CPU 爆高分析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17139891">
+摘要：            
+一：背景 1. 讲故事 一直在追这个系列的朋友应该能感受到，我给这个行业中无数的陌生人分析过各种dump，终于在上周有位老同学找到我，还是个大妹子，必须有求必应 &#128513;&#128513;&#128513;。 妹子公司的系统最近在某次升级之后，在高峰期会遇到 CPU 爆高的现象，有些单位你懂的，很强势，所以就苦逼了程序媛，不管怎么        <a href="https://www.cnblogs.com/huangxincheng/p/17139891.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-02-21 09:47
+一线码农
+<span data-post-id="17139891" class="post-view-count">阅读(2299)</span> 
+<span data-post-id="17139891" class="post-comment-count">评论(14)</span> 
+<span data-post-id="17139891" class="post-digg-count">推荐(21)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17139891" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17136299">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/02/20.html">2023年2月20日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17136299.html">
+    <span>
+        SQLSERVER 语句交错引发的死锁研究
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17136299">
+摘要：            
+一：背景 1. 讲故事 相信大家在使用 SQLSERVER 的过程中经常会遇到 阻塞 和 死锁，尤其是 死锁，比如下面的输出： (1 row affected) Msg 1205, Level 13, State 51, Line 5 Transaction (Process ID 62) was         <a href="https://www.cnblogs.com/huangxincheng/p/17136299.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-02-20 09:36
+一线码农
+<span data-post-id="17136299" class="post-view-count">阅读(1987)</span> 
+<span data-post-id="17136299" class="post-comment-count">评论(2)</span> 
+<span data-post-id="17136299" class="post-digg-count">推荐(17)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17136299" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17126024">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/huangxincheng/archive/2023/02/16.html">2023年2月16日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17126024.html">
+    <span>
+        SQLSERVER 临时表和表变量到底有什么区别？
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17126024">
+摘要：            
+一：背景 1. 讲故事 今天和大家聊一套面试中经常被问到的高频题，对，就是 临时表 和 表变量 这俩玩意，如果有朋友在面试中回答的不好，可以尝试看下这篇能不能帮你成功迈过。 二：到底有什么区别 1. 前置思考 不管是 临时表 还是 表变量 都带了 表 这个词，既然提到了 表 ，按推理自然会落到某一个        <a href="https://www.cnblogs.com/huangxincheng/p/17126024.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-02-16 11:08
+一线码农
+<span data-post-id="17126024" class="post-view-count">阅读(729)</span> 
+<span data-post-id="17126024" class="post-comment-count">评论(3)</span> 
+<span data-post-id="17126024" class="post-digg-count">推荐(5)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17126024" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+
+<div class="topicListFooter">
+    <div id="nav_next_page">
+        
+    <a href="https://www.cnblogs.com/huangxincheng/?page=2">
+        下一页
+    </a>
+
+    </div>    
+</div>
+
+
+
+
+
+
+<script>
+    updatePostStats(
+        $(".post-view-count").map(function () { return this.dataset.postId }).get(),
+        function(id, count) { $(".post-view-count[data-post-id=" + id + "]").text("阅读(" + count + ")") },
+        function(id, count) { $(".post-comment-count[data-post-id=" + id + "]").text("评论(" + count + ")") },
+        function(id, count) { $(".post-digg-count[data-post-id=" + id + "]").text("推荐(" + count + ")") });
+</script>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 一线码农
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULk4q9h4FwvpiK0jTAml9-j_fLuJ_p5O4EwfMWk4_BS-94-gpeY-HuwVl8erkUBYiZ7gAZhNEgUuD1UcLG2d6VWVqSOh8jWJq3eISKVnroGaY4ErNRGX3lPSeIF6nFB25SM" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

@@ -1,0 +1,532 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="description" content="一：背景 1. 讲故事 前段时间在用 腾讯会议 直播的时候，居然意外崩溃了，还好不是在训练营上课，不然又得重录了，崩完之后发现 腾讯会议 的 bugreport 组件会自动生成一个 minidump，" />
+    <meta property="og:description" content="一：背景 1. 讲故事 前段时间在用 腾讯会议 直播的时候，居然意外崩溃了，还好不是在训练营上课，不然又得重录了，崩完之后发现 腾讯会议 的 bugreport 组件会自动生成一个 minidump，" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>记一次 腾讯会议 的意外崩溃分析 - 一线码农 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/imetro_hd/bundle-imetro_hd.min.css?v=hPOB5phQOImv1Eoze7tPbU-UCEJ9Y9W9C29GBRpBf24" />
+        <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="/css/hljs/cnblogs.css?v=5J1NDtbnnIr2Rc2SdhEMlMxD4l9Eydj88B31E7_NhS4" />
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/huangxincheng/custom.css?v=qCwvwmEm1ZtPIqAjWw3cb1l/1fY=" />
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/imetro_hd/bundle-imetro_hd-mobile.min.css?v=Yo5rOUFsRu8UW46vSFCEYekmBW8XCpQWj-KlsYlwc4U" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/huangxincheng/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/huangxincheng/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/huangxincheng/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 85195;
+        var currentBlogApp = 'huangxincheng';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'iMetro_HD';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+        <script>
+            var currentPostDateAdded = '2023-04-20 14:10';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-imetro_hd no-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'huangxincheng', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/huangxincheng/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/huangxincheng/"></a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/huangxincheng/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E4%B8%80%E7%BA%BF%E7%A0%81%E5%86%9C">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/huangxincheng/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17336640.html">
+    <span role="heading" aria-level="2">记一次 腾讯会议 的意外崩溃分析</span>
+    
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<h2 id="一背景">一：背景</h2>
+<h3 id="1-讲故事">1. 讲故事</h3>
+<p>前段时间在用 <code>腾讯会议</code> 直播的时候，居然意外崩溃了，还好不是在训练营上课，不然又得重录了，崩完之后发现 <code>腾讯会议</code> 的 bugreport 组件会自动生成一个 minidump，截图如下：</p>
+<p><img src="https://img2023.cnblogs.com/blog/214741/202304/214741-20230420141121851-1262968877.png" alt="" loading="lazy"></p>
+<p>作为一个.NET高级调试的技术博主，非 <code>.NET</code> 的程序也得要研究研究哈😄😄😄，有了这个好奇心，也有了这个 dump，接下来用 windbg 看一看吧。</p>
+<h2 id="二windbg-分析">二：WinDbg 分析</h2>
+<h3 id="1-为什么会崩溃">1. 为什么会崩溃</h3>
+<p>在 Windows 平台上不管是<code>硬件异常</code>还是<code>软件异常</code> 操作系统都会帮忙构造一个 <code>EXCEPTION_POINTERS</code> 结构体，这里面就包含了程序的崩溃点，错误码等各种非常有价值的信息，要想洞察这个结构体，要么在栈上提取，要么用 <code>!analyze -v</code> 自动化提取，这里采用后者。</p>
+<pre><code class="language-C#">
+0:000&gt; !analyze -v
+
+CONTEXT:  (.ecxr)
+eax=008fdfe4 ebx=00000001 ecx=00000000 edx=2d692620 esi=3c4e1818 edi=3207f464
+eip=1c5b34aa esp=008fe034 ebp=008fe094 iopl=0         nv up ei pl nz ac pe nc
+cs=0023  ss=002b  ds=002b  es=002b  fs=0053  gs=002b             efl=00010216
+meeting_dashboard_module+0x34aa:
+1c5b34aa 8b01            mov     eax,dword ptr [ecx]  ds:002b:00000000=????????
+Resetting default scope
+
+EXCEPTION_RECORD:  (.exr -1)
+ExceptionAddress: 1c5b34aa (meeting_dashboard_module+0x000034aa)
+   ExceptionCode: c0000005 (Access violation)
+  ExceptionFlags: 00000000
+NumberParameters: 2
+   Parameter[0]: 00000000
+   Parameter[1]: 00000000
+Attempt to read from address 00000000
+
+PROCESS_NAME:  wemeetapp.exe
+
+READ_ADDRESS:  00000000 
+
+ERROR_CODE: (NTSTATUS) 0xc0000005 - 0x%p            0x%p                    %s
+
+EXCEPTION_CODE_STR:  c0000005
+
+EXCEPTION_PARAMETER1:  00000000
+
+EXCEPTION_PARAMETER2:  00000000
+
+STACK_TEXT:  
+WARNING: Stack unwind information not available. Following frames may be wrong.
+008fe094 7ad808f4     008fe320 00000000 ec0d8f9b meeting_dashboard_module+0x34aa
+008fe214 7ad80617     008fe2f0 ec0d89ef 4ee246d8 desktop_common+0x108f4
+008fe460 7ad7f4d7     776f6873 008fe400 79641fe1 desktop_common+0x10617
+008fe5ec 7ad7ae62     008fe9d0 008fe76c 79bce43a desktop_common+0xf4d7
+008fe5f8 79bce43a     008fe6b8 a0f1fbb4 326aed58 desktop_common+0xae62
+008fe76c 7ad7de66     00000000 008fe9d0 ec0d8a63 wemeet_framework+0x2e43a
+008fe7ec 7ad7deed     00000000 008fe9d0 008fe808 desktop_common+0xde66
+008fe7fc 7ad7ae62     008fe9d0 008fe97c 79bce43a desktop_common+0xdee
+...
+
+</code></pre>
+<p>从上面的 <code>ExceptionCode: c0000005</code> 来看，这是一个经典的访问违例，从崩溃汇编的 <code>mov     eax,dword ptr [ecx]  ds:002b:00000000=????????</code> 来看，当前的 ecx 中存放的是 0 ，从 0 上取内容自然就是访问违例。</p>
+<h3 id="2-为什么会访问违例">2. 为什么会访问违例</h3>
+<p>要想知道访问违例的原因，就需要分析一下附近的汇编代码，用 <code>.ecxr ; k</code> 切到异常前的崩溃上下文。</p>
+<pre><code class="language-C#">
+0:000&gt; .ecxr ; k
+eax=008fdfe4 ebx=00000001 ecx=00000000 edx=2d692620 esi=3c4e1818 edi=3207f464
+eip=1c5b34aa esp=008fe034 ebp=008fe094 iopl=0         nv up ei pl nz ac pe nc
+cs=0023  ss=002b  ds=002b  es=002b  fs=0053  gs=002b             efl=00010216
+meeting_dashboard_module+0x34aa:
+1c5b34aa 8b01            mov     eax,dword ptr [ecx]  ds:002b:00000000=????????
+  *** Stack trace for last set context - .thread/.cxr resets it
+ # ChildEBP RetAddr      
+WARNING: Stack unwind information not available. Following frames may be wrong.
+00 008fe094 7ad808f4     meeting_dashboard_module+0x34aa
+01 008fe214 7ad80617     desktop_common+0x108f4
+02 008fe460 7ad7f4d7     desktop_common+0x10617
+03 008fe5ec 7ad7ae62     desktop_common+0xf4d7
+04 008fe5f8 79bce43a     desktop_common+0xae62
+05 008fe76c 7ad7de66     wemeet_framework+0x2e43a
+06 008fe7ec 7ad7deed     desktop_common+0xde66
+07 008fe7fc 7ad7ae62     desktop_common+0xdeed
+08 008fe808 79bce43a     desktop_common+0xae62
+09 008fe97c 79bc784c     wemeet_framework+0x2e43a
+0a 008fe98c 79bc821f     wemeet_framework+0x2784c
+0b 008fe9a0 79bdac53     wemeet_framework+0x2821f
+0c 008fea1c 79bdb791     wemeet_framework+0x3ac53
+...
+
+</code></pre>
+<p>由于没有这些 dll 的符号，windbg 为了定义代码行数，就只能用 <code>module + 0xxxxx</code> 作为偏移来定位。</p>
+<p>现在我们知道 ecx=0，那为什么会是 0 呢？接下来用 <code>ub</code> 观察下汇编代码逻辑，截图如下：</p>
+<pre><code class="language-C#">
+0:000&gt; ub 1c5b34aa L20
+meeting_dashboard_module+0x3449:
+1c5b3449 00c6            add     dh,al
+1c5b344b 45              inc     ebp
+1c5b344c b000            mov     al,0
+1c5b344e e8cde2ffff      call    meeting_dashboard_module+0x1720 (1c5b1720)
+1c5b3453 8d45b0          lea     eax,[ebp-50h]
+1c5b3456 c645fc04        mov     byte ptr [ebp-4],4
+1c5b345a 50              push    eax
+1c5b345b 8bce            mov     ecx,esi
+1c5b345d ff15a8cb611c    call    dword ptr [meeting_dashboard_module+0x6cba8 (1c61cba8)]
+1c5b3463 8d4db0          lea     ecx,[ebp-50h]
+1c5b3466 8945c8          mov     dword ptr [ebp-38h],eax
+1c5b3469 c645fc00        mov     byte ptr [ebp-4],0
+1c5b346d e8feebffff      call    meeting_dashboard_module+0x2070 (1c5b2070)
+1c5b3472 51              push    ecx
+1c5b3473 8b4d0c          mov     ecx,dword ptr [ebp+0Ch]
+1c5b3476 8bd4            mov     edx,esp
+1c5b3478 c7450c00000000  mov     dword ptr [ebp+0Ch],0
+1c5b347f 890a            mov     dword ptr [edx],ecx
+1c5b3481 8bcf            mov     ecx,edi
+1c5b3483 e8d8010000      call    meeting_dashboard_module+0x3660 (1c5b3660)
+1c5b3488 837dc801        cmp     dword ptr [ebp-38h],1
+1c5b348c 8b4f08          mov     ecx,dword ptr [edi+8]
+1c5b348f 8b01            mov     eax,dword ptr [ecx]
+1c5b3491 7509            jne     meeting_dashboard_module+0x349c (1c5b349c)
+1c5b3493 6a01            push    1
+1c5b3495 6a01            push    1
+1c5b3497 ff507c          call    dword ptr [eax+7Ch]
+1c5b349a eb2b            jmp     meeting_dashboard_module+0x34c7 (1c5b34c7)
+1c5b349c ff5048          call    dword ptr [eax+48h]
+1c5b349f 8bc8            mov     ecx,eax
+1c5b34a1 ff15ccc6611c    call    dword ptr [meeting_dashboard_module+0x6c6cc (1c61c6cc)]
+1c5b34a7 8b4f08          mov     ecx,dword ptr [edi+8]
+1c5b34aa 8b01            mov     eax,dword ptr [ecx]
+...
+
+</code></pre>
+<p>从汇编代码看，当前的 ecx 是来自于地址 <code>edi+8</code>，edi 的值有可能会在 <code>meeting_dashboard_module+0x6c6cc (1c61c6cc)</code> 方法中被修改，我们一并观察下。</p>
+<pre><code class="language-C#">
+0:000&gt; dp @edi+8 L2
+3207f46c  ???????? ????????
+
+0:000&gt; u 1c61c6cc
+meeting_dashboard_module+0x6c6cc:
+1c61c6cc ??              ???
+                ^ Memory access error in 'u 1c61c6cc'
+
+</code></pre>
+<p>我去，都是 <code>???</code>，这表示当前的<code>数据和机器指令</code>都没有纳入到 dump 中，这也就是为什么 dump 小的原因。</p>
+<p>到这里好像就没法继续分析了，天要绝人之路吗？</p>
+<h3 id="3-还有希望吗">3. 还有希望吗</h3>
+<p>虽然被当头一棒，但总得要挣扎一下吧，突破口也只能是汇编代码了，通过仔细观察，由于倒数第五行是一个 jmp 指令，所以语句指令 <code>1c5b349c</code> 肯定是从别的地方飞跃过来的，翻译成 C 代码就是一个 <code>if else</code> 的判断，截图如下：</p>
+<p><img src="https://img2023.cnblogs.com/blog/214741/202304/214741-20230420141121882-1880540311.png" alt="" loading="lazy"></p>
+<p>既然走到了 else 的逻辑，那必然 <code>ebp-38h</code> 上的值肯定不是 1，那到底是多少呢？可以来查一查。</p>
+<pre><code class="language-C#">0:000&gt; dp @ebp-38h L1
+008fe05c  00000000
+</code></pre>
+<p>那 <code>@ebp-38h</code> 是谁给的呢？继续观察汇编代码，发现是 <code>meeting_dashboard_module+0x6cba8</code> 函数的返回值 eax 给的 ，从汇编逻辑看， 0 是一种异常状态。</p>
+<h3 id="4-为什么会返回-0">4. 为什么会返回 0</h3>
+<p>返回 0 也暗示了代码在哪里报了一些错，可以用 <code>GetLastError()</code> 来获取可能调用 win32api 出错时设置的错误码，用 <code>!teb</code> 观察里面的 <code>LastErrorValue</code> 值。</p>
+<pre><code class="language-C#">
+0:000&gt; !teb
+TEB at 0078a000
+    ExceptionList:        008fcf94
+    StackBase:            00900000
+    StackLimit:           008ee000
+    SubSystemTib:         00000000
+    FiberData:            00001e00
+    ArbitraryUserPointer: 00000000
+    Self:                 0078a000
+    EnvironmentPointer:   00000000
+    ClientId:             00003ccc . 00004484
+    Real ClientId:        00000000 . 00000000
+    RpcHandle:            00000000
+    Tls Storage:          40a94180
+    PEB Address:          00787000
+    LastErrorValue:       18
+    LastStatusValue:      0
+    Count Owned Locks:    0
+    HardErrorMode:        0
+
+</code></pre>
+<p>这里的 18 是一个十进制，十六进制就是 <code>0x12</code> ，那这个错误码代表什么意思呢？ <code>!error</code> 已经不支持了，只能上 msdn 上找答案，截图如下：</p>
+<p><img src="https://img2023.cnblogs.com/blog/214741/202304/214741-20230420141121837-1648597648.png" alt="" loading="lazy"></p>
+<p>汇总一下：在腾讯会议录制期间，可能是处理什么文件抛了一个 <code>There are no more files.</code> 错误，在错误处理的后续逻辑中抛了崩溃。</p>
+<p>有了这个信息之后，可以到外网搜一下 (<a href="https://windowsreport.com/there-are-no-more-files" target="_blank" rel="noopener">https://windowsreport.com/there-are-no-more-files</a>)，常见的解决办法如下：</p>
+<ul>
+<li>Solution 1 — Remove folder lock</li>
+<li>Solution 2 – Repair your registry</li>
+<li>Solution 3 — Run a full system scan</li>
+<li>Solution 4 — Update your OS</li>
+<li>Solution 5 — Remove recently installed software</li>
+<li>Solution 6 — Uninstall Comodo Cleaner/ ASUS security data manager</li>
+<li>Solution 7 — Boot into Safe Mode</li>
+</ul>
+<p>具体是什么原因，由于缺少符号再深入分析下去得要花一些时间了，这里就到此为止吧。</p>
+<h2 id="三总结">三：总结</h2>
+<p>崩溃的 dump 已经第一时间提交上去了，相信<code>腾讯会议</code>的研发团队能够很快解决，作为一个付费会员，真心希望在下次录制的时候不要再崩了。</p>
+<img src="https://images.cnblogs.com/cnblogs_com/huangxincheng/345039/o_210929020104最新消息优惠促销公众号关注二维码.jpg" width="700" height="300" alt="图片名称" align="center">
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="2.895549765847222" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2023-04-20 17:15">2023-04-20 14:10</span>&nbsp;
+<a href="https://www.cnblogs.com/huangxincheng/">一线码农</a>&nbsp;
+阅读(<span id="post_view_count">2012</span>)&nbsp;
+评论(<span id="post_comment_count">3</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17336640" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(17336640);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '17336640', targetLink: 'https://www.cnblogs.com/huangxincheng/p/17336640.html', title: '记一次 腾讯会议 的意外崩溃分析' })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+
+<script>
+    var cb_entryId = 17336640, cb_entryCreatedDate = '2023-04-20 14:10', cb_postType = 1, cb_postTitle = '记一次 腾讯会议 的意外崩溃分析';
+    var allowComments = true, cb_blogId = 85195, cb_blogApp = 'huangxincheng', cb_blogUserGuid = '40a06552-abf8-df11-ac81-842b2b196315';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+            <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 一线码农
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULnRRCwtjtfHV1iVL5nlDDE6w3kx0-pPuJ0M8UKsVHs7O0BOi-Cb690P6czDyK_nQ_yuVDAq0u7ripLvVQVP0z2CLXo_od2NR8vC8QVOYxK1VJTUSd6jgOglznoipp5EG4Y" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

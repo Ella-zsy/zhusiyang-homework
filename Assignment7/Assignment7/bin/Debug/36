@@ -1,0 +1,1130 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="description" content="以proxysql的单例为环境，搭建mysql的高可用，读写分离环境。" />
+    <meta property="og:description" content="以proxysql的单例为环境，搭建mysql的高可用，读写分离环境。" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>mysql+proxysql+replication-manager的主从半同步复制+高可用+读写分离 - 逆水寒龙 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/buildtowin/bundle-buildtowin.min.css?v=Tgl1d--mRuaeqinLMFZ2zu1KEazOmNWHLTJIcXu4SXU" />
+        <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="/css/hljs/cnblogs.css?v=5J1NDtbnnIr2Rc2SdhEMlMxD4l9Eydj88B31E7_NhS4" />
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/buildtowin/bundle-buildtowin-mobile.min.css?v=ZBWq3OPQpKdP7jvC_UMCkC1a79tQGcXLPZwlftZaLVg" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/24la/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/24la/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/24la/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 109201;
+        var currentBlogApp = '24la';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'BuildtoWin';
+        var visitorUserId = '';
+        var hasCustomScript = false;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+        <script>
+            var currentPostDateAdded = '2023-04-23 12:53';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-buildtowin has-navbar">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://www.cnblogs.com/cmt/p/17320765.html" onclick="countCreativeClicks('M2-博客园')">
+                    园子的商业化努力-困境求助：开设捐助通道
+                </a>                
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, '24la', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/24la/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/24la/">逆水寒龙</a>
+</h1>
+<h2>败人二字，非傲即惰</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/24la/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E9%80%86%E6%B0%B4%E5%AF%92%E9%BE%99">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/24la/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/mysql-proxysql-replication-manager-read-write-split-mha.html">
+    <span role="heading" aria-level="2">mysql+proxysql+replication-manager的主从半同步复制+高可用+读写分离</span>
+    
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                    <div id="cnblogs_post_description" style="display: none">
+        
+        以proxysql的单例为环境，搭建mysql的高可用，读写分离环境。
+    </div>
+<div id="cnblogs_post_body" class="blogpost-body blogpost-body-html">
+<p>环境：</p>
+<p>AlmaLinux release 9.1</p>
+<p>MySQL Community Server Ver 8.0.33</p>
+<p>Replication Manager v2.2.40 for MariaDB 10.x and MySQL 5.7 Series</p>
+<p>ProxySQL version 2.5.1-90-gbedaa6c</p>
+<p>主机分配情况：</p>
+<p><img src="https://img2023.cnblogs.com/blog/376147/202304/376147-20230422211340770-1043424715.png" alt="" loading="lazy"></p>
+<p>采用hyper-v创建虚拟机的方式进行的，创建1台模板之后另外3台导入虚拟机复制。</p>
+<p>1、安装mysql</p>
+<p>mysql8的默认加密插件变为了caching_sha2_password需要修改成mysql_native_password，因为proxysql不支持caching_sha2_password</p>
+<p>安装完成后在server01、02、03上创建以下用户</p>
+<p>rep-manager供replication-manager使用，repl供主从复制使用</p>
+<div class="cnblogs_code">
+<pre>mysql<span style="color: rgba(128, 128, 128, 1)">&gt;</span> <span style="color: rgba(0, 0, 255, 1)">create</span> <span style="color: rgba(255, 0, 255, 1)">user</span> <span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">rep-manager</span><span style="color: rgba(255, 0, 0, 1)">'</span>@<span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">%</span><span style="color: rgba(255, 0, 0, 1)">'</span> identified <span style="color: rgba(0, 0, 255, 1)">by</span> <span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">your password</span><span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(0, 0, 0, 1)">;
+Query OK, </span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">0</span> rows affected (<span style="color: rgba(128, 0, 0, 1); font-weight: bold">0.01</span><span style="color: rgba(0, 0, 0, 1)"> sec)
+
+mysql</span><span style="color: rgba(128, 128, 128, 1)">&gt;</span> <span style="color: rgba(0, 0, 255, 1)">create</span> <span style="color: rgba(255, 0, 255, 1)">user</span> <span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">repl</span><span style="color: rgba(255, 0, 0, 1)">'</span>@<span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">%</span><span style="color: rgba(255, 0, 0, 1)">'</span> identified <span style="color: rgba(0, 0, 255, 1)">by</span> <span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">your password</span><span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(0, 0, 0, 1)">;
+Query OK, </span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">0</span> rows affected (<span style="color: rgba(128, 0, 0, 1); font-weight: bold">0.02</span><span style="color: rgba(0, 0, 0, 1)"> sec)
+
+mysql</span><span style="color: rgba(128, 128, 128, 1)">&gt;</span> <span style="color: rgba(0, 0, 255, 1)">create</span> <span style="color: rgba(255, 0, 255, 1)">user</span> <span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">proxysql</span><span style="color: rgba(255, 0, 0, 1)">'</span>@<span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">%</span><span style="color: rgba(255, 0, 0, 1)">'</span> identified <span style="color: rgba(0, 0, 255, 1)">by</span> <span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">your password</span><span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(0, 0, 0, 1)">;
+Query OK, </span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">0</span> rows affected (<span style="color: rgba(128, 0, 0, 1); font-weight: bold">0.02</span><span style="color: rgba(0, 0, 0, 1)"> sec)
+
+mysql</span><span style="color: rgba(128, 128, 128, 1)">&gt;</span> <span style="color: rgba(0, 0, 255, 1)">grant</span> process,<span style="color: rgba(0, 0, 255, 1)">replication</span> slave,<span style="color: rgba(0, 0, 255, 1)">replication</span> client <span style="color: rgba(0, 0, 255, 1)">on</span> <span style="color: rgba(128, 128, 128, 1)">*</span>.<span style="color: rgba(128, 128, 128, 1)">*</span> <span style="color: rgba(0, 0, 255, 1)">to</span> <span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">proxysql</span><span style="color: rgba(255, 0, 0, 1)">'</span>@<span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">%</span><span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(0, 0, 0, 1)">;
+Query OK, </span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">0</span> rows affected (<span style="color: rgba(128, 0, 0, 1); font-weight: bold">0.01</span><span style="color: rgba(0, 0, 0, 1)"> sec)
+
+mysql</span><span style="color: rgba(128, 128, 128, 1)">&gt;</span> <span style="color: rgba(0, 0, 255, 1)">grant</span> <span style="color: rgba(0, 0, 255, 1)">select</span>,<span style="color: rgba(0, 0, 255, 1)">replication</span> slave,<span style="color: rgba(0, 0, 255, 1)">replication</span> client,reload,super <span style="color: rgba(0, 0, 255, 1)">on</span> <span style="color: rgba(128, 128, 128, 1)">*</span>.<span style="color: rgba(128, 128, 128, 1)">*</span> <span style="color: rgba(0, 0, 255, 1)">to</span> <span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">repl</span><span style="color: rgba(255, 0, 0, 1)">'</span>@<span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">%</span><span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(0, 0, 0, 1)">;
+Query OK, </span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">0</span> rows affected, <span style="color: rgba(128, 0, 0, 1); font-weight: bold">1</span> warning (<span style="color: rgba(128, 0, 0, 1); font-weight: bold">0.01</span><span style="color: rgba(0, 0, 0, 1)"> sec)
+
+mysql</span><span style="color: rgba(128, 128, 128, 1)">&gt;</span> <span style="color: rgba(0, 0, 255, 1)">grant</span> <span style="color: rgba(128, 128, 128, 1)">all</span> <span style="color: rgba(0, 0, 255, 1)">privileges</span> <span style="color: rgba(0, 0, 255, 1)">on</span> <span style="color: rgba(128, 128, 128, 1)">*</span>.<span style="color: rgba(128, 128, 128, 1)">*</span> <span style="color: rgba(0, 0, 255, 1)">to</span> <span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">rep-manager</span><span style="color: rgba(255, 0, 0, 1)">'</span>@<span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">%</span><span style="color: rgba(255, 0, 0, 1)">'</span> <span style="color: rgba(0, 0, 255, 1)">with</span> <span style="color: rgba(0, 0, 255, 1)">grant</span> <span style="color: rgba(0, 0, 255, 1)">option</span><span style="color: rgba(0, 0, 0, 1)">;
+Query OK, </span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">0</span> rows affected (<span style="color: rgba(128, 0, 0, 1); font-weight: bold">0.01</span><span style="color: rgba(0, 0, 0, 1)"> sec)
+
+mysql</span><span style="color: rgba(128, 128, 128, 1)">&gt;</span> flush <span style="color: rgba(0, 0, 255, 1)">privileges</span><span style="color: rgba(0, 0, 0, 1)">;
+Query OK, </span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">0</span> rows affected (<span style="color: rgba(128, 0, 0, 1); font-weight: bold">0.01</span> sec)</pre>
+</div>
+<p>&nbsp;</p>
+<p>2、复制虚拟机</p>
+<p>3、在server00上安装replication-manager</p>
+<p>4、在server00上安装proxysql</p>
+<p>5、启动mysql，创建主从半同步复制</p>
+<p>半同步需要安装插件，在主库和从库上都安装</p>
+<div class="cnblogs_code">
+<pre>mysql<span style="color: rgba(128, 128, 128, 1)">&gt;</span> install plugin rpl_semi_sync_source soname <span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">semisync_source.so</span><span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(0, 0, 0, 1)">;
+mysql</span><span style="color: rgba(128, 128, 128, 1)">&gt;</span> install plugin rpl_semi_sync_replica soname <span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">semisync_replica.so</span><span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(0, 0, 0, 1)">;
+mysql</span><span style="color: rgba(128, 128, 128, 1)">&gt;</span> show plugins;<br>+----------------------------------+----------+--------------------+---------------------+---------+<br>| Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Status&nbsp;&nbsp; | Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Library&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | License |<br>+----------------------------------+----------+--------------------+---------------------+---------+<br>| binlog&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | STORAGE ENGINE&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysql_native_password&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | AUTHENTICATION&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| sha256_password&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | AUTHENTICATION&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| caching_sha2_password&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | AUTHENTICATION&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| sha2_cache_cleaner&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | AUDIT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| daemon_keyring_proxy_plugin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | DAEMON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| CSV&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | STORAGE ENGINE&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| MEMORY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | STORAGE ENGINE&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| InnoDB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | STORAGE ENGINE&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_TRX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_CMP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_CMP_RESET&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_CMPMEM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_CMPMEM_RESET&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_CMP_PER_INDEX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_CMP_PER_INDEX_RESET&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_BUFFER_PAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_BUFFER_PAGE_LRU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_BUFFER_POOL_STATS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_TEMP_TABLE_INFO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_METRICS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_FT_DEFAULT_STOPWORD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_FT_DELETED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_FT_BEING_DELETED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_FT_CONFIG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_FT_INDEX_CACHE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_FT_INDEX_TABLE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_TABLES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_TABLESTATS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_INDEXES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_TABLESPACES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_COLUMNS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_VIRTUAL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_CACHED_INDEXES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| INNODB_SESSION_TEMP_TABLESPACES&nbsp; | ACTIVE&nbsp;&nbsp; | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| MyISAM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | STORAGE ENGINE&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| MRG_MYISAM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | STORAGE ENGINE&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| PERFORMANCE_SCHEMA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | STORAGE ENGINE&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| TempTable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | STORAGE ENGINE&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| ARCHIVE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | STORAGE ENGINE&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| BLACKHOLE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | STORAGE ENGINE&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| FEDERATED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | DISABLED | STORAGE ENGINE&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| ndbcluster&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | DISABLED | STORAGE ENGINE&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| ndbinfo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | DISABLED | STORAGE ENGINE&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| ndb_transid_mysql_connection_map | DISABLED | INFORMATION SCHEMA | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| ngram&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | FTPARSER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysqlx_cache_cleaner&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | AUDIT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysqlx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | DAEMON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | NULL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_source&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | REPLICATION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | semisync_source.so&nbsp; | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_replica&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ACTIVE&nbsp;&nbsp; | REPLICATION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | semisync_replica.so | GPL&nbsp;&nbsp;&nbsp;&nbsp; |<br>+----------------------------------+----------+--------------------+---------------------+---------+<br>50 rows in set (0.00 sec)<br>要想永久启用半同步需将配置写入my.cnf看下面的配置即可。<br>在主库上查看是否启用了半同步<br>&nbsp;mysql&gt; show variables like 'rpl_semi%';<br>+---------------------------------------------+------------+<br>| Variable_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Value&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>+---------------------------------------------+------------+<br>| rpl_semi_sync_replica_enabled&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OFF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_replica_trace_level&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 32&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_source_enabled&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_source_timeout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 10000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_source_trace_level&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 32&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_source_wait_for_replica_count | 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_source_wait_no_replica&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_source_wait_point&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | AFTER_SYNC |<br>+---------------------------------------------+------------+<br>从库上<br>mysql&gt; show variables like 'rpl_semi%';<br>+---------------------------------------------+------------+<br>| Variable_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Value&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>+---------------------------------------------+------------+<br>| rpl_semi_sync_replica_enabled&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_replica_trace_level&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 32&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_source_enabled&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_source_timeout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 10000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_source_trace_level&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 32&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_source_wait_for_replica_count | 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_source_wait_no_replica&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| rpl_semi_sync_source_wait_point&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | AFTER_SYNC |<br>+---------------------------------------------+------------+<br>8 rows in set (0.01 sec)</pre>
+</div>
+<p>master主机mysql配置my.cnf如下</p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 0, 1)"># For advice on how to change settings please see
+# http://dev.mysql.com/doc/refman/</span>8.0<span style="color: rgba(0, 0, 0, 1)">/en/server-configuration-defaults.html
+
+</span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">[</span><span style="color: rgba(128, 0, 0, 1)">mysqld</span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">]</span><span style="color: rgba(0, 0, 0, 1)">
+#
+# Remove leading # and set to the amount of RAM for the most important data
+# cache in MySQL. Start at </span>70% of total RAM for dedicated server, else 10<span style="color: rgba(0, 0, 0, 1)">%.
+# innodb_buffer_pool_size </span>=<span style="color: rgba(0, 0, 0, 1)"> 128M
+#
+# Remove the leading </span>"# "<span style="color: rgba(0, 0, 0, 1)"> to disable binary logging
+# Binary logging captures changes between backups and is enabled by
+# default. It's default setting is log_bin</span>=<span style="color: rgba(0, 0, 0, 1)">binlog
+# disable_log_bin
+#
+# Remove leading # to set options mainly useful for reporting servers.
+# The server defaults are faster for transactions and fast SELECTs.
+# Adjust sizes as needed</span>,<span style="color: rgba(0, 0, 0, 1)"> experiment to find the optimal values.
+# join_buffer_size </span>=<span style="color: rgba(0, 0, 0, 1)"> 128M
+# sort_buffer_size </span>=<span style="color: rgba(0, 0, 0, 1)"> 2M
+# read_rnd_buffer_size </span>=<span style="color: rgba(0, 0, 0, 1)"> 2M
+#
+# Remove leading # to revert to previous value for default_authentication_plugin</span>,<span style="color: rgba(0, 0, 0, 1)">
+# this will increase compatibility with older clients. For background</span>,<span style="color: rgba(0, 0, 0, 1)"> see:
+# https://dev.mysql.com/doc/refman/</span>8.0<span style="color: rgba(0, 0, 0, 1)">/en/server-system-variables.html#sysvar_default_authentication_plugin
+# default-authentication-plugin</span>=<span style="color: rgba(0, 0, 0, 1)">mysql_native_password
+
+datadir</span>=<span style="color: rgba(0, 0, 0, 1)">/var/lib/mysql
+socket</span>=<span style="color: rgba(0, 0, 0, 1)">/var/lib/mysql/mysql.sock
+
+log-error</span>=<span style="color: rgba(0, 0, 0, 1)">/var/log/mysqld.log
+pid-file</span>=<span style="color: rgba(0, 0, 0, 1)">/var/run/mysqld/mysqld.pid
+default_authentication_plugin=mysql_native_password
+######replication settings######
+server-id</span>=1001<span style="color: rgba(0, 0, 0, 1)">
+log-bin</span>=<span style="color: rgba(0, 0, 0, 1)">mysql-bin
+binlog_format</span>=<span style="color: rgba(0, 0, 0, 1)">row
+
+binlog-ignore-db</span>=<span style="color: rgba(0, 0, 0, 1)">mysql
+binlog-ignore-db</span>=<span style="color: rgba(0, 0, 0, 1)">information_schema
+binlog-ignore-db</span>=<span style="color: rgba(0, 0, 0, 1)">performance_schema
+binlog-ignore-db</span>=<span style="color: rgba(0, 0, 0, 1)">sys
+
+######gtid#######
+gtid_mode</span>=<span style="color: rgba(0, 0, 0, 1)">on
+enforce_gtid_consistency</span>=<span style="color: rgba(0, 0, 0, 1)">on
+binlog_gtid_simple_recovery</span>=<span style="color: rgba(0, 0, 0, 1)">on
+
+relay_log_recovery </span>=<span style="color: rgba(0, 0, 0, 1)"> ON
+relay-log-index</span>=<span style="color: rgba(0, 0, 0, 1)">mysql-relay
+relay-log</span>=<span style="color: rgba(0, 0, 0, 1)">mysql-relay
+
+rpl_semi_sync_source_enabled </span>=<span style="color: rgba(0, 0, 0, 1)"> ON<br>rpl_semi_sync_replica_enabled =<span style="color: rgba(0, 0, 0, 1)"> ON</span>
+log_slow_<span style="color: rgba(0, 0, 0, 1)">replica</span>_statements </span>= 1</pre>
+</div>
+<p>slave主机myql的配置如下：</p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 0, 1)"># For advice on how to change settings please see
+# http://dev.mysql.com/doc/refman/</span>8.0<span style="color: rgba(0, 0, 0, 1)">/en/server-configuration-defaults.html
+
+</span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">[</span><span style="color: rgba(128, 0, 0, 1)">mysqld</span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">]</span><span style="color: rgba(0, 0, 0, 1)">
+#
+# Remove leading # and set to the amount of RAM for the most important data
+# cache in MySQL. Start at </span>70% of total RAM for dedicated server, else 10<span style="color: rgba(0, 0, 0, 1)">%.
+# innodb_buffer_pool_size </span>=<span style="color: rgba(0, 0, 0, 1)"> 128M
+#
+# Remove the leading </span>"# "<span style="color: rgba(0, 0, 0, 1)"> to disable binary logging
+# Binary logging captures changes between backups and is enabled by
+# default. It's default setting is log_bin</span>=<span style="color: rgba(0, 0, 0, 1)">binlog
+# disable_log_bin
+#
+# Remove leading # to set options mainly useful for reporting servers.
+# The server defaults are faster for transactions and fast SELECTs.
+# Adjust sizes as needed</span>,<span style="color: rgba(0, 0, 0, 1)"> experiment to find the optimal values.
+# join_buffer_size </span>=<span style="color: rgba(0, 0, 0, 1)"> 128M
+# sort_buffer_size </span>=<span style="color: rgba(0, 0, 0, 1)"> 2M
+# read_rnd_buffer_size </span>=<span style="color: rgba(0, 0, 0, 1)"> 2M
+#
+# Remove leading # to revert to previous value for default_authentication_plugin</span>,<span style="color: rgba(0, 0, 0, 1)">
+# this will increase compatibility with older clients. For background</span>,<span style="color: rgba(0, 0, 0, 1)"> see:
+# https://dev.mysql.com/doc/refman/</span>8.0<span style="color: rgba(0, 0, 0, 1)">/en/server-system-variables.html#sysvar_default_authentication_plugin
+# default-authentication-plugin</span>=<span style="color: rgba(0, 0, 0, 1)">mysql_native_password
+
+datadir</span>=<span style="color: rgba(0, 0, 0, 1)">/var/lib/mysql
+socket</span>=<span style="color: rgba(0, 0, 0, 1)">/var/lib/mysql/mysql.sock
+
+log-error</span>=<span style="color: rgba(0, 0, 0, 1)">/var/log/mysqld.log
+pid-file</span>=<span style="color: rgba(0, 0, 0, 1)">/var/run/mysqld/mysqld.pid
+default_authentication_plugin=mysql_native_password
+######replication settings######
+server-id</span>=1002<span style="color: rgba(0, 0, 0, 1)">
+log-bin</span>=<span style="color: rgba(0, 0, 0, 1)">mysql-bin
+binlog_format</span>=<span style="color: rgba(0, 0, 0, 1)">row
+log_slave_updates</span>=<span style="color: rgba(0, 0, 0, 1)">on
+relay_log_recovery</span>=1<span style="color: rgba(0, 0, 0, 1)">
+
+binlog-ignore-db</span>=<span style="color: rgba(0, 0, 0, 1)">mysql
+binlog-ignore-db</span>=<span style="color: rgba(0, 0, 0, 1)">information_schema
+binlog-ignore-db</span>=<span style="color: rgba(0, 0, 0, 1)">performance_schema
+binlog-ignore-db</span>=<span style="color: rgba(0, 0, 0, 1)">sys
+
+######gtid#######
+gtid_mode</span>=<span style="color: rgba(0, 0, 0, 1)">on
+enforce_gtid_consistency</span>=<span style="color: rgba(0, 0, 0, 1)">on
+binlog_gtid_simple_recovery</span>=<span style="color: rgba(0, 0, 0, 1)">on
+
+relay_log_recovery </span>=<span style="color: rgba(0, 0, 0, 1)"> ON
+relay-log-index</span>=<span style="color: rgba(0, 0, 0, 1)">mysql-relay
+relay-log</span>=<span style="color: rgba(0, 0, 0, 1)">mysql-relay
+
+rpl_semi_sync_source_enabled </span>=<span style="color: rgba(0, 0, 0, 1)"> ON</span><span style="color: rgba(0, 0, 0, 1)">
+rpl_semi_sync_replica_enabled </span>=<span style="color: rgba(0, 0, 0, 1)"> ON
+log_slow_<span style="color: rgba(0, 0, 0, 1)">replica</span>_statements </span>= 1<br><br>read_only = on</pre>
+</div>
+<p>启动主从</p>
+<div class="cnblogs_code">
+<pre>mysql&gt; CHANGE REPLICATION SOURCE to SOURCE_HOST='server01.mshome.net',SOURCE_USER='repl',SOURCE_PASSWORD='your password',SOURCE_PORT=3306;<br>Query OK, 0 rows affected, 3 warnings (0.03 sec)<br><br>mysql&gt; start replica;<br>Query OK, 0 rows affected (0.02 sec)<br><br>mysql&gt; show replica status\G;<br>*************************** 1. row ***************************<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Replica_IO_State: Waiting for source to send event<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_Host: server01.mshome.net<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_User: repl<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_Port: 3306<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Connect_Retry: 60<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_Log_File: mysql-bin.000009<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Read_Source_Log_Pos: 157<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Relay_Log_File: mysql-relay.000010<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Relay_Log_Pos: 373<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Relay_Source_Log_File: mysql-bin.000009<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Replica_IO_Running: Yes<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Replica_SQL_Running: Yes<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Replicate_Do_DB: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Replicate_Ignore_DB: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Replicate_Do_Table: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Replicate_Ignore_Table: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Replicate_Wild_Do_Table: <br>&nbsp; Replicate_Wild_Ignore_Table: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last_Errno: 0<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last_Error: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Skip_Counter: 0<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exec_Source_Log_Pos: 157<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Relay_Log_Space: 795<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Until_Condition: None<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Until_Log_File: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Until_Log_Pos: 0<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_SSL_Allowed: No<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_SSL_CA_File: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_SSL_CA_Path: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_SSL_Cert: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_SSL_Cipher: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_SSL_Key: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Seconds_Behind_Source: 0<br>Source_SSL_Verify_Server_Cert: No<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last_IO_Errno: 0<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last_IO_Error: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last_SQL_Errno: 0<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last_SQL_Error: <br>&nbsp; Replicate_Ignore_Server_Ids: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_Server_Id: 1001<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_UUID: 590af332-e04e-11ed-8935-00155d030202<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_Info_File: mysql.slave_master_info<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SQL_Delay: 0<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SQL_Remaining_Delay: NULL<br>&nbsp;&nbsp;&nbsp; Replica_SQL_Running_State: Replica has read all relay log; waiting for more updates<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_Retry_Count: 86400<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_Bind: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last_IO_Error_Timestamp: <br>&nbsp;&nbsp;&nbsp;&nbsp; Last_SQL_Error_Timestamp: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_SSL_Crl: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_SSL_Crlpath: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Retrieved_Gtid_Set: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Executed_Gtid_Set: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Auto_Position: 0<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Replicate_Rewrite_DB: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Channel_Name: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_TLS_Version: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source_public_key_path: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Get_Source_public_key: 1<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Network_Namespace: <br>1 row in set (0.00 sec)<br><br>ERROR: <br>No query specified</pre>
+<pre><span style="color: rgba(128, 0, 0, 1); font-weight: bold">&nbsp;</span></pre>
+</div>
+<p>server00主机上安装了replication-manager和proxysql</p>
+<p>replication-manager的配置如下</p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 255, 1)"><span style="color: rgba(0, 0, 255, 1)">查看replication-manager配置文件cluster1.toml</span><br>cat</span> /etc/replication-manager/cluster.d/cluster1.toml</pre>
+</div>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(128, 0, 0, 1); font-weight: bold">[</span><span style="color: rgba(128, 0, 0, 1)">cluster1</span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">]</span><span style="color: rgba(0, 0, 0, 1)">
+title </span>= "cluster1"<span style="color: rgba(0, 0, 0, 1)">
+prov-orchestrator </span>= "onpremise"<span style="color: rgba(0, 0, 0, 1)">
+prov-db-tags </span>= "innodb,noquerycache,slow,pfs,pkg,linux,smallredolog,logtotable"<span style="color: rgba(0, 0, 0, 1)">
+prov-db-memory </span>= "256"<span style="color: rgba(0, 0, 0, 1)">
+prov-db-memory-shared-pct </span>= "threads:16,innodb:60,myisam:10,aria:10,rocksdb:1,tokudb:1,s3:1,archive:1,querycache:0"<span style="color: rgba(0, 0, 0, 1)">
+prov-db-disk-size </span>= "1"<span style="color: rgba(0, 0, 0, 1)">
+prov-db-cpu-cores </span>= "1"<span style="color: rgba(0, 0, 0, 1)">
+prov-db-disk-iops </span>= "300"<span style="color: rgba(0, 0, 0, 1)">
+
+db-servers-hosts </span>= "server01.mshome.net:3306,server02.mshome.net:3306,server03.mshome.net:3306"<span style="color: rgba(0, 0, 0, 1)">
+db-servers-prefered-master </span>= "server01.mshome.net:3306"<span style="color: rgba(0, 0, 0, 1)">
+db-servers-credential </span>= "rep-manager:yourpassword"<span style="color: rgba(0, 0, 0, 1)">
+db-servers-connect-timeout </span>= 5<span style="color: rgba(0, 0, 0, 1)">
+replication-credential </span>= "rep-manager:yourpassword"<span style="color: rgba(0, 0, 0, 1)">
+
+
+verbose </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+log-failed-election  </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+log-level </span>= 1<span style="color: rgba(0, 0, 0, 1)">
+log-rotate-max-age </span>= 7<span style="color: rgba(0, 0, 0, 1)">
+log-rotate-max-backup </span>= 7<span style="color: rgba(0, 0, 0, 1)">
+log-rotate-max-size </span>= 5<span style="color: rgba(0, 0, 0, 1)">
+log-sql-in-monitoring   </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+log-sst </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+
+##############
+## TOPOLOGY ##
+##############
+
+replication-multi-master </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+replication-multi-tier-slave </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+
+############
+# BACKUPS ##
+###########
+
+
+backup-streaming </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+backup-streaming-aws-access-key-id </span>= "admin"<span style="color: rgba(0, 0, 0, 1)">
+backup-streaming-aws-access-secret </span>= "xxxx"<span style="color: rgba(0, 0, 0, 1)">
+backup-streaming-endpoint</span>= "https://s3.signal18.io/"<span style="color: rgba(0, 0, 0, 1)">
+backup-streaming-region</span>= "fr-1"<span style="color: rgba(0, 0, 0, 1)">
+backup-streaming-bucket</span>= "repman"<br><br><span style="color: rgba(0, 0, 0, 1)">
+#####这里可以设置备份工具restic，工具可以跨服务器，结合minio备份就很爽了，后续再介绍吧
+backup-restic </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+backup-restic-aws </span>=<span style="color: rgba(0, 0, 0, 1)">  false
+backup-physical-type </span>= "mariabackup"<span style="color: rgba(0, 0, 0, 1)">
+backup-logical-type </span>= "mysqldump"<span style="color: rgba(0, 0, 0, 1)">
+backup-restic-aws-access-secret </span>= "xxxx"<span style="color: rgba(0, 0, 0, 1)">
+backup-restic-password </span>= "xxxx"<span style="color: rgba(0, 0, 0, 1)">
+backup-restic-binary-path </span>= "/usr/bin/restic"<span style="color: rgba(0, 0, 0, 1)">
+
+monitoring-scheduler </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+scheduler-db-servers-logical-backup  </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+scheduler-db-servers-logical-backup-cron</span>= "0 30 23 * * 6"<span style="color: rgba(0, 0, 0, 1)">
+scheduler-db-servers-logs   </span>=<span style="color: rgba(0, 0, 0, 1)">  false
+scheduler-db-servers-logs-cron </span>= "0 0 * * * *"<span style="color: rgba(0, 0, 0, 1)">
+scheduler-db-servers-logs-table-keep </span>= 4<span style="color: rgba(0, 0, 0, 1)">
+scheduler-db-servers-logs-table-rotate  </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+scheduler-db-servers-logs-table-rotate-cron </span>= "0 0 0/6 * * *"<span style="color: rgba(0, 0, 0, 1)">
+scheduler-db-servers-optimize  </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+scheduler-db-servers-optimize-cron </span>= "0 0 3 1 * 5"<span style="color: rgba(0, 0, 0, 1)">
+scheduler-db-servers-physical-backup </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+scheduler-db-servers-physical-backup-cron </span>= "0 30 23 * * *"<span style="color: rgba(0, 0, 0, 1)">
+
+##############
+## FAILOVER ##
+##############
+
+failover-mode </span>= "manual"<span style="color: rgba(0, 0, 0, 1)">
+failover-pre-script </span>= ""<span style="color: rgba(0, 0, 0, 1)">
+failover-post-script </span>= ""<span style="color: rgba(0, 0, 0, 1)">
+
+## Slaves will re enter with read-only
+
+failover-readonly-state </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+failover-event-scheduler </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+failover-event-status </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+
+## Failover after N failures detection
+
+failover-falsepositive-ping-counter </span>= 5<span style="color: rgba(0, 0, 0, 1)">
+
+## Cancel failover if already N failover
+## Cancel failover if last failover was N seconds before
+## Cancel failover in semi-sync when one slave is not in sync
+## Cancel failover if one slave receive master heartbeat
+## Cancel failover when replication delay is more than N seconds
+
+failover-limit </span>= 0<span style="color: rgba(0, 0, 0, 1)">
+failover-time-limit </span>= 0<span style="color: rgba(0, 0, 0, 1)">
+failover-at-sync </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+failover-max-slave-delay </span>= 30<span style="color: rgba(0, 0, 0, 1)">
+failover-restart-unsafe </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+
+# failover-falsepositive-heartbeat </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+# failover-falsepositive-heartbeat-timeout </span>= 3<span style="color: rgba(0, 0, 0, 1)">
+# failover-falsepositive-maxscale </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+# failover-falsepositive-maxscale-timeout </span>= 14<span style="color: rgba(0, 0, 0, 1)">
+# failover-falsepositive-external </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+# failover-falsepositive-external-port </span>= 80<span style="color: rgba(0, 0, 0, 1)">
+
+################
+## SWITCHOVER ##
+################
+
+## In switchover Wait N milliseconds before killing long running transactions
+## Cancel switchover if transaction running more than N seconds
+## Cancel switchover if write query running more than N seconds
+## Cancel switchover if one of the slaves is not synced based on GTID equality
+
+switchover-wait-kill </span>= 5000<span style="color: rgba(0, 0, 0, 1)">
+switchover-wait-trx </span>= 10<span style="color: rgba(0, 0, 0, 1)">
+switchover-wait-write-query </span>= 10<span style="color: rgba(0, 0, 0, 1)">
+switchover-at-equal-gtid </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+switchover-at-sync </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+switchover-max-slave-delay </span>= 30<span style="color: rgba(0, 0, 0, 1)">
+
+############
+## REJOIN ##
+############
+
+autorejoin </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+autorejoin-script </span>= ""<span style="color: rgba(0, 0, 0, 1)">
+autorejoin-semisync </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+autorejoin-backup-binlog </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+autorejoin-flashback </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+autorejoin-mysqldump </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+
+####################
+## CHECKS &amp; FORCE ##
+####################
+
+check-replication-filters </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+check-binlog-filters </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+check-replication-state </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+
+force-slave-heartbeat</span>=<span style="color: rgba(0, 0, 0, 1)"> false
+force-slave-heartbeat-retry </span>= 5<span style="color: rgba(0, 0, 0, 1)">
+force-slave-heartbeat-time </span>= 3<span style="color: rgba(0, 0, 0, 1)">
+force-slave-gtid-mode </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+force-slave-semisync </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+force-slave-failover-readonly-state </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+force-binlog-row </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+force-binlog-annotate </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+force-binlog-slowqueries </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+force-binlog-compress </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+force-binlog-checksum </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+force-inmemory-binlog-cache-size </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+force-disk-relaylog-size-limit </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+force-disk-relaylog-size-limit-size </span>= 1000000000<span style="color: rgba(0, 0, 0, 1)">
+force-sync-binlog </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+force-sync-innodb </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+
+##############
+## MAXSCALE ##
+##############
+
+## for </span>2<span style="color: rgba(0, 0, 0, 1)"> nodes cluster maxscale can be driven by replication manager
+
+maxscale </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+maxscale-binlog </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+maxscale-servers </span>= "192.168.0.201"<span style="color: rgba(0, 0, 0, 1)">
+maxscale-port </span>= 4003<span style="color: rgba(0, 0, 0, 1)">
+maxscale-user </span>= "admin"<span style="color: rgba(0, 0, 0, 1)">
+maxscale-pass </span>= "mariadb"<span style="color: rgba(0, 0, 0, 1)">
+
+## When true replication manager drive maxscale server state
+## Not required unless multiple maxscale or release does not support detect_stale_slave
+
+maxscale-disable-monitor </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+
+## maxinfo|maxadmin
+
+maxscale-get-info-method </span>= "maxadmin"<span style="color: rgba(0, 0, 0, 1)">
+maxscale-maxinfo-port </span>= 4002<span style="color: rgba(0, 0, 0, 1)">
+
+maxscale-write-port </span>= 4007<span style="color: rgba(0, 0, 0, 1)">
+maxscale-read-port </span>= 4008<span style="color: rgba(0, 0, 0, 1)">
+maxscale-read-write-port </span>= 4006<span style="color: rgba(0, 0, 0, 1)">
+maxscale-binlog-port </span>= 4000<span style="color: rgba(0, 0, 0, 1)">
+
+#############
+## HAPROXY ##
+#############
+
+## Wrapper mode unless maxscale or proxysql required to be located with replication-manager
+
+haproxy </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+haproxy-binary-path </span>= "/usr/sbin/haproxy"<span style="color: rgba(0, 0, 0, 1)">
+
+## Read write traffic
+## Read only load balance least connection traffic
+haproxy-write-port </span>= 3306<span style="color: rgba(0, 0, 0, 1)">
+haproxy-read-port </span>= 3307<span style="color: rgba(0, 0, 0, 1)">
+
+####################
+## SHARDING PROXY ##
+####################
+
+mdbshardproxy </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+mdbshardproxy-hosts </span>= "127.0.0.1:3306"<span style="color: rgba(0, 0, 0, 1)">
+mdbshardproxy-user </span>= "root:mariadb"<span style="color: rgba(0, 0, 0, 1)">
+
+#################################
+###### proxysql settings ########
+#################################
+proxysql </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+proxysql-servers </span>= "127.0.0.1"<span style="color: rgba(0, 0, 0, 1)">
+proxysql-port </span>= "6033"<span style="color: rgba(0, 0, 0, 1)">
+proxysql-admin-port </span>= "6032"<span style="color: rgba(0, 0, 0, 1)">
+proxysql-writer-hostgroup </span>= "1000"<span style="color: rgba(0, 0, 0, 1)">
+proxysql-reader-hostgroup </span>= "1001"<span style="color: rgba(0, 0, 0, 1)">
+proxysql-user </span>= "admin"<span style="color: rgba(0, 0, 0, 1)">
+proxysql-password </span>= "admin"<span style="color: rgba(0, 0, 0, 1)">
+proxysql-bootstrap </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+proxysql-bootstrap-users </span>= false #不从master复制用户到proxysql，因为复制会出问题<br>proxysql-bootstrap-hostgroups = false<br>proxysql-bootstrap-variables = false</pre>
+</div>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 255, 1)">查看replication-manager配置文件config.toml<br>cat</span> /etc/replication-manager/config.toml</pre>
+</div>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(128, 0, 0, 1); font-weight: bold">[</span><span style="color: rgba(128, 0, 0, 1)">Default</span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">]</span><span style="color: rgba(0, 0, 0, 1)">
+
+include </span>= "/etc/replication-manager/cluster.d"<span style="color: rgba(0, 0, 0, 1)">
+
+monitoring-save-config </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+monitoring-datadir </span>= "/var/lib/replication-manager"<span style="color: rgba(0, 0, 0, 1)">
+#monitoring-sharedir </span>= "/usr/share/replication-manager"<span style="color: rgba(0, 0, 0, 1)">
+
+## Timeout in seconds between consecutive monitoring
+
+monitoring-ticker </span>= 2<span style="color: rgba(0, 0, 0, 1)">
+
+#########
+## LOG ##
+#########
+
+log-file </span>= "/var/log/replication-manager.log"<span style="color: rgba(0, 0, 0, 1)">
+log-heartbeat </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+log-syslog </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+
+
+
+#################
+## ARBITRATION ##
+#################
+
+arbitration-external </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+arbitration-external-secret </span>= "13787932529099014144"<span style="color: rgba(0, 0, 0, 1)">
+arbitration-external-hosts </span>= "88.191.151.84:80"<span style="color: rgba(0, 0, 0, 1)">
+arbitration-peer-hosts </span>="127.0.0.1:10002"<span style="color: rgba(0, 0, 0, 1)">
+
+## Unique value on each replication-manager
+
+arbitration-external-unique-id </span>= 0<span style="color: rgba(0, 0, 0, 1)">
+
+##########
+## HTTP ##
+##########
+
+http-server </span>=<span style="color: rgba(0, 0, 0, 1)"> true
+http-bind-address </span>= "0.0.0.0"<span style="color: rgba(0, 0, 0, 1)">
+http-port </span>= "10001"<span style="color: rgba(0, 0, 0, 1)">
+http-auth </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+http-session-lifetime </span>=   3600<span style="color: rgba(0, 0, 0, 1)">
+http-bootstrap-button </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+http-refresh-interval </span>= 4000<span style="color: rgba(0, 0, 0, 1)">
+
+#########
+## API ##
+#########
+
+api-credentials </span>= "admin:repman"<span style="color: rgba(0, 0, 0, 1)">
+api-port </span>= "10005"<span style="color: rgba(0, 0, 0, 1)">
+api-https-bind </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+
+api-credentials-acl-allow </span>=  "admin:cluster proxy db prov,dba:cluster proxy db,foo:"<span style="color: rgba(0, 0, 0, 1)">
+api-credentials-acl-discard </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+api-credentials-external </span>= "dba:repman,foo:bar"<span style="color: rgba(0, 0, 0, 1)">
+
+############
+## ALERTS ##
+############
+
+mail-from </span>= "replication-manager@localhost"<span style="color: rgba(0, 0, 0, 1)">
+mail-smtp-addr </span>= "localhost:25"<span style="color: rgba(0, 0, 0, 1)">
+mail-to </span>= "replication-manager@signal18.io"<span style="color: rgba(0, 0, 0, 1)">
+mail-smtp-password</span>=""<span style="color: rgba(0, 0, 0, 1)">
+mail-smtp-user</span>=""<span style="color: rgba(0, 0, 0, 1)">
+
+alert-slack-channel </span>= "#support"<span style="color: rgba(0, 0, 0, 1)">
+alert-slack-url </span>= ""<span style="color: rgba(0, 0, 0, 1)">
+alert-slack-user </span>= "svar"<span style="color: rgba(0, 0, 0, 1)">
+
+##########
+# STATS ##
+##########
+
+graphite-metrics </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+graphite-carbon-host </span>= "127.0.0.1"<span style="color: rgba(0, 0, 0, 1)">
+graphite-carbon-port </span>= 2003<span style="color: rgba(0, 0, 0, 1)">
+graphite-embedded </span>=<span style="color: rgba(0, 0, 0, 1)"> false
+graphite-carbon-api-port </span>= 10002<span style="color: rgba(0, 0, 0, 1)">
+graphite-carbon-server-port </span>= 10003<span style="color: rgba(0, 0, 0, 1)">
+graphite-carbon-link-port </span>= 7002<span style="color: rgba(0, 0, 0, 1)">
+graphite-carbon-pickle-port </span>= 2004<span style="color: rgba(0, 0, 0, 1)">
+graphite-carbon-pprof-port </span>= 7007<span style="color: rgba(0, 0, 0, 1)">
+<br>####这里可以设置逻辑备份和物理备份的程序，结合上面的配置里的restic做备份，很不错，后续有时间了再继续配置吧
+backup-mydumper-path </span>= "/usr/local/bin/mydumper"<span style="color: rgba(0, 0, 0, 1)">
+backup-myloader-path </span>= "/usr/local/bin/myloader"<span style="color: rgba(0, 0, 0, 1)">
+backup-mysqlbinlog-path </span>= "/usr/local/bin/mysqlbinlog"<span style="color: rgba(0, 0, 0, 1)">
+backup-mysqldump-path </span>= "/usr/local/bin/mysqldump"<span style="color: rgba(0, 0, 0, 1)">
+
+
+##############
+# BENCHMARK ##
+##############
+
+sysbench-binary-path </span>= "/usr/bin/sysbench"<span style="color: rgba(0, 0, 0, 1)">
+sysbench-threads </span>= 4<span style="color: rgba(0, 0, 0, 1)">
+sysbench-time </span>= 100<span style="color: rgba(0, 0, 0, 1)">
+sysbench-v1 </span>= true</pre>
+</div>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 255, 1)">查看proxysql的配置<br>cat</span> /etc/proxysql.cnf</pre>
+</div>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 0, 1)">#file proxysql.cfg
+
+########################################################################################
+# This config file is parsed using libconfig </span>,<span style="color: rgba(0, 0, 0, 1)"> and its grammar is described in:        
+# http://www.hyperrealm.com/libconfig/libconfig_manual.html#Configuration-File-Grammar 
+# Grammar is also copied at the end of this file                                       
+########################################################################################
+
+########################################################################################
+# IMPORTANT INFORMATION REGARDING THIS CONFIGURATION FILE:                             
+########################################################################################
+# On startup</span>,<span style="color: rgba(0, 0, 0, 1)"> ProxySQL reads its config file (if present) to determine its datadir. 
+# What happens next depends on if the database file (disk) is present in the defined
+# datadir (i.e. </span>"/var/lib/proxysql/proxysql.db"<span style="color: rgba(0, 0, 0, 1)">).
+#
+# If the database file is found</span>,<span style="color: rgba(0, 0, 0, 1)"> ProxySQL initializes its in-memory configuration from 
+# the persisted on-disk database. So</span>,<span style="color: rgba(0, 0, 0, 1)"> disk configuration gets loaded into memory and 
+# then propagated towards the runtime configuration. 
+#
+# If the database file is not found and a config file exists</span>,<span style="color: rgba(0, 0, 0, 1)"> the config file is parsed 
+# and its content is loaded into the in-memory database</span>,<span style="color: rgba(0, 0, 0, 1)"> to then be both saved on-disk 
+# database and loaded at runtime.
+#
+# IMPORTANT: If a database file is found</span>,<span style="color: rgba(0, 0, 0, 1)"> the config file is NOT parsed. In this case
+#            ProxySQL initializes its in-memory configuration from the persisted on-disk
+#            database ONLY. In other words</span>,<span style="color: rgba(0, 0, 0, 1)"> the configuration found in the proxysql.cnf
+#            file is only used to initial the on-disk database read on the first startup.
+#
+# In order to FORCE a re-initialise of the on-disk database from the configuration file 
+# the ProxySQL service should be started with </span>"systemctl start proxysql-initial"<span style="color: rgba(0, 0, 0, 1)">.
+#
+########################################################################################
+
+datadir</span>="/var/lib/proxysql"<span style="color: rgba(0, 0, 0, 1)">
+errorlog</span>="/var/lib/proxysql/proxysql.log"<span style="color: rgba(0, 0, 0, 1)">
+
+admin_variables</span>=<span style="color: rgba(0, 0, 0, 1)">
+{
+    admin_credentials</span>="admin:admin"<span style="color: rgba(0, 0, 0, 1)">
+#    mysql_ifaces</span>="127.0.0.1:6032;/tmp/proxysql_admin.sock"<span style="color: rgba(0, 0, 0, 1)">
+    mysql_ifaces</span>="0.0.0.0:6032"<span style="color: rgba(0, 0, 0, 1)">
+#    refresh_interval</span>=2000<span style="color: rgba(0, 0, 0, 1)">
+#    debug</span>=<span style="color: rgba(0, 0, 0, 1)">true
+}
+
+mysql_variables</span>=<span style="color: rgba(0, 0, 0, 1)">
+{
+    threads</span>=4<span style="color: rgba(0, 0, 0, 1)">
+    max_connections</span>=2048<span style="color: rgba(0, 0, 0, 1)">
+    default_query_delay</span>=0<span style="color: rgba(0, 0, 0, 1)">
+    default_query_timeout</span>=36000000<span style="color: rgba(0, 0, 0, 1)">
+    have_compress</span>=<span style="color: rgba(0, 0, 0, 1)">true
+    poll_timeout</span>=2000<span style="color: rgba(0, 0, 0, 1)">
+#    interfaces</span>="0.0.0.0:6033;/tmp/proxysql.sock"<span style="color: rgba(0, 0, 0, 1)">
+    interfaces</span>="0.0.0.0:6033"<span style="color: rgba(0, 0, 0, 1)">
+    default_schema</span>="information_schema"<span style="color: rgba(0, 0, 0, 1)">
+    stacksize</span>=1048576<span style="color: rgba(0, 0, 0, 1)">
+    server_version</span>="5.5.30"<span style="color: rgba(0, 0, 0, 1)">
+    connect_timeout_server</span>=3000<span style="color: rgba(0, 0, 0, 1)">
+# make sure to configure monitor username and password
+# https://github.com/sysown/proxysql/wiki/Global-variables#mysql-monitor_username-mysql-monitor_password
+    monitor_username</span>="monitor"<span style="color: rgba(0, 0, 0, 1)">
+    monitor_password</span>="monitor"<span style="color: rgba(0, 0, 0, 1)">
+    monitor_history</span>=600000<span style="color: rgba(0, 0, 0, 1)">
+    monitor_connect_interval</span>=60000<span style="color: rgba(0, 0, 0, 1)">
+    monitor_ping_interval</span>=10000<span style="color: rgba(0, 0, 0, 1)">
+    monitor_read_only_interval</span>=1500<span style="color: rgba(0, 0, 0, 1)">
+    monitor_read_only_timeout</span>=500<span style="color: rgba(0, 0, 0, 1)">
+    ping_interval_server_msec</span>=120000<span style="color: rgba(0, 0, 0, 1)">
+    ping_timeout_server</span>=500<span style="color: rgba(0, 0, 0, 1)">
+    commands_stats</span>=<span style="color: rgba(0, 0, 0, 1)">true
+    sessions_sort</span>=<span style="color: rgba(0, 0, 0, 1)">true
+    connect_retries_on_failure</span>=10<span style="color: rgba(0, 0, 0, 1)">
+}
+
+
+# defines all the MySQL servers
+mysql_servers </span>=<span style="color: rgba(0, 0, 0, 1)">
+(
+#    {
+#        address </span>= "127.0.0.1" # no default, required . If port is 0 ,<span style="color: rgba(0, 0, 0, 1)"> address is interpred as a Unix Socket Domain
+#        port </span>= 3306           # no default, required . If port is 0 ,<span style="color: rgba(0, 0, 0, 1)"> address is interpred as a Unix Socket Domain
+#        hostgroup </span>= 0            # no default,<span style="color: rgba(0, 0, 0, 1)"> required
+#        status </span>= "ONLINE"<span style="color: rgba(0, 0, 0, 1)">     # default: ONLINE
+#        weight </span>= 1            # default: 1<span style="color: rgba(0, 0, 0, 1)">
+#        compression </span>= 0       # default: 0<span style="color: rgba(0, 0, 0, 1)">
+#   max_replication_lag </span>= 10  # default 0 . If greater than 0 and replication lag passes such threshold,<span style="color: rgba(0, 0, 0, 1)"> the server is shunned
+#    }</span>,<span style="color: rgba(0, 0, 0, 1)">
+#    {
+#        address </span>= "/var/lib/mysql/mysql.sock"<span style="color: rgba(0, 0, 0, 1)">
+#        port </span>= 0<span style="color: rgba(0, 0, 0, 1)">
+#        hostgroup </span>= 0<span style="color: rgba(0, 0, 0, 1)">
+#    }</span>,<span style="color: rgba(0, 0, 0, 1)">
+#    {
+#        address</span>="127.0.0.1"<span style="color: rgba(0, 0, 0, 1)">
+#        port</span>=21891<span style="color: rgba(0, 0, 0, 1)">
+#        hostgroup</span>=0<span style="color: rgba(0, 0, 0, 1)">
+#        max_connections</span>=200<span style="color: rgba(0, 0, 0, 1)">
+#    }</span>,<span style="color: rgba(0, 0, 0, 1)">
+#    { address</span>="127.0.0.2" , port=3306 , hostgroup=0, max_connections=5 },<span style="color: rgba(0, 0, 0, 1)">
+#    { address</span>="127.0.0.1" , port=21892 , hostgroup=1 },<span style="color: rgba(0, 0, 0, 1)">
+#    { address</span>="127.0.0.1" , port=21893 , hostgroup=1<span style="color: rgba(0, 0, 0, 1)"> }
+#    { address</span>="127.0.0.2" , port=3306 , hostgroup=1 },<span style="color: rgba(0, 0, 0, 1)">
+#    { address</span>="127.0.0.3" , port=3306 , hostgroup=1 },<span style="color: rgba(0, 0, 0, 1)">
+#    { address</span>="127.0.0.4" , port=3306 , hostgroup=1 },<span style="color: rgba(0, 0, 0, 1)">
+#    { address</span>="/var/lib/mysql/mysql.sock" , port=0 , hostgroup=1<span style="color: rgba(0, 0, 0, 1)"> }
+)
+
+
+# defines all the MySQL users
+mysql_users:
+(
+#    {
+#        username </span>= "username" # no default ,<span style="color: rgba(0, 0, 0, 1)"> required
+#        password </span>= "password"<span style="color: rgba(0, 0, 0, 1)"> # default: ''
+#        default_hostgroup </span>= 0 # default: 0<span style="color: rgba(0, 0, 0, 1)">
+#        active </span>= 1            # default: 1<span style="color: rgba(0, 0, 0, 1)">
+#    }</span>,<span style="color: rgba(0, 0, 0, 1)">
+#    {
+#        username </span>= "root"<span style="color: rgba(0, 0, 0, 1)">
+#        password </span>= ""<span style="color: rgba(0, 0, 0, 1)">
+#        default_hostgroup </span>= 0<span style="color: rgba(0, 0, 0, 1)">
+#        max_connections</span>=1000<span style="color: rgba(0, 0, 0, 1)">
+#        default_schema</span>="test"<span style="color: rgba(0, 0, 0, 1)">
+#        active </span>= 1<span style="color: rgba(0, 0, 0, 1)">
+#    }</span>,<span style="color: rgba(0, 0, 0, 1)">
+#    { username </span>= "user1" , password = "password" , default_hostgroup = 0 , active = 0<span style="color: rgba(0, 0, 0, 1)"> }
+)
+
+
+
+#defines MySQL Query Rules
+mysql_query_rules:
+(
+#    {
+#        rule_id</span>=1<span style="color: rgba(0, 0, 0, 1)">
+#        active</span>=1<span style="color: rgba(0, 0, 0, 1)">
+#        match_pattern</span>="^SELECT .* FOR UPDATE$"<span style="color: rgba(0, 0, 0, 1)">
+#        destination_hostgroup</span>=0<span style="color: rgba(0, 0, 0, 1)">
+#        apply</span>=1<span style="color: rgba(0, 0, 0, 1)">
+#    }</span>,<span style="color: rgba(0, 0, 0, 1)">
+#    {
+#        rule_id</span>=2<span style="color: rgba(0, 0, 0, 1)">
+#        active</span>=1<span style="color: rgba(0, 0, 0, 1)">
+#        match_pattern</span>="^SELECT"<span style="color: rgba(0, 0, 0, 1)">
+#        destination_hostgroup</span>=1<span style="color: rgba(0, 0, 0, 1)">
+#        apply</span>=1<span style="color: rgba(0, 0, 0, 1)">
+#    }
+)
+
+scheduler</span>=<span style="color: rgba(0, 0, 0, 1)">
+(
+#  {
+#    id</span>=1<span style="color: rgba(0, 0, 0, 1)">
+#    active</span>=0<span style="color: rgba(0, 0, 0, 1)">
+#    interval_ms</span>=10000<span style="color: rgba(0, 0, 0, 1)">
+#    filename</span>="/var/lib/proxysql/proxysql_galera_checker.sh"<span style="color: rgba(0, 0, 0, 1)">
+#    arg1</span>="0"<span style="color: rgba(0, 0, 0, 1)">
+#    arg2</span>="0"<span style="color: rgba(0, 0, 0, 1)">
+#    arg3</span>="0"<span style="color: rgba(0, 0, 0, 1)">
+#    arg4</span>="1"<span style="color: rgba(0, 0, 0, 1)">
+#    arg5</span>="/var/lib/proxysql/proxysql_galera_checker.log"<span style="color: rgba(0, 0, 0, 1)">
+#  }
+)
+
+
+mysql_replication_hostgroups</span>=<span style="color: rgba(0, 0, 0, 1)">
+(
+#        {
+#                writer_hostgroup</span>=30<span style="color: rgba(0, 0, 0, 1)">
+#                reader_hostgroup</span>=40<span style="color: rgba(0, 0, 0, 1)">
+#                comment</span>="test repl 1"<span style="color: rgba(0, 0, 0, 1)">
+#       }</span>,<span style="color: rgba(0, 0, 0, 1)">
+#       {
+#                writer_hostgroup</span>=50<span style="color: rgba(0, 0, 0, 1)">
+#                reader_hostgroup</span>=60<span style="color: rgba(0, 0, 0, 1)">
+#                comment</span>="test repl 2"<span style="color: rgba(0, 0, 0, 1)">
+#        }
+)
+
+
+
+
+# http://www.hyperrealm.com/libconfig/libconfig_manual.html#Configuration-File-Grammar
+#
+# Below is the BNF grammar for configuration files. Comments and include directives are not part of the grammar</span>,<span style="color: rgba(0, 0, 0, 1)"> so they are not included here. 
+#
+# configuration </span>=<span style="color: rgba(0, 0, 0, 1)"> setting-list | empty
+#
+# setting-list </span>=<span style="color: rgba(0, 0, 0, 1)"> setting | setting-list setting
+#     
+# setting </span>= name (":" | "=") value (";" | ","<span style="color: rgba(0, 0, 0, 1)"> | empty)
+#     
+# value </span>=<span style="color: rgba(0, 0, 0, 1)"> scalar-value | array | list | group
+#     
+# value-list </span>= value | value-list ","<span style="color: rgba(0, 0, 0, 1)"> value
+#     
+# scalar-value </span>=<span style="color: rgba(0, 0, 0, 1)"> boolean | integer | integer64 | hex | hex64 | float
+#                | string
+#     
+# scalar-value-list </span>= scalar-value | scalar-value-list ","<span style="color: rgba(0, 0, 0, 1)"> scalar-value
+#     
+# array </span>= "[" (scalar-value-list | empty) "]"<span style="color: rgba(0, 0, 0, 1)">
+#     
+# list </span>= "(" (value-list | empty) ")"<span style="color: rgba(0, 0, 0, 1)">
+#     
+# group </span>= "{" (setting-list | empty) "}"<span style="color: rgba(0, 0, 0, 1)">
+#     
+# empty </span>=</pre>
+</div>
+<p>其实proxysql配置基本上在启动了之后都是通过数据库来设置的配置文件</p>
+<p>proxysql的配置如下，进入proxysql</p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(128, 0, 0, 1); font-weight: bold">[</span><span style="color: rgba(128, 0, 0, 1)">root@server00 ~</span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">]</span># mysql -uadmin -p -P6032 -h127.0.0.1 --prompt=<span style="color: rgba(0, 0, 0, 1)">'proxysql Admin&gt; '
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with </span><span style="color: rgba(0, 128, 0, 1)">;</span><span style="color: rgba(0, 128, 0, 1)"> or \g.</span>
+Your MySQL connection id is 9037<span style="color: rgba(0, 0, 0, 1)">
+Server version: </span>5.5.30<span style="color: rgba(0, 0, 0, 1)"> (ProxySQL Admin Module)
+
+Copyright (c) </span>2000, 2023,<span style="color: rgba(0, 0, 0, 1)"> Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help</span><span style="color: rgba(0, 128, 0, 1)">;</span><span style="color: rgba(0, 128, 0, 1)">' or '\h' for help. Type '\c' to clear the current input statement.</span>
+<span style="color: rgba(0, 0, 0, 1)">
+proxysql Admin&gt; <br>proxysql Admin&gt; set mysql-monitor_username='proxysql';<br>Query OK, 1 row affected (0.00 sec)<br><br>proxysql Admin&gt; set mysql-monitor_password='your password';<br>Query OK, 1 row affected (0.00 sec)<br>proxysql Admin&gt; select * from global_variables;<br><br>| mysql-monitor_username&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | proxysql&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysql-monitor_password&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | your password&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysql-monitor_history&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 600000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysql-monitor_connect_interval&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 60000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysql-monitor_ping_interval&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 10000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysql-monitor_read_only_interval&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 1500&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysql-monitor_read_only_timeout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 500&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysql-ping_interval_server_msec&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 120000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysql-ping_timeout_server&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 500&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysql-commands_stats&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | true&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysql-sessions_sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | true&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysql-connect_retries_on_failure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| mysql-server_capabilities&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 569899&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>+----------------------------------------------------------------------+--------------------------------------------+<br>proxysql Admin&gt; load mysql variables to runtime;<br>Query OK, 0 rows affected (0.00 sec)<br><br>proxysql Admin&gt; save mysql variables to disk;<br>Query OK, 155 rows affected (0.01 sec)<br>proxysql Admin&gt; insert into mysql_replication_hostgroups values(1000,1001,'read_only','读1000写1001分离');<br>Query OK, 1 row affected (0.00 sec)<br><br>proxysql Admin&gt; insert into mysql_servers(hostgroup_id,hostname,port) values(1000,'server01.mshome.net',3306);<br>Query OK, 1 row affected (0.00 sec)<br><br>proxysql Admin&gt; insert into mysql_servers(hostgroup_id,hostname,port) values(1001,'server02.mshome.net',3306);<br>Query OK, 1 row affected (0.00 sec)<br><br>proxysql Admin&gt; insert into mysql_servers(hostgroup_id,hostname,port) values(1001,'server03.mshome.net',3306);<br>Query OK, 1 row affected (0.00 sec)<br><br>proxysql Admin&gt; load mysql servers to runtime;<br>Query OK, 0 rows affected (0.00 sec)<br><br>proxysql Admin&gt; save mysql servers to disk;<br>Query OK, 0 rows affected (0.05 sec)<br>proxysql Admin&gt; delete from mysql_users;<br>Query OK, 1 row affected (0.00 sec)<br><br>proxysql Admin&gt; insert into mysql_users(username,password,default_hostgroup) values('appbox','Appbox@123',1000);<br>Query OK, 1 row affected (0.00 sec)<br><br>proxysql Admin&gt; load mysql users to runtime;<br>Query OK, 0 rows affected (0.00 sec)<br><br>proxysql Admin&gt; save mysql users to disk;<br>Query OK, 0 rows affected (0.02 sec)<br><br></span></pre>
+</div>
+<p>&nbsp;按照以上配置打开replication-manager的web管理端，默认账号admin密码repman</p>
+<p><img src="https://img2023.cnblogs.com/blog/376147/202304/376147-20230422221437358-1252444512.png" alt="" loading="lazy"></p>
+<p><img src="https://img2023.cnblogs.com/blog/376147/202304/376147-20230422221501194-1707835964.png" alt="" loading="lazy"></p>
+<p>&nbsp;</p>
+<p><img src="https://img2023.cnblogs.com/blog/376147/202304/376147-20230422221540788-1027080165.png" alt="" loading="lazy"></p>
+<p>&nbsp;</p>
+<p><img src="https://img2023.cnblogs.com/blog/376147/202304/376147-20230422230605187-1990219551.png" alt="" loading="lazy"></p>
+<p>&nbsp;在server01的主库上创建appbox用户</p>
+<div class="cnblogs_code">
+<pre>mysql<span style="color: rgba(128, 128, 128, 1)">&gt;</span> <span style="color: rgba(0, 0, 255, 1)">create</span> <span style="color: rgba(255, 0, 255, 1)">user</span> appbox@<span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">%</span><span style="color: rgba(255, 0, 0, 1)">'</span> identified <span style="color: rgba(0, 0, 255, 1)">by</span> <span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">Appbox@123</span><span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(0, 0, 0, 1)">;
+Query OK, </span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">0</span> rows affected (<span style="color: rgba(128, 0, 0, 1); font-weight: bold">0.01</span><span style="color: rgba(0, 0, 0, 1)"> sec)
+
+mysql</span><span style="color: rgba(128, 128, 128, 1)">&gt;</span> <span style="color: rgba(0, 0, 255, 1)">create</span> <span style="color: rgba(0, 0, 255, 1)">database</span> appboxdb <span style="color: rgba(0, 0, 255, 1)">character</span> <span style="color: rgba(0, 0, 255, 1)">set</span><span style="color: rgba(0, 0, 0, 1)"> utf8mb4;
+Query OK, </span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">1</span> row affected (<span style="color: rgba(128, 0, 0, 1); font-weight: bold">0.01</span><span style="color: rgba(0, 0, 0, 1)"> sec)
+
+mysql</span><span style="color: rgba(128, 128, 128, 1)">&gt;</span> <span style="color: rgba(0, 0, 255, 1)">grant</span> <span style="color: rgba(128, 128, 128, 1)">all</span> <span style="color: rgba(0, 0, 255, 1)">privileges</span> <span style="color: rgba(0, 0, 255, 1)">on</span> appboxdb.<span style="color: rgba(128, 128, 128, 1)">*</span> <span style="color: rgba(0, 0, 255, 1)">to</span> appbox@<span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">%</span><span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(0, 0, 0, 1)">;
+Query OK, </span><span style="color: rgba(128, 0, 0, 1); font-weight: bold">0</span> rows affected (<span style="color: rgba(128, 0, 0, 1); font-weight: bold">0.01</span><span style="color: rgba(0, 0, 0, 1)"> sec)
+
+mysql</span><span style="color: rgba(128, 128, 128, 1)">&gt;</span> </pre>
+</div>
+<p>&nbsp;用Navicat连proxysql</p>
+<p><img src="https://img2023.cnblogs.com/blog/376147/202304/376147-20230422231700771-1520803306.png" alt="" loading="lazy"></p>
+<p>在proxysql中插入读写规则</p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 255, 1)">insert</span> <span style="color: rgba(0, 0, 255, 1)">into</span> mysql_query_rules(rule_id,active,match_digest,destination_hostgroup,apply)<span style="color: rgba(0, 0, 255, 1)">values</span>(<span style="color: rgba(128, 0, 0, 1); font-weight: bold">1</span>,<span style="color: rgba(128, 0, 0, 1); font-weight: bold">1</span>,<span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">^SELECT.*FOR UPDATE$</span><span style="color: rgba(255, 0, 0, 1)">'</span>,<span style="color: rgba(128, 0, 0, 1); font-weight: bold">100</span>,<span style="color: rgba(128, 0, 0, 1); font-weight: bold">1</span><span style="color: rgba(0, 0, 0, 1)">);
+</span><span style="color: rgba(0, 0, 255, 1)">insert</span> <span style="color: rgba(0, 0, 255, 1)">into</span> mysql_query_rules(rule_id,active,match_digest,destination_hostgroup,apply)<span style="color: rgba(0, 0, 255, 1)">values</span>(<span style="color: rgba(128, 0, 0, 1); font-weight: bold">2</span>,<span style="color: rgba(128, 0, 0, 1); font-weight: bold">1</span>,<span style="color: rgba(255, 0, 0, 1)">'</span><span style="color: rgba(255, 0, 0, 1)">^SELECT</span><span style="color: rgba(255, 0, 0, 1)">'</span>,<span style="color: rgba(128, 0, 0, 1); font-weight: bold">1000</span>,<span style="color: rgba(128, 0, 0, 1); font-weight: bold">1</span>);<br>load mysql query rules to runtime;<br>save mysql query rules to disk;</pre>
+</div>
+<p>bash下进行读写测试</p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 255, 1)">for</span> i <span style="color: rgba(0, 0, 255, 1)">in</span> {<span style="color: rgba(128, 0, 128, 1)">1</span>..<span style="color: rgba(128, 0, 128, 1)">100</span>}; <span style="color: rgba(0, 0, 255, 1)">do</span> mysql -uappbox -pAppbox@<span style="color: rgba(128, 0, 128, 1)">123</span> -h server00<span style="color: rgba(128, 0, 128, 1)">.mshome.net</span>  -P6033  -e <span style="color: rgba(128, 0, 0, 1)">'</span><span style="color: rgba(128, 0, 0, 1)">select * from mysql.user LIMIT 2;</span><span style="color: rgba(128, 0, 0, 1)">'</span> ; <span style="color: rgba(0, 0, 255, 1)">sleep</span> <span style="color: rgba(128, 0, 128, 1)">0.5</span>; <span style="color: rgba(0, 0, 255, 1)">done</span></pre>
+</div>
+<p>如果有用，欢迎打赏，不限金额</p>
+<p><img src="https://img2023.cnblogs.com/blog/376147/202304/376147-20230423125121134-1624798358.png" alt="" width="316" height="314" loading="lazy"></p>
+<p>&nbsp;</p>
+</div>
+<div id="MySignature" role="contentinfo">
+    <p>
+	<strong><span style="color: #009900; font-size: 14px;">-------------------------------------------------</span></strong>
+</p>
+<p>
+	<strong><span style="color: #009900; font-size: 14px;">保持专注，只做一件事，做好这件事！@</span></strong>
+</p>
+<p>
+	<strong><span style="color: #009900; font-size: 14px;">-------------------------------------------------</span></strong>
+</p>
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="0.0775030591863426" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2023-04-23 12:53">2023-04-23 12:53</span>&nbsp;
+<a href="https://www.cnblogs.com/24la/">逆水寒龙</a>&nbsp;
+阅读(<span id="post_view_count">56</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17344503" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(17344503);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '17344503', targetLink: 'https://www.cnblogs.com/24la/p/mysql-proxysql-replication-manager-read-write-split-mha.html', title: 'mysql&#x2B;proxysql&#x2B;replication-manager的主从半同步复制&#x2B;高可用&#x2B;读写分离' })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+
+<script>
+    var cb_entryId = 17344503, cb_entryCreatedDate = '2023-04-23 12:53', cb_postType = 1, cb_postTitle = 'mysql+proxysql+replication-manager的主从半同步复制+高可用+读写分离';
+    var allowComments = true, cb_blogId = 109201, cb_blogApp = '24la', cb_blogUserGuid = 'c5f4680a-8a58-e111-aa3f-842b2b196315';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+            <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 逆水寒龙
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULmlPazLKX26VkW8Pxo9uOnhy0eGg0vZPwl1aG_BreDsYiH6h5_e9-4OcdmqdfPjRpt5dxFc_qarVemLLn-rfiBqxTesUC7kfy0qm_dlXJYRZmcBIOPUtdB-dBw8RRhARWU" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

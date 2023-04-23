@@ -1,0 +1,754 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="never" />
+    <meta name="description" content="pytorch在有限的资源下部署大语言模型（以ChatGLM-6B为例） Part1知识准备 在PyTorch中加载预训练的模型时，通常的工作流程是这样的： my_model&amp;#160;=&amp;#160;" />
+    <meta property="og:description" content="pytorch在有限的资源下部署大语言模型（以ChatGLM-6B为例） Part1知识准备 在PyTorch中加载预训练的模型时，通常的工作流程是这样的： my_model&amp;#160;=&amp;#160;" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>pytorch在有限的资源下部署大语言模型（以ChatGLM-6B为例） - 西西嘛呦 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/darkgreentrip/bundle-darkgreentrip.min.css?v=OEdqELF7t8yNp68xYs-VSvQS8Pu8C7L1Cq-HRkJtKsA" />
+        <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="/css/hljs/cnblogs.css?v=5J1NDtbnnIr2Rc2SdhEMlMxD4l9Eydj88B31E7_NhS4" />
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/xiximayou/custom.css?v=Rm8VIpuerqAq&#x2B;P0NihMc03WwrwA=" />
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/darkgreentrip/bundle-darkgreentrip-mobile.min.css?v=7cLCtXL6v2rk4VV2a2Hpku4lE15h5DLVX2iTkYporNw" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/xiximayou/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/xiximayou/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/xiximayou/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 465208;
+        var currentBlogApp = 'xiximayou';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'darkgreentrip';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = true;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+        <script>
+            var currentPostDateAdded = '2023-04-23 09:38';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-darkgreentrip no-navbar mathjax2">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'xiximayou', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        <a href="https://github.com/taishan1994">  
+<img style="position: fixed; top: 0; right: 0; border: 0; z-index:9999;" 
+     src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" 
+     alt="Fork me on GitHub">
+</a>
+<script type="text/javascript">
+/* 鼠标特效 */
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("❤JAVA❤","❤C++❤","❤C❤","❤PYTHON❤","❤GO❤","❤LINUX❤","❤HTML❤","❤CSS❤","❤JS❤","❤PYTORCH❤","❤MXNET❤","❤TF❤");
+        var $i = $("<span></span>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "rgb("+~~(255*Math.random())+","+~~(255*Math.random())+","+~~(255*Math.random())+")"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+</script>
+<link  type="text/css" rel="stylesheet" href="https://files.cnblogs.com/files/hafiz/feedback.css">
+
+<!--导航设置-->
+<script type="text/javascript">
+var BlogDirectory = {
+    /*
+        获取元素位置，距浏览器左边界的距离（left）和距浏览器上边界的距离（top）
+    */
+    getElementPosition:function (ele) {        
+        var topPosition = 0;
+        var leftPosition = 0;
+        while (ele){              
+            topPosition += ele.offsetTop;
+            leftPosition += ele.offsetLeft;        
+            ele = ele.offsetParent;     
+        }  
+        return {top:topPosition, left:leftPosition}; 
+    },
+
+    /*
+    获取滚动条当前位置
+    */
+    getScrollBarPosition:function () {
+        var scrollBarPosition = document.body.scrollTop || document.documentElement.scrollTop;
+        return  scrollBarPosition;
+    },
+    
+    /*
+    移动滚动条，finalPos 为目的位置，internal 为移动速度
+    */
+    moveScrollBar:function(finalpos, interval) {
+
+        //若不支持此方法，则退出
+        if(!window.scrollTo) {
+            return false;
+        }
+
+        //窗体滚动时，禁用鼠标滚轮
+        window.onmousewheel = function(){
+            return false;
+        };
+          
+        //清除计时
+        if (document.body.movement) { 
+            clearTimeout(document.body.movement); 
+        } 
+
+        var currentpos =BlogDirectory.getScrollBarPosition();//获取滚动条当前位置
+
+        var dist = 0; 
+        if (currentpos == finalpos) {//到达预定位置，则解禁鼠标滚轮，并退出
+            window.onmousewheel = function(){
+                return true;
+            }
+            return true; 
+        } 
+        if (currentpos < finalpos) {//未到达，则计算下一步所要移动的距离
+            dist = Math.ceil((finalpos - currentpos)/10); 
+            currentpos += dist; 
+        } 
+        if (currentpos > finalpos) { 
+            dist = Math.ceil((currentpos - finalpos)/10); 
+            currentpos -= dist; 
+        }
+        
+        var scrTop = BlogDirectory.getScrollBarPosition();//获取滚动条当前位置
+        window.scrollTo(0, currentpos);//移动窗口
+        if(BlogDirectory.getScrollBarPosition() == scrTop)//若已到底部，则解禁鼠标滚轮，并退出
+        {
+            window.onmousewheel = function(){
+                return true;
+            }
+            return true;
+        }
+        
+        //进行下一步移动
+        var repeat = "BlogDirectory.moveScrollBar(" + finalpos + "," + interval + ")"; 
+        document.body.movement = setTimeout(repeat, interval); 
+    },
+    
+    htmlDecode:function (text){
+        var temp = document.createElement("div");
+        temp.innerHTML = text;
+        var output = temp.innerText || temp.textContent;
+        temp = null;
+        return output;
+    },
+
+    /*
+    创建博客目录，
+    id表示包含博文正文的 div 容器的 id，
+    mt 和 st 分别表示主标题和次级标题的标签名称（如 H2、H3，大写或小写都可以！），
+    interval 表示移动的速度
+    */
+    createBlogDirectory:function (id, mt, st, interval){
+         //获取博文正文div容器
+        var elem = document.getElementById(id);
+        if(!elem) return false;
+        //获取div中所有元素结点
+        var nodes = elem.getElementsByTagName("*");
+        //创建博客目录的div容器
+        var divSideBar = document.createElement('DIV');
+        divSideBar.className = 'uprightsideBar';
+        divSideBar.setAttribute('id', 'uprightsideBar');
+        var divSideBarTab = document.createElement('DIV');
+        divSideBarTab.setAttribute('id', 'sideBarTab');
+        divSideBar.appendChild(divSideBarTab);
+        var h2 = document.createElement('H2');
+        divSideBarTab.appendChild(h2);
+        var txt = document.createTextNode('目录导航');
+        h2.appendChild(txt);
+        var divSideBarContents = document.createElement('DIV');
+        divSideBarContents.style.display = 'none';
+        divSideBarContents.setAttribute('id', 'sideBarContents');
+        divSideBar.appendChild(divSideBarContents);
+        //创建自定义列表
+        var dlist = document.createElement("dl");
+        divSideBarContents.appendChild(dlist);
+        var num = 0;//统计找到的mt和st
+        mt = mt.toUpperCase();//转化成大写
+        st = st.toUpperCase();//转化成大写
+        //遍历所有元素结点
+        for(var i=0; i<nodes.length; i++)
+        {
+            if(nodes[i].nodeName == mt|| nodes[i].nodeName == st)    
+            {
+                //获取标题文本
+                var nodetext = nodes[i].innerHTML.replace(/<\/?[^>]+>/g,"");//innerHTML里面的内容可能有HTML标签，所以用正则表达式去除HTML的标签
+                nodetext = nodetext.replace(/&nbsp;/ig, "");//替换掉所有的&nbsp;
+                nodetext = BlogDirectory.htmlDecode(nodetext);
+                //插入锚        
+                nodes[i].setAttribute("id", "blogTitle" + num);
+                var item;
+                switch(nodes[i].nodeName)
+                {
+                    case mt:    //若为主标题 
+                        item = document.createElement("dt");
+                        break;
+                    case st:    //若为子标题
+                        item = document.createElement("dd");
+                        break;
+                }
+                
+                //创建锚链接
+                var itemtext = document.createTextNode(nodetext);
+                item.appendChild(itemtext);
+                item.setAttribute("name", num);
+                item.onclick = function(){        //添加鼠标点击触发函数
+                    var pos = BlogDirectory.getElementPosition(document.getElementById("blogTitle" + this.getAttribute("name")));
+                    if(!BlogDirectory.moveScrollBar(pos.top, interval)) return false;
+                };            
+                
+                //将自定义表项加入自定义列表中
+                dlist.appendChild(item);
+                num++;
+            }
+        }
+        
+        if(num == 0) return false; 
+        /*鼠标进入时的事件处理*/
+        divSideBarTab.onmouseenter = function(){
+            divSideBarContents.style.display = 'block';
+        }
+        /*鼠标离开时的事件处理*/
+        divSideBar.onmouseleave = function() {
+            divSideBarContents.style.display = 'none';
+        }
+
+        document.body.appendChild(divSideBar);
+    }
+    
+};
+
+window.onload=function(){
+    /*页面加载完成之后生成博客目录*/
+    BlogDirectory.createBlogDirectory("cnblogs_post_body","h1","h2",20);
+}
+</script>
+
+
+<script>
+    L2Dwidget.init({
+        "model": {
+            jsonPath: "https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json",
+            "scale": 1
+        },
+        "display": {
+            "position": "left",
+            "width": 150,
+            "height": 300,
+            "hOffset": 0,
+            "vOffset": -20
+        },
+        "mobile": {
+            "show": true,
+            "scale": 0.5
+        },
+        "react": {
+            "opacityDefault": 0.7,
+            "opacityOnHover": 0.2
+        }
+    });
+</script>
+    </div>
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/xiximayou/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/xiximayou/">西西嘛呦</a>
+</h1>
+<h2><br>
+从自己能做到的开始，一件件来，缓慢而坚定地前进，尽力而为
+</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/xiximayou/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E8%A5%BF%E8%A5%BF%E5%98%9B%E5%91%A6">
+联系</a></li>
+<li>
+
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/xiximayou/p/17345539.html">
+    <span role="heading" aria-level="2">pytorch在有限的资源下部署大语言模型（以ChatGLM-6B为例）</span>
+    
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<section id="nice" data-tool="mdnice编辑器" data-website="https://www.mdnice.com" style="font-size: 16px; color: rgba(0, 0, 0, 1); padding: 0 10px; line-height: 1.6; word-spacing: 0; letter-spacing: 0; word-wrap: break-word; text-align: left; counter-reset: counterh1 0 counterh2 0 counterh3 0; font-family: Optima-Regular, Optima, PingFangSC-light, PingFangTC-light, &quot;PingFang SC&quot;, Cambria, Cochin, Georgia, Times, &quot;Times New Roman&quot;, serif"><p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">pytorch在有限的资源下部署大语言模型（以ChatGLM-6B为例）</p>
+<h1 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 24px; line-height: 28px; border-bottom: 1px solid rgba(37, 132, 181, 1)"><span style="background: rgba(37, 132, 181, 1); color: rgba(255, 255, 255, 1); counter-increment: counterh1 1; padding: 2px 8px">Part1</span><span class="prefix" style="display: none"></span><span class="content" style="color: rgba(37, 132, 181, 1); margin-left: 8px; font-size: 20px">知识准备</span><span class="suffix"></span></h1>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">在PyTorch中加载预训练的模型时，通常的工作流程是这样的：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">my_model&nbsp;=&nbsp;ModelClass(...)<br>state_dict&nbsp;=<br>torch.load(checkpoint_file)<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">用简单的话来说，这些步骤是：</p>
+<ol data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: decimal">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">用随机初始化的权重创建模型。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">从磁盘上加载模型权重（在一个通常被称为状态字典的字典中）。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">在模型中加载这些权重。</section></li></ol>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">虽然这对常规大小的模型来说非常有效，但当我们处理一个巨大的模型时，这个工作流程有一些明显的局限性：在第1步，我们在RAM中加载一个完整版本的模型，并花一些时间随机初始化权重（这将在第3步被丢弃）。在第2步，我们在RAM中加载另一个完整版本的模型，并使用预训练的权重。如果你正在加载一个具有60亿个参数的模型，这意味着你需要为每个模型的副本提供24GB的RAM，所以总共需要48GB（其中一半用于在FP16中加载模型）。</p>
+<h2 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 22px"><span class="prefix" style="display: inline-block"><span style="counter-increment: counterh2 1; color: rgba(159, 205, 208, 1); border-bottom: 4px solid rgba(159, 205, 208, 1); font-size: 18px; padding: 2px 4px">1</span></span><span class="content" style="font-size: 18px; border-bottom: 4px solid rgba(37, 132, 181, 1); padding: 2px 4px; color: rgba(37, 132, 181, 1)">使用accelerate</span><span class="suffix"></span></h2>
+<h3 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 20px"><span class="prefix" style="display: inline-block; background: linear-gradient(45deg, rgba(0, 0, 0, 0) 48%, rgba(37, 132, 181, 1) 48%, rgba(37, 132, 181, 1) 52%, rgba(0, 0, 0, 0) 52%); width: 24px; height: 24px; margin-bottom: -7px"></span><span class="content" style="font-size: 16px; border-bottom: 1px solid rgba(37, 132, 181, 1); padding: 2px 10px; color: rgba(37, 132, 181, 1)">上下文管理器</span><span class="suffix" style="display: none"></span></h3>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">引入accelerate处理大模型的第一个工具是上下文管理器init_empty_weights()，它可以帮助你在不使用任何RAM的情况下初始化一个模型，这样，步骤1就可以可以在任何尺寸的模型上进行。以下是它的工作原理：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px"><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">from</span>&nbsp;accelerate&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;init_empty_weights<br><br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">with</span>&nbsp;init_empty_weights():<br>&nbsp;&nbsp;&nbsp;&nbsp;my_model&nbsp;=&nbsp;ModelClass(...)<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">例如：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px"><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">with</span>&nbsp;init_empty_weights():<br>&nbsp;&nbsp;&nbsp;&nbsp;model&nbsp;=&nbsp;nn.Sequential(*[nn.Linear(<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">10000</span>,&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">10000</span>)&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">for</span>&nbsp;_&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">in</span>&nbsp;range(<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">1000</span>)])<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">初始化一个空的模型，参数略多于100B。这有赖于<strong style="font-weight: bold; color: rgba(37, 132, 181, 1)">PyTorch 1.9</strong>中引入的元设备(meta device)。在上下文管理器下的初始化过程中，每次创建一个参数时，它都会移动到该设备上。</p>
+<h3 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 20px"><span class="prefix" style="display: inline-block; background: linear-gradient(45deg, rgba(0, 0, 0, 0) 48%, rgba(37, 132, 181, 1) 48%, rgba(37, 132, 181, 1) 52%, rgba(0, 0, 0, 0) 52%); width: 24px; height: 24px; margin-bottom: -7px"></span><span class="content" style="font-size: 16px; border-bottom: 1px solid rgba(37, 132, 181, 1); padding: 2px 10px; color: rgba(37, 132, 181, 1)">分布式检查点</span><span class="suffix" style="display: none"></span></h3>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">你的模型有可能大到即使是一个副本也无法装入RAM。这并不意味着它不能被加载：如果你有一个或几个GPU，这将有更多的内存可用于存储你的模型。在这种情况下，如果你的检查点被分割成几个较小的文件，我们称之为检查点碎片，效果会更好。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">accelerate将处理分片检查点，只要你遵循以下格式：你的检查点应该<strong style="font-weight: bold; color: rgba(37, 132, 181, 1)">在一个文件夹</strong>中，有几个文件<strong style="font-weight: bold; color: rgba(37, 132, 181, 1)">包含部分状态字典</strong>，应该<strong style="font-weight: bold; color: rgba(37, 132, 181, 1)">有一个JSON格式的索引</strong>，包含一个字典将参数名称映射到包含其权重的文件。例如，我们可以有一个包含以下内容的文件夹：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">first_state_dict.bin<br>index.json<br>second_state_dict.bin<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">与index.json是以下文件：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">{<br>&nbsp;&nbsp;<span class="hljs-attr" style="color: rgba(209, 154, 102, 1); line-height: 26px">"linear1.weight"</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"first_state_dict.bin"</span>,<br>&nbsp;&nbsp;<span class="hljs-attr" style="color: rgba(209, 154, 102, 1); line-height: 26px">"linear1.bias"</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"first_state_dict.bin"</span>,<br>&nbsp;&nbsp;<span class="hljs-attr" style="color: rgba(209, 154, 102, 1); line-height: 26px">"linear2.weight"</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"second_state_dict.bin"</span>,<br>&nbsp;&nbsp;<span class="hljs-attr" style="color: rgba(209, 154, 102, 1); line-height: 26px">"linear2.bias"</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"second_state_dict.bin"</span><br>}<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">first_state_dict.bin包含 "linear1.weight "和 "linear1.bias "的权重。second_state_dict.bin是 "linear2.weight "和 "linear2.bias "的权重。</p>
+<h3 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 20px"><span class="prefix" style="display: inline-block; background: linear-gradient(45deg, rgba(0, 0, 0, 0) 48%, rgba(37, 132, 181, 1) 48%, rgba(37, 132, 181, 1) 52%, rgba(0, 0, 0, 0) 52%); width: 24px; height: 24px; margin-bottom: -7px"></span><span class="content" style="font-size: 16px; border-bottom: 1px solid rgba(37, 132, 181, 1); padding: 2px 10px; color: rgba(37, 132, 181, 1)">加载权重</span><span class="suffix" style="display: none"></span></h3>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">第二个工具是引入了一个函数load_checkpoint_and_dispatch()，它将允许你在你的空模型中加载一个检查点。这支持完整的检查点（一个单个文件包含整个状态描述）以及分片检查点。它还会在你可用的设备（GPU、CPURAM）上自动分配这些权重，所以如果你正在加载一个分片检查点，最大的RAM使用量将是最大分片的大小。</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px"><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">from</span>&nbsp;accelerate&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;init_empty_weights<br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">from</span>&nbsp;transformers&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;AutoConfig,&nbsp;AutoModelForCausalLM<br><br>checkpoint&nbsp;=&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"EleutherAI/gpt-j-6B"</span><br>config&nbsp;=&nbsp;AutoConfig.from_pretrained(checkpoint)<br><br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">with</span>&nbsp;init_empty_weights():<br>&nbsp;&nbsp;&nbsp;&nbsp;model&nbsp;=&nbsp;AutoModelForCausalLM.from_config(config)<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">请注意，在transformer中用from_config加载模型并不绑定权重，这在加载不包含绑定权重的重复键的检查点时可能导致问题。所以你应该在加载检查点之前绑定权重。</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">model.tie_weights()<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">然后加载我们刚刚下载的检查点：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">model&nbsp;=&nbsp;load_checkpoint_and_dispatch(<br>&nbsp;&nbsp;&nbsp;&nbsp;model,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"sharded-gpt-j-6B"</span>,&nbsp;device_map=<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"auto"</span>,&nbsp;no_split_module_classes=[<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"GPTJBlock"</span>]<br>)<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">通过传递device_map="auto"，根据可用的资源，我们告诉模型的每一层放置在哪里。</p>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: disc">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">首先，我们使用GPU上的最大可用空间。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">如果我们仍然需要空间，我们将剩余的权重存储在CPU上。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">如果没有足够的RAM，我们将剩余的权重作为内存映射的张量存储在硬盘上。</section></li></ul>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">no_split_module_classes=["GPTJBlock"] 表示属于GPTJBlock的模块不应该在不同的设备上被分割。你应该在这里设置所有包括某种<strong style="font-weight: bold; color: rgba(37, 132, 181, 1)">residual</strong>(残差连接)的块。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">你可以通过hf_device_map来查看accelearte挑选的设备图。</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">model.hf_device_map<br></code></pre>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">{'transformer.wte':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.drop':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.0':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.1':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.2':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.3':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.4':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.5':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.6':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.7':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.8':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.9':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.10':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.11':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.12':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.13':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.14':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.15':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.16':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.17':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.18':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.19':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.20':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.21':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.22':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.23':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,<br>&nbsp;'transformer.h.24':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">1</span>,<br>&nbsp;'transformer.h.25':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">1</span>,<br>&nbsp;'transformer.h.26':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">1</span>,<br>&nbsp;'transformer.h.27':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">1</span>,<br>&nbsp;'transformer.ln_f':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">1</span>,<br>&nbsp;'lm_head':&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">1</span>}<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">如果你喜欢明确地决定每层的位置，你也可以自己设计你的设备图。在这种情况下，上面的命令变成了：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">model&nbsp;=&nbsp;load_checkpoint_and_dispatch(model,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"sharded-gpt-j-6B"</span>,&nbsp;device_map=my_device_map)<br></code></pre>
+<h3 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 20px"><span class="prefix" style="display: inline-block; background: linear-gradient(45deg, rgba(0, 0, 0, 0) 48%, rgba(37, 132, 181, 1) 48%, rgba(37, 132, 181, 1) 52%, rgba(0, 0, 0, 0) 52%); width: 24px; height: 24px; margin-bottom: -7px"></span><span class="content" style="font-size: 16px; border-bottom: 1px solid rgba(37, 132, 181, 1); padding: 2px 10px; color: rgba(37, 132, 181, 1)">运行模型</span><span class="suffix" style="display: none"></span></h3>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">现在我们已经做到了这一点，我们的模型位于几个设备之间，也许还有硬盘。但它仍然可以作为一个普通的PyTorch模型使用：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px"><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">from</span>&nbsp;transformers&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;AutoTokenizer<br><br>tokenizer&nbsp;=&nbsp;AutoTokenizer.from_pretrained(checkpoint)<br>inputs&nbsp;=&nbsp;tokenizer(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"Hello,&nbsp;my&nbsp;name&nbsp;is"</span>,&nbsp;return_tensors=<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"pt"</span>)<br>inputs&nbsp;=&nbsp;inputs.to(<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>)<br>output&nbsp;=&nbsp;model.generate(inputs[<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"input_ids"</span>])<br>tokenizer.decode(output[<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>].tolist())<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">在幕后，accelerate为模型添加了钩子，因此：</p>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: disc">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">在每一层，输入被放在正确的设备上（因此，即使你的模型分散在几个GPU上，它也能工作）。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">对于卸载在CPU上的权重，就在向前传递之前，它们被放在GPU上，并在之后被清理掉。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">对于卸载在硬盘上的权重，它们被加载在RAM中，然后在向前传递之前被放在GPU上，并在之后被清理掉。
+这样，即使你的模型不适合在某个GPU或CPU RAM上运行，你也可以运行推理！</section></li></ul>
+<h3 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 20px"><span class="prefix" style="display: inline-block; background: linear-gradient(45deg, rgba(0, 0, 0, 0) 48%, rgba(37, 132, 181, 1) 48%, rgba(37, 132, 181, 1) 52%, rgba(0, 0, 0, 0) 52%); width: 24px; height: 24px; margin-bottom: -7px"></span><span class="content" style="font-size: 16px; border-bottom: 1px solid rgba(37, 132, 181, 1); padding: 2px 10px; color: rgba(37, 132, 181, 1)">设计一个设备图</span><span class="suffix" style="display: none"></span></h3>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">你可以通过以下选项"auto", "balanced", "balanced_low_0", "sequential"让acclerate处理设备图的计算，或自己创建一个。如果你想更多地控制每个层应该去哪里，你可以在一个元设备上的模型上推导出模型的所有尺寸（从而计算出一个设备图）。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">当你没有足够的GPU内存来容纳整个模型时，所有的选项都会产生相同的结果（也就是把所有能装的东西都装到GPU上，然后把重量卸到CPU上，如果没有足够的内存，甚至卸到磁盘上）。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">当你有比模型大小更多的GPU内存可用时，这里是每个选项之间的区别：</p>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: disc">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">"auto"和"balanced"在所有可用的GPU上平均分配模型，使你有可能使用大于1的批次大小。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">"balanced_low_0 "将模型均匀地分割到所有的GPU上，除了第一个GPU之外，并且只将不适合其他GPU的部分放在GPU 0上。当你需要使用GPU 0对输出进行一些处理时，这个选项是非常好的，比如使用transformers的生成函数时。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">"顺序 "将在GPU 0上安装它可以安装的东西，然后在GPU 1上移动，以此类推（所以如果不需要，就不会使用最后的GPU）。</section></li></ul>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">首先注意，你可以通过使用max_memory参数（在fer_auto_device_map()和所有使用该参 的函数中可用）限制每个GPU上使用的内存。当设置max_memory时，你应该传递一个包含GPU标识符（例如0、1等）和 "cpu "键的字典，用于你希望用于CPU卸载的最大RAM。这些值可以是一个整数（以字节为单位），也可以是一个代表数字及其单位的字符串，例如 "10GiB "或 "10GB"。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">这里有一个例子，我们不希望在两个GPU上各使用超过10GiB，而在模型权重上不超过30GiB的CPU内存：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px"><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">from</span>&nbsp;accelerate&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;infer_auto_device_map<br><br>device_map&nbsp;=&nbsp;infer_auto_device_map(my_model,&nbsp;max_memory={<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"10GiB"</span>,&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">1</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"10GiB"</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"cpu"</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"30GiB"</span>})<br></code></pre>
+<blockquote class="multiquote-1" data-tool="mdnice编辑器" style="display: block; font-size: 0.9em; overflow: auto; overflow-scrolling: touch; border: 1px dashed rgba(37, 132, 181, 1); color: rgba(106, 115, 125, 1); padding: 10px 10px 10px 20px; margin-bottom: 20px; margin-top: 20px; background: rgba(0, 0, 0, 0)">
+<p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; color: rgba(0, 0, 0, 1); line-height: 26px">当PyTorch发生首次分配时，它会加载CUDA内核，根据GPU的情况，它需要大约1-2GB的内存。因此，你的可用内存总是少于GPU的实际大小。要查看实际使用了多
+少内存，请执行torch.ones(1).cuda()并查看内存使用情况。因此，当你用max_memory创建内存映射时，确保相应地调整可用的内存，以避免出先OOM。</p>
+</blockquote>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">此外，如果你对你的输出做一些额外的操作而不把它们放回CPU（例如在transformer的生成方法里面），如果你把你的输入放在一个GPU上，这个GPU将比其他的消耗更多的内存（加速器总是把输出放回输入的设备）。因此，如果你想优化最大的批处理量，并且你有很多GPU，给第一个GPU较少的内存。例如在8x80 A100设置上使用BLOOM-176B，接近理想的映射是：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">max_memory&nbsp;=&nbsp;{0:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"30GIB"</span>,&nbsp;1:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"46GIB"</span>,&nbsp;2:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"46GIB"</span>,&nbsp;3:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"46GIB"</span>,&nbsp;4:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"46GIB"</span>,&nbsp;5:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"46GIB"</span>,&nbsp;6:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"46GIB"</span>,&nbsp;7:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"46GIB"</span>}<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">你可以看到，我们给其余7个GPU的内存比GPU 0多了50%。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">如果你选择自己完全设计设备映射，它应该是一个字典，键是你的模型的模块名称，值是一个有效的设备标识符（例如GPU是一个整数）或CPU卸载的 "cpu"，磁盘卸载的 "disc"。<strong style="font-weight: bold; color: rgba(37, 132, 181, 1)">键需要覆盖整个模型</strong>，然后你可以按照你的意愿定义你的设备映射：例如，如果你的模型有两个块（比方说block1和block2），它们各自包含三个线性层（比方 说线性1、线性2和线性3），一个有效的设备映射可以是：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">device_map&nbsp;=&nbsp;{<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"block1"</span>:&nbsp;0,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"block2"</span>:&nbsp;1}<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">另一个有效的可能是：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">device_map&nbsp;=&nbsp;{<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"block1"</span>:&nbsp;0,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"block2.linear1"</span>:&nbsp;0,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"block2.linear2"</span>:&nbsp;1,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"block2.linear3"</span>:&nbsp;1}<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">另一方面，这个是无效的，因为它没有涵盖模型的每个参数：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">device_map&nbsp;=&nbsp;{<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"block1"</span>：0,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"block2.linear1"</span>：1,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"block2.linear2"</span>：1}<br></code></pre>
+<blockquote class="multiquote-1" data-tool="mdnice编辑器" style="display: block; font-size: 0.9em; overflow: auto; overflow-scrolling: touch; border: 1px dashed rgba(37, 132, 181, 1); color: rgba(106, 115, 125, 1); padding: 10px 10px 10px 20px; margin-bottom: 20px; margin-top: 20px; background: rgba(0, 0, 0, 0)">
+<p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; color: rgba(0, 0, 0, 1); line-height: 26px">为了达到最高的效率，请确保你的设备映射以连续的方式将参数放在GPU上（例如 ，不要将第一个权重放在GPU 0上，然后将权重放在GPU 1上，最后一个权重再放 回GPU 0），以避免在GPU之间进行多次数据传输。</p>
+</blockquote>
+<h3 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 20px"><span class="prefix" style="display: inline-block; background: linear-gradient(45deg, rgba(0, 0, 0, 0) 48%, rgba(37, 132, 181, 1) 48%, rgba(37, 132, 181, 1) 52%, rgba(0, 0, 0, 0) 52%); width: 24px; height: 24px; margin-bottom: -7px"></span><span class="content" style="font-size: 16px; border-bottom: 1px solid rgba(37, 132, 181, 1); padding: 2px 10px; color: rgba(37, 132, 181, 1)">限制和进一步发展</span><span class="suffix" style="display: none"></span></h3>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">我们知道目前API的局限性：</p>
+<ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: disc">
+<li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">虽然理论上这只可以在一个CPU上工作，并有潜在的磁盘卸载，但你至少需要一个GPU来运行这个API。这将在进一步的开发中得到解决。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">infer_auto_device_map() (或load_checkpoint_and_dispatch()中的 device_map="auto")试图在你执行它的时候最大化它所看到的GPU和CPU RAM。虽然PyTorch在有效地管理GPU RAM方面非常出色（当不需要时就会归还），但对于Python和CPU RAM来说，这并不完全正确。因此，自动计算的设备图可能对CPU来说过于紧张。如果你因内存不足而出现崩溃，请将一些模块移到磁盘设备上。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">infer_auto_device_map()（或者load_checkpoint_and_dispatch()中的device_map="auto"）是按顺序属性设备的（以避免来回移动东西），所以如果你的第一层比你的GPU的大小大，最后会把所有东西都放在CPU/磁盘上。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">load_checkpoint_and_dispatch()和load_checkpoint_in_model()目前没有对你的状态描述与你的模型相比的正确性进行任何检查（这将在未来的版本中被修复），所以如果你试图加载一个键不匹配或丢失的检查点，你可能会得到一些奇怪的错误。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">当你的模型被分割到几个GPU上时，所使用的模型并行性是天真的，没有经过优化，这意味着在某个时间只有一个GPU在工作，而另一个则处于闲置状态。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">当权重被卸载在CPU/硬盘上时，没有预取（还没有，我们会在未来的版本中努力做到这一点），这意味着权重在需要时被放到GPU上，而不是之前。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">如果你运行的硬件没有磁盘和CPU之间的快速通信（如NVM），硬盘卸载可能会非常慢.</section></li></ul>
+<h1 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 24px; line-height: 28px; border-bottom: 1px solid rgba(37, 132, 181, 1)"><span style="background: rgba(37, 132, 181, 1); color: rgba(255, 255, 255, 1); counter-increment: counterh1 1; padding: 2px 8px">Part2</span><span class="prefix" style="display: none"></span><span class="content" style="color: rgba(37, 132, 181, 1); margin-left: 8px; font-size: 20px">部署ChatGLM-6B</span><span class="suffix"></span></h1>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">基础环境：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">torch==<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">2.0</span><span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">.0</span>+cu118<br>transformers==<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">4.28</span><span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">.1</span><br>accelerate==<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0.18</span><span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">.0</span><br>Tesla&nbsp;T4&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">15.3</span>G<br>内存：<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">11.8</span>G<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">下载相关文件：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">git&nbsp;clone&nbsp;https://github.com/THUDM/ChatGLM<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">-6</span>B<br>cd&nbsp;ChatGLM<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">-6</span>B<br><br>git&nbsp;clone&nbsp;--depth=<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">1</span>&nbsp;https://huggingface.co/THUDM/chatglm<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">-6</span>b&nbsp;THUDM/chatglm<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">-6</span>b<br>git&nbsp;clone&nbsp;--depth=<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">1</span>&nbsp;https://huggingface.co/THUDM/chatglm<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">-6</span>b-int4&nbsp;THUDM/chatglm<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">-6</span>b-int4<br><br>pip&nbsp;install&nbsp;-r&nbsp;requirements.txt<br>pip&nbsp;install&nbsp;gradio<br>pip&nbsp;install&nbsp;accelerate<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">正常情况下，我们使用Chat-GLM需要的显存大于13G，内存没有评估过，但上述的肯定是不够的，16G应该可以。</p>
+<h2 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 22px"><span class="prefix" style="display: inline-block"><span style="counter-increment: counterh2 1; color: rgba(159, 205, 208, 1); border-bottom: 4px solid rgba(159, 205, 208, 1); font-size: 18px; padding: 2px 4px">2</span></span><span class="content" style="font-size: 18px; border-bottom: 4px solid rgba(37, 132, 181, 1); padding: 2px 4px; color: rgba(37, 132, 181, 1)">第一种方案</span><span class="suffix"></span></h2>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">直接使用量化以后的模型：</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px"><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">from</span>&nbsp;accelerate&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;infer_auto_device_map,&nbsp;init_empty_weights,&nbsp;load_checkpoint_and_dispatch<br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">from</span>&nbsp;transformers&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;AutoConfig,&nbsp;AutoModel,&nbsp;AutoModelForCausalLM,&nbsp;AutoTokenizer<br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;gradio&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">as</span>&nbsp;gr<br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;torch<br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;time<br><br>tokenizer&nbsp;=&nbsp;AutoTokenizer.from_pretrained(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"./THUDM/chatglm-6b-int4"</span>,&nbsp;trust_remote_code=<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">True</span>)<br>model&nbsp;=&nbsp;AutoModel.from_pretrained(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"./THUDM/chatglm-6b-int4"</span>,&nbsp;trust_remote_code=<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">True</span>).half().cuda()<br><br>model&nbsp;=&nbsp;model.eval()<br><br><span class="hljs-function" style="line-height: 26px"><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">def</span>&nbsp;<span class="hljs-title" style="color: rgba(97, 174, 238, 1); line-height: 26px">predict</span><span class="hljs-params" style="line-height: 26px">(input,&nbsp;history=None)</span>:</span><br>&nbsp;&nbsp;&nbsp;&nbsp;print(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">f'predict&nbsp;started:&nbsp;<span class="hljs-subst" style="color: rgba(224, 108, 117, 1); line-height: 26px">{time.time()}</span>'</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">if</span>&nbsp;history&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">is</span>&nbsp;<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">None</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;history&nbsp;=&nbsp;[]<br>&nbsp;&nbsp;&nbsp;&nbsp;response,&nbsp;history&nbsp;=&nbsp;model.chat(tokenizer,&nbsp;input,&nbsp;history)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">return</span>&nbsp;response,&nbsp;history<br><br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">while</span>&nbsp;<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">True</span>:<br>&nbsp;&nbsp;text&nbsp;=&nbsp;input(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"&gt;&gt;用户："</span>)<br>&nbsp;&nbsp;response,&nbsp;history&nbsp;=&nbsp;model.chat(tokenizer,&nbsp;input,&nbsp;history)<br>&nbsp;&nbsp;print(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"&gt;&gt;CHatGLM："</span>,&nbsp;response)<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">GPU使用4.9G，内存使用5.5G。</p>
+<h2 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 22px"><span class="prefix" style="display: inline-block"><span style="counter-increment: counterh2 1; color: rgba(159, 205, 208, 1); border-bottom: 4px solid rgba(159, 205, 208, 1); font-size: 18px; padding: 2px 4px">3</span></span><span class="content" style="font-size: 18px; border-bottom: 4px solid rgba(37, 132, 181, 1); padding: 2px 4px; color: rgba(37, 132, 181, 1)">第二种方案</span><span class="suffix"></span></h2>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">使用acclerate，只有一块GPU。</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px">%cd&nbsp;/content/ChatGLM<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">-6</span>B<br><br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">from</span>&nbsp;accelerate&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;infer_auto_device_map,&nbsp;init_empty_weights,&nbsp;load_checkpoint_and_dispatch<br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">from</span>&nbsp;transformers&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;AutoConfig,&nbsp;AutoModel,&nbsp;AutoModelForCausalLM,&nbsp;AutoTokenizer<br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;gradio&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">as</span>&nbsp;gr<br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;torch<br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;time<br><br><br>tokenizer&nbsp;=&nbsp;AutoTokenizer.from_pretrained(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"./THUDM/chatglm-6b"</span>,&nbsp;trust_remote_code=<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">True</span>)<br>config&nbsp;=&nbsp;AutoConfig.from_pretrained(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"./THUDM/chatglm-6b"</span>,&nbsp;trust_remote_code=<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">True</span>)<br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">with</span>&nbsp;init_empty_weights():<br>&nbsp;&nbsp;model&nbsp;=&nbsp;AutoModel.from_config(config,&nbsp;trust_remote_code=<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">True</span>)<br><br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">for</span>&nbsp;name,&nbsp;_&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">in</span>&nbsp;model.named_parameters():<br>&nbsp;&nbsp;print(name)<br><span class="hljs-comment" style="color: rgba(92, 99, 112, 1); font-style: italic; line-height: 26px">#&nbsp;device_map&nbsp;=&nbsp;infer_auto_device_map(model,&nbsp;no_split_module_classes=["GLMBlock"])</span><br><span class="hljs-comment" style="color: rgba(92, 99, 112, 1); font-style: italic; line-height: 26px">#&nbsp;print(device_map)</span><br>device_map&nbsp;=&nbsp;{<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.word_embeddings'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.0'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.1'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.2'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.3'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.4'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.5'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.6'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.7'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.8'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.9'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.10'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.11'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.12'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.13'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.14'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.15'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.16'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.17'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.18'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.19'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.20'</span>:&nbsp;<span class="hljs-number" style="color: rgba(209, 154, 102, 1); line-height: 26px">0</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.21'</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'cpu'</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.22'</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'cpu'</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.23'</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'cpu'</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.24'</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'cpu'</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.25'</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'cpu'</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.26'</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'cpu'</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.layers.27'</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'cpu'</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'transformer.final_layernorm'</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'cpu'</span>,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'lm_head'</span>:&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">'cpu'</span>}<br>model&nbsp;=&nbsp;load_checkpoint_and_dispatch(model,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"./THUDM/chatglm-6b"</span>,&nbsp;device_map=device_map,&nbsp;offload_folder=<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"offload"</span>,&nbsp;offload_state_dict=<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">True</span>,&nbsp;no_split_module_classes=[<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"GLMBlock"</span>]).half()<br><br><span class="hljs-function" style="line-height: 26px"><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">def</span>&nbsp;<span class="hljs-title" style="color: rgba(97, 174, 238, 1); line-height: 26px">predict</span><span class="hljs-params" style="line-height: 26px">(input,&nbsp;history=None)</span>:</span><br>&nbsp;&nbsp;&nbsp;&nbsp;print(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">f'predict&nbsp;started:&nbsp;<span class="hljs-subst" style="color: rgba(224, 108, 117, 1); line-height: 26px">{time.time()}</span>'</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">if</span>&nbsp;history&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">is</span>&nbsp;<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">None</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;history&nbsp;=&nbsp;[]<br>&nbsp;&nbsp;&nbsp;&nbsp;response,&nbsp;history&nbsp;=&nbsp;model.chat(tokenizer,&nbsp;input,&nbsp;history)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">return</span>&nbsp;response,&nbsp;history<br><br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">while</span>&nbsp;<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">True</span>:<br>&nbsp;&nbsp;history&nbsp;=&nbsp;<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">None</span><br>&nbsp;&nbsp;text&nbsp;=&nbsp;input(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"&gt;&gt;用户："</span>)<br>&nbsp;&nbsp;response,&nbsp;history&nbsp;=&nbsp;model.chat(tokenizer,&nbsp;text,&nbsp;history)<br>&nbsp;&nbsp;print(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"&gt;&gt;CHatGLM："</span>,&nbsp;response)<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">GPU使用9.7G，内存使用5.9G。第一轮输入你好后GPU使用11.2G。</p>
+<h2 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 22px"><span class="prefix" style="display: inline-block"><span style="counter-increment: counterh2 1; color: rgba(159, 205, 208, 1); border-bottom: 4px solid rgba(159, 205, 208, 1); font-size: 18px; padding: 2px 4px">4</span></span><span class="content" style="font-size: 18px; border-bottom: 4px solid rgba(37, 132, 181, 1); padding: 2px 4px; color: rgba(37, 132, 181, 1)">第三种方案</span><span class="suffix"></span></h2>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">使用accelerate，多块GPU。</p>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">环境：windwos下。GPU：4*4090 24G。内存：128G。python&gt;=3.8，torch==2.0+117，transformers==4.28.1，acclerate==0.18.0。</p>
+<pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(40, 44, 52, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(171, 178, 191, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(40, 44, 52, 1); border-radius: 5px"><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;os<br>os.environ[<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"cuda_visible_devices"</span>]&nbsp;=&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"0,1"</span><br><br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">from</span>&nbsp;accelerate&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;infer_auto_device_map,&nbsp;init_empty_weights,&nbsp;load_checkpoint_and_dispatch<br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">from</span>&nbsp;transformers&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;AutoConfig,&nbsp;AutoModel,&nbsp;AutoModelForCausalLM,&nbsp;AutoTokenizer<br><span class="hljs-comment" style="color: rgba(92, 99, 112, 1); font-style: italic; line-height: 26px">#&nbsp;import&nbsp;gradio&nbsp;as&nbsp;gr</span><br><span class="hljs-comment" style="color: rgba(92, 99, 112, 1); font-style: italic; line-height: 26px">#&nbsp;import&nbsp;torch</span><br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">import</span>&nbsp;time<br><br><br>tokenizer&nbsp;=&nbsp;AutoTokenizer.from_pretrained(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">".\\chatglm-6b\\"</span>,&nbsp;trust_remote_code=<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">True</span>)<br>config&nbsp;=&nbsp;AutoConfig.from_pretrained(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">".\\chatglm-6b\\"</span>,&nbsp;trust_remote_code=<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">True</span>)<br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">with</span>&nbsp;init_empty_weights():<br>&nbsp;&nbsp;model&nbsp;=&nbsp;AutoModel.from_config(config,&nbsp;trust_remote_code=<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">True</span>)<br><br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">for</span>&nbsp;name,&nbsp;_&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">in</span>&nbsp;model.named_parameters():<br>&nbsp;&nbsp;print(name)<br><span class="hljs-comment" style="color: rgba(92, 99, 112, 1); font-style: italic; line-height: 26px">#&nbsp;device_map&nbsp;=&nbsp;infer_auto_device_map(model,&nbsp;no_split_module_classes=["GLMBlock"])</span><br><span class="hljs-comment" style="color: rgba(92, 99, 112, 1); font-style: italic; line-height: 26px">#&nbsp;print(device_map)</span><br><span class="hljs-comment" style="color: rgba(92, 99, 112, 1); font-style: italic; line-height: 26px">#&nbsp;device_map&nbsp;=&nbsp;{'transformer.word_embeddings':&nbsp;0,&nbsp;'transformer.layers.0':&nbsp;0,&nbsp;'transformer.layers.1':&nbsp;0,&nbsp;'transformer.layers.2':&nbsp;0,&nbsp;'transformer.layers.3':&nbsp;0,&nbsp;'transformer.layers.4':&nbsp;0,&nbsp;'transformer.layers.5':&nbsp;0,&nbsp;'transformer.layers.6':&nbsp;0,&nbsp;'transformer.layers.7':&nbsp;0,&nbsp;'transformer.layers.8':&nbsp;0,&nbsp;'transformer.layers.9':&nbsp;0,&nbsp;'transformer.layers.10':&nbsp;0,&nbsp;'transformer.layers.11':&nbsp;0,&nbsp;'transformer.layers.12':&nbsp;0,&nbsp;'transformer.layers.13':&nbsp;0,&nbsp;'transformer.layers.14':&nbsp;0,&nbsp;'transformer.layers.15':&nbsp;0,&nbsp;'transformer.layers.16':&nbsp;0,&nbsp;'transformer.layers.17':&nbsp;0,&nbsp;'transformer.layers.18':&nbsp;0,&nbsp;'transformer.layers.19':&nbsp;0,&nbsp;'transformer.layers.20':&nbsp;0,&nbsp;'transformer.layers.21':&nbsp;'cpu',&nbsp;'transformer.layers.22':&nbsp;'cpu',&nbsp;'transformer.layers.23':&nbsp;'cpu',&nbsp;'transformer.layers.24':&nbsp;'cpu',&nbsp;'transformer.layers.25':&nbsp;'cpu',&nbsp;'transformer.layers.26':&nbsp;'cpu',&nbsp;'transformer.layers.27':&nbsp;'cpu',&nbsp;'transformer.final_layernorm':&nbsp;'cpu',&nbsp;'lm_head':&nbsp;'cpu'}</span><br>model&nbsp;=&nbsp;load_checkpoint_and_dispatch(model,&nbsp;<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">".\\chatglm-6b\\"</span>,&nbsp;device_map=<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"balanced"</span>,&nbsp;offload_folder=<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"offload"</span>,&nbsp;offload_state_dict=<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">True</span>,&nbsp;no_split_module_classes=[<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"GLMBlock"</span>]).half()<br><br><span class="hljs-function" style="line-height: 26px"><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">def</span>&nbsp;<span class="hljs-title" style="color: rgba(97, 174, 238, 1); line-height: 26px">predict</span><span class="hljs-params" style="line-height: 26px">(input,&nbsp;history=None)</span>:</span><br>&nbsp;&nbsp;&nbsp;&nbsp;print(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">f'predict&nbsp;started:&nbsp;<span class="hljs-subst" style="color: rgba(224, 108, 117, 1); line-height: 26px">{time.time()}</span>'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">if</span>&nbsp;history&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">is</span>&nbsp;<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">None</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;history&nbsp;=&nbsp;[]<br>&nbsp;&nbsp;&nbsp;&nbsp;response,&nbsp;history&nbsp;=&nbsp;model.chat(tokenizer,&nbsp;input,&nbsp;history)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">return</span>&nbsp;response,&nbsp;history<br><br><span class="hljs-keyword" style="color: rgba(198, 120, 221, 1); line-height: 26px">while</span>&nbsp;<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">True</span>:<br>&nbsp;&nbsp;history&nbsp;=&nbsp;<span class="hljs-literal" style="color: rgba(86, 182, 194, 1); line-height: 26px">None</span><br>&nbsp;&nbsp;text&nbsp;=&nbsp;input(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"&gt;&gt;用户："</span>)<br>&nbsp;&nbsp;response,&nbsp;history&nbsp;=&nbsp;model.chat(tokenizer,&nbsp;text,&nbsp;history)<br>&nbsp;&nbsp;print(<span class="hljs-string" style="color: rgba(152, 195, 121, 1); line-height: 26px">"&gt;&gt;CHatGLM："</span>,&nbsp;response)<br></code></pre>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">注意，这里我们设置设备映射为balanced，并只使用前两块GPU。显卡占用情况：</p>
+<figure data-tool="mdnice编辑器" style="margin: 10px 0; display: flex; flex-direction: column; justify-content: center; align-items: center"><img src="https://files.mdnice.com/user/34120/eb54a221-a9bd-4c2b-a5fd-4bc418af3f62.png" alt="" style="display: block; margin: 0 auto; max-width: 100%"></figure>
+<p data-tool="mdnice编辑器" style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: rgba(0, 0, 0, 1)">会发现平均分配了显存，当然GPU 0分配得更多些、至此，关于如何进行大模型推理就全部完成了。</p>
+<h1 data-tool="mdnice编辑器" style="margin-top: 30px; margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 24px; line-height: 28px; border-bottom: 1px solid rgba(37, 132, 181, 1)"><span style="background: rgba(37, 132, 181, 1); color: rgba(255, 255, 255, 1); counter-increment: counterh1 1; padding: 2px 8px">Part3</span><span class="prefix" style="display: none"></span><span class="content" style="color: rgba(37, 132, 181, 1); margin-left: 8px; font-size: 20px">参考</span><span class="suffix"></span></h1>
+<blockquote class="multiquote-1" data-tool="mdnice编辑器" style="display: block; font-size: 0.9em; overflow: auto; overflow-scrolling: touch; border: 1px dashed rgba(37, 132, 181, 1); color: rgba(106, 115, 125, 1); padding: 10px 10px 10px 20px; margin-bottom: 20px; margin-top: 20px; background: rgba(0, 0, 0, 0)">
+<p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; color: rgba(0, 0, 0, 1); line-height: 26px">https://huggingface.co/docs/accelerate/usage_guides/big_modeling<br>
+https://github.com/THUDM/ChatGLM-6B/issues/69<br>
+https://github.com/THUDM/ChatGLM-6B/issues/200<br></p>
+</blockquote>
+</section>
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="0.2115779537685185" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2023-04-23 09:40">2023-04-23 09:38</span>&nbsp;
+<a href="https://www.cnblogs.com/xiximayou/">西西嘛呦</a>&nbsp;
+阅读(<span id="post_view_count">20</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17345539" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(17345539);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '17345539', targetLink: 'https://www.cnblogs.com/xiximayou/p/17345539.html', title: 'pytorch在有限的资源下部署大语言模型（以ChatGLM-6B为例）' })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+
+<script>
+    var cb_entryId = 17345539, cb_entryCreatedDate = '2023-04-23 09:38', cb_postType = 1, cb_postTitle = 'pytorch在有限的资源下部署大语言模型（以ChatGLM-6B为例）';
+    var allowComments = true, cb_blogId = 465208, cb_blogApp = 'xiximayou', cb_blogUserGuid = '6d698895-197f-4e15-9014-08d627f4443f';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+            <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 西西嘛呦
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    <div id="page_end_html">
+        <script type="text/javascript">
+   window.onload = function () {
+                var minSize = 10; //最小字体
+                var maxSize = 20;//最大字体
+                var newOne = 600; //生成雪花间隔
+                var flakColor = "#f5f5f5fa"; //雪花颜色
+                var flak = $("<div></div>").css({position:"absolute","top":"0px"}).html("✽");//定义一个雪花
+                var dhight = $(window).height(); //定义视图高度
+                var dw =$(window).width()-80; //定义视图宽度
+                setInterval(function(){
+                var sizeflak = minSize+Math.random()*maxSize; //产生大小不等的雪花
+                var startLeft = Math.random()*dw; //雪花生成是随机的left值
+                var startOpacity = 0.7+Math.random()*0.3; //随机透明度
+                var endTop= dhight-100; //雪花停止top的位置
+                var endLeft= Math.random()*dw; //雪花停止的left位置
+                var durationfull = 5000+Math.random()*3000; //雪花飘落速度不同
+                flak.clone().appendTo($("body")).css({
+                "left":startLeft ,
+                "opacity":startOpacity,
+                "font-size":sizeflak,
+                "color":flakColor
+                }).animate({
+                "top":endTop,
+                "left":endLeft,
+                "apacity":0.1
+                },durationfull,function(){
+                $(this).remove()
+                });
+                },newOne);
+            }
+ </script>
+
+
+<script type="text/javascript">
+$(function(){
+    $('#blogTitle h1').addClass('bounceInLeft animated');
+    $('#blogTitle h2').addClass('bounceInRight animated');
+    // 删除反对按钮
+    //$('.buryit').remove();
+    initCommentData();
+});
+function initCommentData() {
+    $('.feedbackItem').each(function() {
+        var text = $(this).find('.feedbackListSubtitle .layer').text();
+        // 将楼层信息放到data里面
+        // $(this).find('.blog_comment_body').attr('data-louceng', text.replace(/^#/g, ''));
+        if($(this).find('.feedbackListSubtitle .louzhu').length>0) $(this).addClass('myself');
+        var avatar = $(this).find('> .feedbackCon > span').html() || 'http://pic.cnitblog.com/face/sample_face.gif';
+        $(this).find('> .feedbackCon > .blog_comment_body').append('<img class="user-avatar" src="'+avatar+'"/>')
+    });
+}
+
+$(document).ajaxComplete(function(event, xhr, settings) {
+  // 监听获取评论ajax事件
+  if(settings.url.indexOf('/mvc/blog/GetComments.aspx') >= 0) {
+    initCommentData();
+  }
+});
+</script>
+<span id="back-to-top"><a rel="nofollow noopener"  href="#top"><img id="mypic" src="https://images.cnblogs.com/cnblogs_com/xiximayou/1643158/t_200207035556top.png" /></a></span>
+
+
+<script type="text/javascript" src="https://s4.cnzz.com/z_stat.php?id=1279004310&web_id=1279004310"></script>
+
+    </div>
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULlVjN0QriaUsuc4WefOi4lo6INxrsoPTmTExF2Sot-7J0C--vRHfuCBunlA7YYLotYdXVosAC0HpIZvIjpztzMp_397HUke4n17Ln6gStq3jKfauUVQvWc3nAKyg5EkySc" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

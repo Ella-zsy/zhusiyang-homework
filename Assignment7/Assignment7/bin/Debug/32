@@ -1,0 +1,505 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="description" content="一：背景 1. 讲故事 上周有位朋友找到我，说他的 API 被多次调用后出现了内存暴涨，让我帮忙看下是怎么回事？看样子是有些担心，但也不是特别担心，那既然找到我，就给他分析一下吧。 二：WinDbg " />
+    <meta property="og:description" content="一：背景 1. 讲故事 上周有位朋友找到我，说他的 API 被多次调用后出现了内存暴涨，让我帮忙看下是怎么回事？看样子是有些担心，但也不是特别担心，那既然找到我，就给他分析一下吧。 二：WinDbg " />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>记一次 .NET 某外贸ERP 内存暴涨分析 - 一线码农 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/imetro_hd/bundle-imetro_hd.min.css?v=hPOB5phQOImv1Eoze7tPbU-UCEJ9Y9W9C29GBRpBf24" />
+        <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="/css/hljs/cnblogs.css?v=5J1NDtbnnIr2Rc2SdhEMlMxD4l9Eydj88B31E7_NhS4" />
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/huangxincheng/custom.css?v=qCwvwmEm1ZtPIqAjWw3cb1l/1fY=" />
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/imetro_hd/bundle-imetro_hd-mobile.min.css?v=Yo5rOUFsRu8UW46vSFCEYekmBW8XCpQWj-KlsYlwc4U" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/huangxincheng/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/huangxincheng/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/huangxincheng/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 85195;
+        var currentBlogApp = 'huangxincheng';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'iMetro_HD';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+        <script>
+            var currentPostDateAdded = '2023-04-23 11:05';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-imetro_hd no-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'huangxincheng', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/huangxincheng/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/huangxincheng/"></a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/huangxincheng/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E4%B8%80%E7%BA%BF%E7%A0%81%E5%86%9C">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/huangxincheng/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huangxincheng/p/17345889.html">
+    <span role="heading" aria-level="2">记一次 .NET 某外贸ERP 内存暴涨分析</span>
+    
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<h2 id="一背景">一：背景</h2>
+<h3 id="1-讲故事">1. 讲故事</h3>
+<p>上周有位朋友找到我，说他的 API 被多次调用后出现了内存暴涨，让我帮忙看下是怎么回事？看样子是有些担心，但也不是特别担心，那既然找到我，就给他分析一下吧。</p>
+<h2 id="二windbg-分析">二：WinDbg 分析</h2>
+<h3 id="1-到底是哪里的泄露">1. 到底是哪里的泄露</h3>
+<p>这也是我一直在训练营灌输的理念，一定要知道是哪一边的暴涨，否则很可能就南辕北辙了，使用 <code>!address -summary</code> 和 <code>!eeheap -gc</code> 即可。</p>
+<pre><code class="language-C#">
+0:000&gt; !address -summary
+
+--- Usage Summary ---------------- RgnCount ----------- Total Size -------- %ofBusy %ofTotal
+Free                                    315     7df9`dbf15000 ( 125.976 TB)           98.42%
+&lt;unknown&gt;                              1056      206`130ec000 (   2.024 TB)  99.99%    1.58%
+Image                                  1262        0`091ee000 ( 145.930 MB)   0.01%    0.00%
+Heap                                    258        0`04c19000 (  76.098 MB)   0.00%    0.00%
+Stack                                   114        0`02fc0000 (  47.750 MB)   0.00%    0.00%
+Other                                     9        0`001db000 (   1.855 MB)   0.00%    0.00%
+TEB                                      38        0`0004c000 ( 304.000 kB)   0.00%    0.00%
+PEB                                       1        0`00001000 (   4.000 kB)   0.00%    0.00%
+
+--- Type Summary (for busy) ------ RgnCount ----------- Total Size -------- %ofBusy %ofTotal
+MEM_MAPPED                              260      200`01dbf000 (   2.000 TB)  98.82%    1.56%
+MEM_PRIVATE                            1216        6`1912e000 (  24.392 GB)   1.18%    0.02%
+MEM_IMAGE                              1262        0`091ee000 ( 145.930 MB)   0.01%    0.00%
+
+--- State Summary ---------------- RgnCount ----------- Total Size -------- %ofBusy %ofTotal
+MEM_FREE                                315     7df9`dbf15000 ( 125.976 TB)           98.42%
+MEM_RESERVE                             492      205`3abc6000 (   2.020 TB)  99.82%    1.58%
+MEM_COMMIT                             2246        0`e9515000 (   3.646 GB)   0.18%    0.00%
+....
+
+0:000&gt; !eeheap -gc
+Number of GC Heaps: 8
+------------------------------
+....
+------------------------------
+GC Allocated Heap Size:    Size: 0x74d77d98 (1960279448) bytes.
+GC Committed Heap Size:    Size: 0xcb7c6000 (3413925888) bytes.
+
+</code></pre>
+<p>从卦中看，当前提交内存是 <code>3.64G</code> ，托管堆的提交内存是 <code>3.41G</code>，很明显这是一个 <code>托管内存</code> 暴涨，到这里就比较好解决了。</p>
+<p>不知道可有朋友注意到了 <code>GC Allocated Heap Size</code> 和 <code>GC Committed Heap Size</code> 相差甚大，高达 <code>1.5G</code> 之多，上次看到这个情况还是 <code>某电厂</code> 的一个 dump，当时还问了下 Maoni ，说是设计如此，既然说到了设计如此，我还看了下 .NET 版本是 <code>.NET5</code>，所以冷不丁的看下来这个程序的.NET版本，输出如下：</p>
+<pre><code class="language-C#">
+0:000&gt; !eeversion
+5.0.621.22011 free
+5,0,621,22011 @Commit: 478b2f8c0e480665f6c52c95cd57830784dc9560
+Server mode with 8 gc heaps
+SOS Version: 6.0.5.7301 retail build
+
+</code></pre>
+<p>我去 <code>.NET5</code> 再现，其实到这里可以这么说， 至少我觉得 <code>.NET5</code> 在这一块还可以再优化优化。</p>
+<h3 id="2-为什么会相距过大">2. 为什么会相距过大</h3>
+<p>在 <code>电厂</code> 的那个dump中，后来通过非托管分析，发现有大量的统计信息，后来确认是网站上有一段时间的高频导入导出文件造成的暴涨，这句话的意思就是程序曾经出现过短暂的 <code>快进快出</code>，这就意味着有大量短暂的临时对象产生， CLR 为了高效处理，在短暂对象释放后，并没有将内存归还给 <code>操作系统</code>, 而是自己私吞，目的是防未来可能的爆炸性的内存分配，所以你会看到 <code>分配区域</code> 和 <code>提交区域</code> 过大的底层逻辑了。</p>
+<p>原理大概就是这么个原理，那这个 ERP 难道也是出现了 <code>快进快出</code> 的现象吗？是不是我们可以挖一下哈，方法就是统计一下 <code>无根对象</code> 占托管堆的一个 百分比，使用 <code>!heapstat -iu</code> 命令。</p>
+<pre><code class="language-C#">
+0:000&gt; !heapstat -iu
+Heap             Gen0         Gen1         Gen2          LOH          POH
+Heap0       124129016    105671896      5371520      4063704       795560
+Heap1       100102816    109941488      4421800      4719072       452904
+Heap2       144913984    105093616      7285888      4325960      1917928
+Heap3       125996096    109904696      8612112      4194608       425976
+Heap4       124567184    102635432      7450536      3670432       393400
+Heap5       122508864    104438848     12821224      4076136       458616
+Heap6       124459664    120851840      5901680      6615192       311352
+Heap7       131309360     97620536      8585720      8660720       602072
+Total       997986984    856158352     60450480     40325824      5357808
+
+Free space:                                                               Percentage
+Heap0          426616      2332200         3032       393520          264 SOH:  1%
+Heap1          380752      2403984         1768       131208          320 SOH:  1%
+Heap2          484008      2306424         4328          344          616 SOH:  1%
+Heap3          436888      2403000         1168          184           24 SOH:  1%
+Heap4          446192      2266944         1936       393512           24 SOH:  1%
+Heap5          444176      2302824         5232       131440           24 SOH:  1%
+Heap6          429048      2648592         9104       884800           24 SOH:  1%
+Heap7          441216      2144136         3272       168992           80 SOH:  1%
+Total         3488896     18808104        29840      2104000         1376
+
+Unrooted objects:                                            Percentage
+Heap0       121561744    103338800        56592      3145872            0 SOH: 95%
+Heap1        99418536    107524544        19800      4456760            0 SOH: 96%
+Heap2       144081016    102786776        36920      4325616            0 SOH: 95%
+Heap3       124591744    107491216        23832      4194424            0 SOH: 94%
+Heap4       123946896    100368288        10400      3145824           88 SOH: 95%
+Heap5       121457024    102135728        24032      3539136            0 SOH: 93%
+Heap6       123739008    118202552         2288      5243072            0 SOH: 96%
+Heap7       130593408     95460992          736      3539136            0 SOH: 95%
+Total       989389376    837308896       174600     31589840           88
+
+</code></pre>
+<p>从卦中看，当前 <code>Unrooted objects</code> 区域占 SOH 的比率都是在 <code>93%</code> 以上，就是说托管堆上几乎都是 <code>无根对象</code>，这也验证了 <code>快进快出</code> 的现象，接下来的问题就是挖下是什么导致了 <code>快进快出</code>。</p>
+<h3 id="3-什么导致了-快进快出">3. 什么导致了 快进快出</h3>
+<p>要找到这个答案需要到托管堆看一下，是否有超出预期的对象分配，使用 <code>!dumpheap -stat</code> 即可。</p>
+<pre><code class="language-C#">
+0:000&gt; !dumpheap -stat
+Statistics:
+              MT    Count    TotalSize Class Name
+            ...
+00007ff7bf388fa8  1300147     31203528 System.DateTime
+00007ff7c04db260      124     32312064 xxx.UDP_Retention[]
+00007ff7bfeb2c00  1239416    317290496 xxx.UDP_Retention
+00007ff7c00cfe88 12997664    415925248 FreeSql.Internal.Utils+RowInfo
+00007ff7bf107a90 21175792    909769558 System.String
+Total 40777517 objects
+
+</code></pre>
+<p>从卦中看： <code>FreeSql.Internal.Utils+RowInfo</code> 高达 <code>1300w</code> ，同时 <code>xxx.UDP_Retention</code> 对象也高达 <code>123w</code> ， <code>FreeSql</code> 相信国内很多开发者都知道，是一个数据访问的SDK，很显然这个 ERP 应该从数据库中读取了不少数据, FreeSql 在内部为了做映射生成了非常多的临时对象。</p>
+<p>那现在的突破点在哪里呢？就是寻找问题 SQL，找下和类名同名的表名 <code>UDP_Retention</code> 即可，写个脚本查一下就好了，结果发现有不少这样的 sql，输出如下：</p>
+<pre><code class="language-sql">
+SELECT *
+FROM 
+    (SELECT *
+    FROM UDP_Retention with(nolock)
+    WHERE ID NOT IN 
+        (SELECT xxxId
+        FROM UDP_Retention_Pxxxx with(nolock)) ) a 
+
+</code></pre>
+<p>那这条 sql 会捞出多少数据呢？可以观察下 <code>UDP_Retention[]</code> 即可，然后稍微过滤一下。</p>
+<pre><code class="language-C#">
+0:000&gt; !DumpHeap -mt 00007ff7c04db260 -min 0n1048576
+         Address               MT     Size
+00000244c3b71188 00007ff7c04db260  1048600     
+00000244c3c711c0 00007ff7c04db260  1048600     
+00000244d3bd1120 00007ff7c04db260  1048600     
+00000244e3a710e0 00007ff7c04db260  1048600     
+00000244e3cb1230 00007ff7c04db260  1048600     
+00000244f3a11070 00007ff7c04db260  1048600     
+00000244f3b910e0 00007ff7c04db260  1048600     
+00000244f3c91118 00007ff7c04db260  1048600     
+0000024503a91118 00007ff7c04db260  1048600     
+0000024503b91150 00007ff7c04db260  1048600     
+0000024513c74250 00007ff7c04db260  1048600     
+00000245239c90c8 00007ff7c04db260  1048600     
+0000024523ac9100 00007ff7c04db260  1048600     
+0000024523de0048 00007ff7c04db260  1048600     
+0000024523ee0080 00007ff7c04db260  1048600     
+00000245339d0f68 00007ff7c04db260  1048600     
+0000024534013668 00007ff7c04db260  1048600     
+
+Statistics:
+              MT    Count    TotalSize Class Name
+00007ff7c04db260       17     17826200 xxx.UDP_Retention[]
+Total 17 objects
+
+0:000&gt; !DumpObj /d 0000024534013668
+Name:        xxx.UDP_Retention[]
+MethodTable: 00007ff7c04db260
+EEClass:     00007ff7bf0467c8
+Size:        1048600(0x100018) bytes
+Array:       Rank 1, Number of elements 131072, Type CLASS (Print Array)
+Fields:
+None
+
+</code></pre>
+<p>从卦中信息看, 大概有 17 个 13w 的记录，说明这个sql会一次性捞取 <code>10w+</code> ，用完之后即刻释放，也就表示为什么 SOH 会占用 93% 以上的无根对象。</p>
+<h2 id="三总结">三：总结</h2>
+<p>总的来说，这次内存暴涨是因为程序出现了分配的 <code>快进快出</code> 现象导致的，如果你不想管也可以不用管，GC 在下次发兵时会一举歼灭，如果要做优化的话，需要优化下 sql，不要一次性查询出 10w+ 的数据，不过说实话，FreeSql 在映射方面最好也要做些优化，毕竟产生了 <code>1300w</code> 的临时对象，虽然不是它的错。</p>
+<img src="https://images.cnblogs.com/cnblogs_com/huangxincheng/345039/o_210929020104最新消息优惠促销公众号关注二维码.jpg" width="700" height="300" alt="图片名称" align="center">
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="0.1406937537777778" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2023-04-23 11:22">2023-04-23 11:05</span>&nbsp;
+<a href="https://www.cnblogs.com/huangxincheng/">一线码农</a>&nbsp;
+阅读(<span id="post_view_count">292</span>)&nbsp;
+评论(<span id="post_comment_count">8</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17345889" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(17345889);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '17345889', targetLink: 'https://www.cnblogs.com/huangxincheng/p/17345889.html', title: '记一次 .NET 某外贸ERP 内存暴涨分析' })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+
+<script>
+    var cb_entryId = 17345889, cb_entryCreatedDate = '2023-04-23 11:05', cb_postType = 1, cb_postTitle = '记一次 .NET 某外贸ERP 内存暴涨分析';
+    var allowComments = true, cb_blogId = 85195, cb_blogApp = 'huangxincheng', cb_blogUserGuid = '40a06552-abf8-df11-ac81-842b2b196315';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+            <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 一线码农
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULnFQUwOFaOTfi092zFoCPIGwYVOLz_sNdskuJzmTBqZ8TW3L0x1p3g8FCeFTV97IiIzSDRXvFza0LJN0Ya6eJuyy4oUv8Dl1NSdTk_3qUvib9H3V5XZfkDjqoJNl2MQ7fM" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

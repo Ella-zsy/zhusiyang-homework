@@ -1,0 +1,637 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>卓亦苇 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    
+        
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/zhuoblog/custom.css?v=GIkpf33IhR1B&#x2B;6vkGpCa85/gOwM=" />
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/SimpleMemory/bundle-simplememory-mobile-pure.min.css?v=ZBWq3OPQpKdP7jvC_UMCkC1a79tQGcXLPZwlftZaLVg" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/zhuoblog/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/zhuoblog/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/zhuoblog/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 724257;
+        var currentBlogApp = 'zhuoblog';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'SimpleMemory';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'github';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-simplememory no-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'zhuoblog', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        
+<!--鼠标点击效果-->
+<script src="https://blog-static.cnblogs.com/files/e-cat/cursor-effects.js" defer></script>
+    </div>
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/zhuoblog/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/zhuoblog/">卓亦苇</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/zhuoblog/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E5%8D%93%E4%BA%A6%E8%8B%87">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/zhuoblog/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+
+
+
+
+		
+<div class="day pinned" role="article" aria-describedby="postlist_description_15715294">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/zhuoblog/archive/2021/12/21.html"></a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle pinned-post" href="https://www.cnblogs.com/zhuoblog/p/15715294.html">
+    <span>
+            <span class="pinned-post-mark">[置顶]</span>
+        卓亦苇
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="postBody blogpost-body" id="postlist_postbody_15715294">
+        正文内容加载中...
+    </div>
+    <script type="text/javascript">getBlogPostBody(15715294);</script>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2021-12-21 14:48
+卓亦苇
+<span data-post-id="15715294" class="post-view-count">阅读(66)</span> 
+<span data-post-id="15715294" class="post-comment-count">评论(0)</span> 
+<span data-post-id="15715294" class="post-digg-count">推荐(2)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=15715294" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17346208">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/zhuoblog/archive/2023/04/23.html">2023年4月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/zhuoblog/p/17346208.html">
+    <span>
+        rails的接口查询详解
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17346208">
+摘要：            
+Retrieving Objects from the Database find &quot;find&quot;是一种常用的数据库查询方法，在Rails中被用于从数据库中查找单个记录。它可以接收一个主键作为参数，也可以接收一组条件参数。 以下是&quot;find&quot;方法的使用方式： # 使用主键查找单个记录 Model.fi        <a href="https://www.cnblogs.com/zhuoblog/p/17346208.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-23 12:29
+卓亦苇
+<span data-post-id="17346208" class="post-view-count">阅读(5)</span> 
+<span data-post-id="17346208" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17346208" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17346208" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17339621">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/zhuoblog/archive/2023/04/21.html">2023年4月21日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/zhuoblog/p/17339621.html">
+    <span>
+        Callback详解
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17339621">
+摘要：            
+Callbacks Callback Registration 在 Rails 中，回调（Callbacks）是一种在模型对象的生命周期中执行特定代码的机制。回调可以在模型对象的创建、更新、删除等操作中执行特定的代码，例如保存对象前执行某些逻辑，或者在对象被删除前执行清理操作。 Rails 中的回调        <a href="https://www.cnblogs.com/zhuoblog/p/17339621.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-21 11:00
+卓亦苇
+<span data-post-id="17339621" class="post-view-count">阅读(96)</span> 
+<span data-post-id="17339621" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17339621" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17339621" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17336323">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/zhuoblog/archive/2023/04/20.html">2023年4月20日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/zhuoblog/p/17336323.html">
+    <span>
+        关于Validation的方法使用
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17336323">
+摘要：            
+acceptance验证 acceptance 是 Rails 中的一个验证器（validator），用于验证一个布尔类型的属性是否被接受。在表单中，通常会有一些复选框或单选按钮，用户需要勾选或选择才能提交表单。acceptance 验证器用于确保这些复选框或单选按钮已经被选中或勾选。 当一个属性被        <a href="https://www.cnblogs.com/zhuoblog/p/17336323.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-20 12:07
+卓亦苇
+<span data-post-id="17336323" class="post-view-count">阅读(135)</span> 
+<span data-post-id="17336323" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17336323" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17336323" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17215471">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/zhuoblog/archive/2023/03/14.html">2023年3月14日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/zhuoblog/p/17215471.html">
+    <span>
+        深度解析单例模式
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17215471">
+摘要：            
+饥汉模式 package com.cz.single; /** * @author 卓亦苇 * @version 1.0 * 2023/3/11 21:31 */ public class Hungry { private byte[] data1 = new byte[1024]; private        <a href="https://www.cnblogs.com/zhuoblog/p/17215471.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-03-14 16:39
+卓亦苇
+<span data-post-id="17215471" class="post-view-count">阅读(219)</span> 
+<span data-post-id="17215471" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17215471" class="post-digg-count">推荐(4)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17215471" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16928456">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/zhuoblog/archive/2022/11/26.html">2022年11月26日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/zhuoblog/p/16928456.html">
+    <span>
+        计网知识点总结（持续更新）
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16928456">
+摘要：            
+第一章 计算机两个重要功能 连通性：指计算机网络使上网用户之间都可以交换信息，好像互联网之间的用户可以彼此直接连通 共享：指资源共享，如：信息共享、软件贡献、硬件共享 计算机网络向用户提供的服务主要有：数据通信、资源共享，还有分布式处理、提高可靠性、负载均衡 因特网发展的主要阶段 从单个网络ARPN        <a href="https://www.cnblogs.com/zhuoblog/p/16928456.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-11-26 22:05
+卓亦苇
+<span data-post-id="16928456" class="post-view-count">阅读(181)</span> 
+<span data-post-id="16928456" class="post-comment-count">评论(0)</span> 
+<span data-post-id="16928456" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16928456" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16323615">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/zhuoblog/archive/2022/05/29.html">2022年5月29日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/zhuoblog/p/16324961.html">
+    <span>
+        存储器、I/O组织、微处理器
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16324961">
+摘要：            
+重点知识 存储器的内部结构及访问方法 存储器分段以及存储器中的逻辑地址和物理地址 I/O端口组织及编址方式 时序和总线操作以及系统的工作方式和特点。 存储器组织 8086有20根地址线，可寻址的存储器空间为1MB，地址范围为0220-1（00000HFFFFFH）。 存储器内部按字节进行组织，两个相        <a href="https://www.cnblogs.com/zhuoblog/p/16324961.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-05-29 21:37
+卓亦苇
+<span data-post-id="16324961" class="post-view-count">阅读(838)</span> 
+<span data-post-id="16324961" class="post-comment-count">评论(0)</span> 
+<span data-post-id="16324961" class="post-digg-count">推荐(2)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16324961" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/zhuoblog/p/16323615.html">
+    <span>
+        微处理器性能简介（8086）
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16323615">
+摘要：            
+微处理器性能简介 **微处理器职能：**执行各种运算和信息处理，控制各个计算机部件自动协调地完成系统规定的各种操作 典型微处理器的主要性能指标 **主频：**微处理器的时钟频率； 外频：系统总线的工作频率； **倍频：**微处理器主频与外频相差的倍数，主频=外屏*倍频 微处理器具有以下基本功能： （        <a href="https://www.cnblogs.com/zhuoblog/p/16323615.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-05-29 12:30
+卓亦苇
+<span data-post-id="16323615" class="post-view-count">阅读(1345)</span> 
+<span data-post-id="16323615" class="post-comment-count">评论(0)</span> 
+<span data-post-id="16323615" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16323615" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_15734107">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/zhuoblog/archive/2021/12/26.html">2021年12月26日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/zhuoblog/p/15734107.html">
+    <span>
+        计算机组成原理（复习）
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_15734107">
+摘要：            
+# 卓亦苇 第一章 计算机系统概论 \1. 什么是计算机系统、计算机硬件和计算机软件？硬件和软件哪个更重要？ 解：P3 计算机系统：由计算机硬件系统和软件系统组成的综合体。 计算机硬件：指计算机中的电子线路和物理装置。 计算机软件：计算机运行所需的程序及相关资料。 硬件和软件在计算机系统中相互依存，        <a href="https://www.cnblogs.com/zhuoblog/p/15734107.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2021-12-26 21:07
+卓亦苇
+<span data-post-id="15734107" class="post-view-count">阅读(1133)</span> 
+<span data-post-id="15734107" class="post-comment-count">评论(0)</span> 
+<span data-post-id="15734107" class="post-digg-count">推荐(4)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=15734107" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_15717876">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/zhuoblog/archive/2021/12/22.html">2021年12月22日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/zhuoblog/p/15717876.html">
+    <span>
+        有些鸟注定不会在笼子里
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_15717876">
+摘要：            
+你累了吗？        <a href="https://www.cnblogs.com/zhuoblog/p/15717876.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2021-12-22 01:38
+卓亦苇
+<span data-post-id="15717876" class="post-view-count">阅读(210)</span> 
+<span data-post-id="15717876" class="post-comment-count">评论(0)</span> 
+<span data-post-id="15717876" class="post-digg-count">推荐(2)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=15717876" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+
+<div class="topicListFooter">
+    <div id="nav_next_page">
+        
+    
+
+    </div>    
+</div>
+
+
+
+
+
+
+<script>
+    updatePostStats(
+        $(".post-view-count").map(function () { return this.dataset.postId }).get(),
+        function(id, count) { $(".post-view-count[data-post-id=" + id + "]").text("阅读(" + count + ")") },
+        function(id, count) { $(".post-comment-count[data-post-id=" + id + "]").text("评论(" + count + ")") },
+        function(id, count) { $(".post-digg-count[data-post-id=" + id + "]").text("推荐(" + count + ")") });
+</script>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 卓亦苇
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULmbM2S3S2g0tpZA5sTUU97gCsLi8VaGjVhdZSc5jyxhYRlm3Eeose7j0-rsnUdc8EuiA3Ar2palYxpWbTNkRSvdjLh3oxPmcL04aC2Ew4FEjDmQVNzSEzfYa3Gc6bXwO4c" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

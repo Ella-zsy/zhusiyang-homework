@@ -1,0 +1,604 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Dkwestworld - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/codinglife/bundle-codinglife.min.css?v=KhEfknsQdc0P-l_JHvJ4M5MpHxCqROySGNshnHAGUg4" />
+        
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/codinglife/bundle-codinglife-mobile.min.css?v=olw5cvIxb0V5dzf8QCwjbQOun53qoeKpUHSNhnOfVBU" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/dk1024/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/dk1024/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/dk1024/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 488523;
+        var currentBlogApp = 'dk1024';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'CodingLife';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-codinglife has-navbar">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://www.cnblogs.com/cmt/p/17320765.html" onclick="countCreativeClicks('M2-博客园')">
+                    园子的商业化努力-困境求助：开设捐助通道
+                </a>                
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'dk1024', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/dk1024/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/dk1024/">独立思考</a>
+</h1>
+<h2>你值得拥有更好的</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/dk1024/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/Dkwestworld">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/dk1024/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+
+
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17345832">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/dk1024/archive/2023/04/23.html">2023年4月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/dk1024/p/17343708.html">
+    <span>
+        【Spring】三级缓存解决循环依赖问题
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17343708">
+摘要：            
+1、什么是循环依赖 顾名思义“循环依赖”，举一个简单的例子A中依赖B，B中依赖A，在实例化对象过程中，填充属性阶段A需要B对象，就去创建B对象，创建B对象的时候，发现B依赖了A，于是又去创建A对象，但此时A对象又没有创建结束，一级缓存中找不到，于是线程又去创建一个新的A对象，如此一来，就出现了重复创        <a href="https://www.cnblogs.com/dk1024/p/17343708.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-23 11:13
+Dkwestworld
+<span data-post-id="17343708" class="post-view-count">阅读(5)</span> 
+<span data-post-id="17343708" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17343708" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17343708" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/dk1024/p/17345832.html">
+    <span>
+        Mysql中如果建立了索引，索引所占的空间随着数据量增长而变大，这样无论写入还是查询，性能都会有所下降，怎么处理？
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17345832">
+摘要：            
+索引所占空间的增长确实会对MySQL数据库的写入性能和查询性能造成影响，这主要是由于索引数据过多时会导致磁盘I/O操作变得非常频繁，从而使性能下降。为此，可以采取以下几种方式来减缓这种影响： 1. 限制索引的大小：可以考虑为索引指定大小限制，在存储时仅存储指定大小内的数据。例如，在创建索引时可以使用        <a href="https://www.cnblogs.com/dk1024/p/17345832.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-23 10:48
+Dkwestworld
+<span data-post-id="17345832" class="post-view-count">阅读(147)</span> 
+<span data-post-id="17345832" class="post-comment-count">评论(3)</span> 
+<span data-post-id="17345832" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17345832" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17339434">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/dk1024/archive/2023/04/21.html">2023年4月21日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/dk1024/p/17341961.html">
+    <span>
+        确保Redis缓存一致性的N种方法
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17341961">
+摘要：            
+确保Redis缓存一致性的N种方法 1、及时失效法 当程序需要update该数据时，先更新数据库数据数据，若数据库update成功，则重新为Redis该key值设置一个极短的过期时间，当过期之后，下一个请求自然会去数据库获取最新版本的数据 2、互斥锁 当程序需要update数据时，更新完数据库，再去        <a href="https://www.cnblogs.com/dk1024/p/17341961.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-21 21:53
+Dkwestworld
+<span data-post-id="17341961" class="post-view-count">阅读(6)</span> 
+<span data-post-id="17341961" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17341961" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17341961" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/dk1024/p/17339431.html">
+    <span>
+        聊一下你对拦截器、过滤器的认识
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17339431">
+摘要：            
+Java 中的拦截器和过滤器都是常见的用于拦截和处理系统请求的技术手段，它们的主要作用是在系统的关键点上增加通用的处理逻辑，以达到代码的复用和系统的解耦等目的。 相同点：- 都可以对请求进行拦截和处理，增加通用的处理逻辑。- 都可以实现系统的安全控制、日志记录、性能优化、缓存控制等功能。- 都可以通        <a href="https://www.cnblogs.com/dk1024/p/17339431.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-21 21:52
+Dkwestworld
+<span data-post-id="17339431" class="post-view-count">阅读(2)</span> 
+<span data-post-id="17339431" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17339431" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17339431" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/dk1024/p/17339434.html">
+    <span>
+        Java中处理高精度数据计算
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17339434">
+摘要：            
+1、为什么要使用高精度计算 拿整数举例： 在 Java 中，int 和 long 是两种基本数据类型，而 BigInteger 是一个对象类型。它们的取值范围如下： - int：32 位有符号整数，取值范围为 -2^31 ~ 2^31-1 （即 -2147483648 ~ 2147483647）。         <a href="https://www.cnblogs.com/dk1024/p/17339434.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-21 21:49
+Dkwestworld
+<span data-post-id="17339434" class="post-view-count">阅读(5)</span> 
+<span data-post-id="17339434" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17339434" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17339434" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17280305">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/dk1024/archive/2023/04/02.html">2023年4月2日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/dk1024/p/17281176.html">
+    <span>
+        为什么一个对象重写了equals必须也重写hashCode
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17281176">
+摘要：            
+一言以蔽之：重写 equals 方法是为了比较对象的内容是否相等，重写 hashCode 方法是为了保证对象在哈希表等数据结构中的正确性。 1、在 Java 中，如果一个类重写了 equals 方法，则必须同时重写 hashCode 方法。这是因为在 Java 中，对象的 hashCode 值用于在        <a href="https://www.cnblogs.com/dk1024/p/17281176.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-02 20:16
+Dkwestworld
+<span data-post-id="17281176" class="post-view-count">阅读(44)</span> 
+<span data-post-id="17281176" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17281176" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17281176" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/dk1024/p/17281105.html">
+    <span>
+        详解mysql隔离级别
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17281105">
+摘要：            
+MySQL 隔离级别是指在并发环境下控制并发访问数据的一种机制，它可以保证多个事务同时对数据库进行访问时，数据的正确性和一致性。MySQL 支持四种隔离级别，分别是 READ UNCOMMITTED（读未提交）、READ COMMITTED（读已提交）、REPEATABLE READ（可重复读）和         <a href="https://www.cnblogs.com/dk1024/p/17281105.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-02 19:39
+Dkwestworld
+<span data-post-id="17281105" class="post-view-count">阅读(19)</span> 
+<span data-post-id="17281105" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17281105" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17281105" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/dk1024/p/17280305.html">
+    <span>
+        请编写一个程序，使用两个线程分别输出数字和字母，要求输出的结果为：1A2B3C4D5E6F7G8H9I10J。 
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17280305">
+摘要：            
+请编写一个程序，使用两个线程分别输出数字和字母，要求输出的结果为：1A2B3C4D5E6F7G8H9I10J。 提示：可以使用Java中的wait()和notify()方法来实现线程间的通信。 public class NumberLetterPrinter { // 定义一个静态的锁对象 priv        <a href="https://www.cnblogs.com/dk1024/p/17280305.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-02 13:16
+Dkwestworld
+<span data-post-id="17280305" class="post-view-count">阅读(58)</span> 
+<span data-post-id="17280305" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17280305" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17280305" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17245852">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/dk1024/archive/2023/03/22.html">2023年3月22日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/dk1024/p/17245852.html">
+    <span>
+        关于 join、not exists、not in的用法和性能差异
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17245852">
+摘要：            
+好的，以下是关于JOIN、NOT EXISTS和NOT IN的用法和性能差异的长总结： 1. JOIN JOIN是将两个或多个表中的行连接起来形成一个新的表的操作，通常使用JOIN可以比使用NOT EXISTS和NOT IN更高效。 使用JOIN时，可以选择INNER JOIN、LEFT JOIN、        <a href="https://www.cnblogs.com/dk1024/p/17245852.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-03-22 23:07
+Dkwestworld
+<span data-post-id="17245852" class="post-view-count">阅读(18)</span> 
+<span data-post-id="17245852" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17245852" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17245852" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17100038">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/dk1024/archive/2023/02/07.html">2023年2月7日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/dk1024/p/17100038.html">
+    <span>
+        针对一个数组的排序，面试官会这样问
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_17100038">
+摘要：            
+问：你写一个排序算法吧，顺便说一下其他的方式，可以吧？ 题目：对数组 {1,3,6,1,8,22,0,1}进行排序 答： public static void main(String[] args) { String[] arr = {&quot;1&quot;, &quot;1&quot;, &quot;7&quot;, &quot;3&quot;, &quot;9&quot;, &quot;11&quot;, &quot;        <a href="https://www.cnblogs.com/dk1024/p/17100038.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-02-07 22:26
+Dkwestworld
+<span data-post-id="17100038" class="post-view-count">阅读(282)</span> 
+<span data-post-id="17100038" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17100038" class="post-digg-count">推荐(2)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17100038" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+
+<div class="topicListFooter">
+    <div id="nav_next_page">
+        
+    <a href="https://www.cnblogs.com/dk1024/?page=2">
+        下一页
+    </a>
+
+    </div>    
+</div>
+
+
+
+
+
+
+<script>
+    updatePostStats(
+        $(".post-view-count").map(function () { return this.dataset.postId }).get(),
+        function(id, count) { $(".post-view-count[data-post-id=" + id + "]").text("阅读(" + count + ")") },
+        function(id, count) { $(".post-comment-count[data-post-id=" + id + "]").text("评论(" + count + ")") },
+        function(id, count) { $(".post-digg-count[data-post-id=" + id + "]").text("推荐(" + count + ")") });
+</script>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 Dkwestworld
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULkm_HlBOD1eKRaDnJIvnUCxcxmMuuwEf18qTS5-KMshk0ogg7zQjQzol8zAfJ7sSD8R_l05yyakFZhbae53RCBG2fCEzJ3a-QFP3fSp0XjmB-DeparkcBkj_9oQuEv4xY8" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

@@ -1,0 +1,904 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="description" content="Velero 是一款云原生时代的灾难恢复和迁移工具，采用 Go 语言编写，并在 github 上进行了开源，本文将介绍利用 velero 对集群应用进行备份、恢复和迁移 Kubernetes 集群资源" />
+    <meta property="og:description" content="Velero 是一款云原生时代的灾难恢复和迁移工具，采用 Go 语言编写，并在 github 上进行了开源，本文将介绍利用 velero 对集群应用进行备份、恢复和迁移 Kubernetes 集群资源" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>利用Velero对K8S备份还原与集群迁移实战 - 帝都攻城狮 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/simplememory/bundle-simplememory.min.css?v=SiaEEyuLLyqQ30U6p0_gAunDLOqZtbt7kF5APbDruVo" />
+        <link media="(prefers-color-scheme: light)" id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="/css/hljs/cnblogs.css?v=5J1NDtbnnIr2Rc2SdhEMlMxD4l9Eydj88B31E7_NhS4" />
+        <link media="(prefers-color-scheme: dark)" id="highlighter-theme-vs2015-dark" type="text/css" rel="stylesheet" href="/css/hljs/vs2015.css?v=CW_0vf5ci1rUGokoTVmmkav1K7xe6lNGyjWNwugPUFg" />
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/SimpleMemory/bundle-simplememory-mobile.min.css?v=foz1W_Fu2JAPmvBfSxSaxsHH-O7GuQn6sSOfgMtSLfY" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/wubolive/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/wubolive/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/wubolive/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 516592;
+        var currentBlogApp = 'wubolive';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'SimpleMemory';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = true;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = true;
+        window.enableMacStyleCodeBlock = true
+    </script>
+        <script>
+            var currentPostDateAdded = '2023-04-23 10:23';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-simplememory has-navbar">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://www.cnblogs.com/cmt/p/17320765.html" onclick="countCreativeClicks('M2-博客园')">
+                    园子的商业化努力-困境求助：开设捐助通道
+                </a>                
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'wubolive', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/wubolive/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/wubolive/">Wave</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/wubolive/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E5%B8%9D%E9%83%BD%E6%94%BB%E5%9F%8E%E7%8B%AE">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/wubolive/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/wubolive/p/17345716.html">
+    <span role="heading" aria-level="2">利用Velero对K8S备份还原与集群迁移实战</span>
+    
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                    <div id="cnblogs_post_description" style="display: none">
+        
+        Velero 是一款云原生时代的灾难恢复和迁移工具，采用 Go 语言编写，并在 github 上进行了开源，本文将介绍利用 velero 对集群应用进行备份、恢复和迁移 Kubernetes 集群资源和持久卷。
+    </div>
+<div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<h3 id="一简介">一、简介</h3>
+<p>Velero 是一款云原生时代的灾难恢复和迁移工具，采用 Go 语言编写，并在 github 上进行了开源，利用 velero 用户可以安全的备份、恢复和迁移 Kubernetes 集群资源和持久卷。</p>
+<ul>
+<li>开源地址：<a href="https://github.com/vmware-tanzu/velero" target="_blank" rel="noopener">https://github.com/vmware-tanzu/velero</a></li>
+<li>官方文档：<a href="https://velero.io/docs/v1.11/" target="_blank" rel="noopener">https://velero.io/docs/v1.11/</a></li>
+</ul>
+<h4 id="11-支持的版本列表">1.1 支持的版本列表</h4>
+<p><img src="https://img2023.cnblogs.com/blog/1686997/202304/1686997-20230423100402231-977815386.png" alt="" loading="lazy"></p>
+<h4 id="12-velero组件">1.2 Velero组件</h4>
+<p>Velero 组件一共分两部分，分别是服务端和客户端。</p>
+<ul>
+<li><strong>服务端</strong>：运行在你 Kubernetes 的集群中</li>
+<li><strong>客户端</strong>：是一些运行在本地的命令行的工具，需要已配置好 kubectl 及集群 kubeconfig 的机器上</li>
+</ul>
+<h4 id="13-velero备份流程">1.3 velero备份流程</h4>
+<ol>
+<li>velero客户端调用kubernetes API Server创建backup任务</li>
+<li>Backup控制器基于watch机制通过Api Server获取到备份任务</li>
+<li>Backup控制器开始执行备份动作，会通过请求Api Server获取到需要备份的数据</li>
+<li>Backup 控制器将获取到的数据备份到指定的对象存储server端</li>
+</ol>
+<p><img src="https://img2023.cnblogs.com/blog/1686997/202304/1686997-20230423101114648-1506721209.png" alt="" loading="lazy"></p>
+<h4 id="14-velero后端存储">1.4 Velero后端存储</h4>
+<p><code>Velero</code>支持两种关于后端存储的<code>CRD</code>，分别是<code>BackupStorageLocation</code>和<code>VolumeSnapshotLocation</code>。</p>
+<h5 id="141-backupstoragelocation">1.4.1 BackupStorageLocation</h5>
+<p>主要用来定义 Kubernetes 集群资源的数据存放位置，也就是集群对象数据，不是 PVC 的数据。主要支持的后端存储是 S3 兼容的存储，比如：Mino 和阿里云 OSS 等。</p>
+<h5 id="142-volumesnapshotlocation">1.4.2 VolumeSnapshotLocation</h5>
+<p>主要用来给 PV 做快照，需要云提供商提供插件。阿里云已经提供了插件，这个需要使用 CSI 等存储机制。你也可以使用专门的备份工具 <code>Restic</code>，把 PV 数据备份到阿里云 OSS 中去(安装时需要自定义选项)。</p>
+<blockquote>
+<p>Restic 是一款 GO 语言开发的数据加密备份工具，顾名思义，可以将本地数据加密后传输到指定的仓库。支持的仓库有 Local、SFTP、Aws S3、Minio、OpenStack Swift、Backblaze B2、Azure BS、Google Cloud storage、Rest Server。</p>
+</blockquote>
+<h3 id="二准备存储插件">二、准备存储插件</h3>
+<p>Velero支持很多种存储插件，可查看：<a href="https://velero.io/docs/v1.10/supported-providers/" target="_blank" rel="noopener">https://velero.io/docs/v1.10/supported-providers/</a>获取插件信息，我们这里使用minio作为S3兼容的对象存储提供程序。您也可以在任意地方部署Minio对象存储，只需要保证K8S集群可以访问到即可。</p>
+<h4 id="21-准备minio清单">2.1 准备minio清单</h4>
+<pre><code class="language-bash">---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio
+  namespace: velero
+  labels:
+    app: minio
+spec:
+  selector:
+    app: minio
+  ports:
+  - name: api
+    port: 9000
+    protocol: TCP
+  - name: console
+    port: 9001
+    protocol: TCP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minio
+  namespace: velero
+  labels:
+    app: minio
+spec:
+  replicas: 1
+  serviceName: minio
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+      - name: minio
+        image: docker.io/bitnami/minio:2023.3.22
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9000
+          name: api
+          protocol: TCP
+        - containerPort: 9001
+          name: console
+          protocol: TCP
+        env:
+        - name: MINIO_ROOT_USER
+          value: "minio"
+        - name: MINIO_ROOT_PASSWORD
+          value: "minio123"
+        - name: MINIO_DEFAULT_BUCKETS
+          value: "velero"
+        volumeMounts:
+        - name: data
+          mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 50Gi
+</code></pre>
+<h4 id="22-创建minio应用">2.2 创建minio应用</h4>
+<pre><code class="language-bash"># 创建velero命名空间
+$ kubectl create namespace velero
+# 创建minio资源
+$ kubectl apply -f minio.yaml
+
+# 查看部署状态
+$ kubectl get sts,pod,svc -n velero
+NAME                     READY   AGE
+statefulset.apps/minio   1/1     66s
+
+NAME          READY   STATUS    RESTARTS   AGE
+pod/minio-0   1/1     Running   0          65s
+
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
+service/minio   ClusterIP   10.99.223.162   &lt;none&gt;        9000/TCP,9001/TCP   66s
+
+# 开放NodePort端口
+$ kubectl patch svc minio -n velero -p '{"spec": {"type": "NodePort"}}'
+$ kubectl patch svc minio -n velero --type='json' -p='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":9000},{"op": "replace", "path": "/spec/ports/1/nodePort", "value":9001}]'
+
+$ kubectl get svc -n velero
+NAME    TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)                       AGE
+minio   NodePort   10.99.223.162   &lt;none&gt;        9000:9000/TCP,9001:9001/TCP   140m
+</code></pre>
+<p>通过浏览器访问<code>服务器IP:9001</code>，并使用账号<code>minio</code>密码<code>minio123</code>登入验证。<br>
+<img src="https://img2023.cnblogs.com/blog/1686997/202304/1686997-20230423101159036-1960834087.png" alt="" loading="lazy"></p>
+<h3 id="三安装velero-v1102">三、安装velero v1.10.2</h3>
+<p>版本列表：<a href="https://github.com/vmware-tanzu/velero/releases" target="_blank" rel="noopener">https://github.com/vmware-tanzu/velero/releases</a></p>
+<h4 id="31-安装velero命令程序">3.1 安装velero命令程序</h4>
+<pre><code class="language-bash">$ wget https://github.com/vmware-tanzu/velero/releases/download/v1.10.2/velero-v1.10.2-linux-amd64.tar.gz
+$ tar zxf velero-v1.10.2-linux-amd64.tar.gz 
+$ mv velero-v1.10.2-linux-amd64/velero /usr/bin/
+$ velero -h
+# 启用命令补全
+$ source &lt;(velero completion bash)
+$ velero completion bash &gt; /etc/bash_completion.d/velero
+</code></pre>
+<h4 id="32-创建密钥">3.2 创建密钥</h4>
+<pre><code class="language-bash">$ cat &gt; credentials-velero &lt;&lt;EOF
+[default]
+aws_access_key_id = minio
+aws_secret_access_key = minio123
+EOF
+</code></pre>
+<h4 id="33-安装velero到k8s集群">3.3 安装velero到k8s集群</h4>
+<pre><code class="language-bash">$ velero install \
+  --provider aws \
+  --image velero/velero:v1.10.2 \
+  --plugins velero/velero-plugin-for-aws:v1.6.0 \
+  --bucket velero \
+  --secret-file ./credentials-velero \
+  --use-node-agent \
+  --use-volume-snapshots=false \
+  --namespace velero \
+  --backup-location-config region=minio,s3ForcePathStyle="true",s3Url=http://minio:9000 \
+  --wait
+# 执行install命令后会创建一系列清单，包括CustomResourceDefinition、Namespace、Deployment等。
+
+# 可使用如下命令查看运行日志
+$ kubectl logs deployment/velero -n velero
+
+# 查看velero创建的api对象
+$ kubectl api-versions | grep velero
+velero.io/v1
+
+# 查看备份位置
+$ velero backup-location get
+NAME      PROVIDER   BUCKET/PREFIX   PHASE       LAST VALIDATED                  ACCESS MODE   DEFAULT
+default   aws        velero          Available   2023-03-28 15:45:30 +0800 CST   ReadWrite     true
+</code></pre>
+<p><strong>选项说明：</strong></p>
+<ul>
+<li><code>--kubeconfig</code>(可选)：指定<code>kubeconfig</code>认证文件，默认使用<code>.kube/config</code>；</li>
+<li><code>--provider</code>：定义插件提供方；</li>
+<li><code>--image</code>：定义运行velero的镜像，默认与velero客户端一致；</li>
+<li><code>--plugins</code>：指定使用aws s3兼容的插件镜像；</li>
+<li><code>--bucket</code>：指定对象存储Bucket桶名称；</li>
+<li><code>--secret-file</code>：指定对象存储认证文件；</li>
+<li><code>--use-node-agent</code>：创建Velero Node Agent守护进程，托管FSB模块；</li>
+<li><code>--use-volume-snapshots</code>：是否启使用快照；</li>
+<li><code>--namespace</code>：指定部署的namespace名称，默认为velero；</li>
+<li><code>--backup-location-config</code>：指定对象存储地址信息；</li>
+</ul>
+<p><strong>aws插件与velero版本对应关系：</strong><br>
+<img src="https://img2023.cnblogs.com/blog/1686997/202304/1686997-20230423101211903-287604028.png" alt="" loading="lazy"></p>
+<h4 id="34-卸载velero">3.4 卸载velero</h4>
+<p>如果您想从集群中完全卸载Velero，则以下命令将删除由<code>velero install</code>创建的所有资源:</p>
+<pre><code class="language-bash">kubectl delete namespace/velero clusterrolebinding/velero
+kubectl delete crds -l component=velero
+</code></pre>
+<h3 id="四备份与恢复">四、备份与恢复</h3>
+<p>备份命令：<code>velero create backup NAME [flags]</code><br>
+<strong>backup选项：</strong></p>
+<ul>
+<li><code>--exclude-namespaces stringArray</code> : 要从备份中排除的名称空间</li>
+<li><code>--exclude-resources stringArray</code>: 要从备份中排除的资源，如<code>storageclasses.storage.k8s.io</code></li>
+<li><code>--include-cluster-resources optionalBool[=true]</code>: 包含集群资源类型</li>
+<li><code>--include-namespaces stringArray</code>: 要包含在备份中的名称空间(默认'*')</li>
+<li><code>--include-resources stringArray</code>: 备份中要包括的资源</li>
+<li><code>--labels mapStringString</code>: 给这个备份加上标签</li>
+<li><code>-o, --output string</code>: 指定输出格式，支持'table'、'json'和'yaml'；</li>
+<li><code>-l, --selector labelSelector</code>: 对指定标签的资源进行备份</li>
+<li><code>--snapshot-volumes optionalBool[=true]</code>: 对 PV 创建快照</li>
+<li><code>--storage-location string</code>: 指定备份的位置</li>
+<li><code>--ttl duration</code>: 备份数据多久删掉</li>
+<li><code>--volume-snapshot-locations strings</code>: 指定快照的位置，也就是哪一个公有云驱动</li>
+</ul>
+<h4 id="41-备份">4.1 备份</h4>
+<h5 id="411-使用官方案例创建测试应用">4.1.1 使用官方案例创建测试应用</h5>
+<pre><code class="language-bash">$ kubectl apply -f examples/nginx-app/base.yaml 
+namespace/nginx-example created
+deployment.apps/nginx-deployment created
+service/my-nginx created
+
+# 查看资源清单
+$ kubectl get all -n nginx-example
+NAME                                   READY   STATUS    RESTARTS   AGE
+pod/nginx-deployment-57d5dcb68-g42mk   1/1     Running   0          41s
+pod/nginx-deployment-57d5dcb68-pcc6t   1/1     Running   0          41s
+
+NAME               TYPE           CLUSTER-IP   EXTERNAL-IP   PORT(S)        AGE
+service/my-nginx   LoadBalancer   10.96.0.31   &lt;pending&gt;     80:27370/TCP   41s
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx-deployment   2/2     2            2           41s
+
+NAME                                         DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-deployment-57d5dcb68   2         2         2       41s
+</code></pre>
+<h5 id="412-备份测试应用">4.1.2 备份测试应用</h5>
+<pre><code class="language-bash">$ velero backup create nginx-backup --include-namespaces nginx-example
+Backup request "nginx-backup" submitted successfully.
+Run `velero backup describe nginx-backup` or `velero backup logs nginx-backup` for more details.
+</code></pre>
+<p>选项：</p>
+<ul>
+<li><code>--include-namespaces</code>：指定命名空间</li>
+<li><code>--selector</code>：标签选择器，如app=nginx</li>
+</ul>
+<h5 id="413-查看备份列表">4.1.3 查看备份列表</h5>
+<pre><code class="language-bash">$ velero backup get
+NAME           STATUS      ERRORS   WARNINGS   CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
+nginx-backup   Completed   0        0          2023-03-09 09:38:50 +0800 CST   29d       default            &lt;none&gt;
+
+# 查看备份详细信息
+$ velero backup describe nginx-backup
+
+# 查看备份日志
+$ velero backup logs nginx-backup
+</code></pre>
+<p>登入minio控制台查看备份内容<br>
+<img src="https://img2023.cnblogs.com/blog/1686997/202304/1686997-20230423101229069-113765014.png" alt="" loading="lazy"></p>
+<h5 id="414-定时备份指南">4.1.4 定时备份指南</h5>
+<pre><code class="language-bash"># 使用cron表达式备份
+$ velero schedule create nginx-daily --schedule="0 1 * * *" --include-namespaces nginx-example
+
+# 使用一些非标准的速记 cron 表达式
+$ velero schedule create nginx-daily --schedule="@daily" --include-namespaces nginx-example
+
+# 手动触发定时任务
+$ velero backup create --from-schedule nginx-daily
+</code></pre>
+<p>更多cron示例请参考：<a href="https://pkg.go.dev/github.com/robfig/cron#hdr-Predefined_schedules" target="_blank" rel="noopener">cron package’s documentation</a></p>
+<h4 id="42-恢复">4.2 恢复</h4>
+<h5 id="421-模拟灾难">4.2.1 模拟灾难</h5>
+<pre><code class="language-bash"># 删除nginx-example命名空间和资源
+$ kubectl delete namespace nginx-example
+# 检查是否删除
+$ kubectl get all -n nginx-example
+No resources found in nginx-example namespace.
+</code></pre>
+<h5 id="422-恢复资源">4.2.2 恢复资源</h5>
+<pre><code class="language-bash">$ velero backup get
+NAME           STATUS      ERRORS   WARNINGS   CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
+nginx-backup   Completed   0        0          2023-03-09 09:38:50 +0800 CST   29d       default            &lt;none&gt;
+$ velero restore create --from-backup nginx-backup
+Restore request "nginx-backup-20230309095025" submitted successfully.
+Run `velero restore describe nginx-backup-20230309095025` or `velero restore logs nginx-backup-20230309095025` for more details.
+</code></pre>
+<h5 id="423-检查恢复的资源">4.2.3 检查恢复的资源</h5>
+<pre><code class="language-bash">$ velero restore get
+NAME                          BACKUP         STATUS      STARTED                         COMPLETED                       ERRORS   WARNINGS   CREATED                         SELECTOR
+nginx-backup-20230309095025   nginx-backup   Completed   2023-03-09 09:50:25 +0800 CST   2023-03-09 09:50:25 +0800 CST   0        1          2023-03-09 09:50:25 +0800 CST   &lt;none&gt;
+
+# 查看详细信息
+$ velero restore describe nginx-backup-20230309095025
+
+# 检查资源状态
+$ kubectl get all -n nginx-example
+NAME                                   READY   STATUS    RESTARTS   AGE
+pod/nginx-deployment-57d5dcb68-g42mk   1/1     Running   0          2m19s
+pod/nginx-deployment-57d5dcb68-pcc6t   1/1     Running   0          2m19s
+
+NAME               TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+service/my-nginx   LoadBalancer   10.96.0.204   &lt;pending&gt;     80:31291/TCP   2m19s
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx-deployment   2/2     2            2           2m19s
+
+NAME                                         DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-deployment-57d5dcb68   2         2         2       2m19s
+</code></pre>
+<h3 id="五项目迁移实战">五、项目迁移实战</h3>
+<h4 id="51项目介绍">5.1、项目介绍</h4>
+<p>我们将使用<code>Velero</code>快速完成<strong>云原生应用</strong>及<strong>PV数据</strong>的迁移实践过程，在本文示例中，我们将<strong>A集群</strong>中的一个<strong>MOS应用</strong>迁移到<strong>集群B</strong>中，其中数据备份采用自建<strong>Minio</strong>对象存储服务。<br>
+<img src="https://img2023.cnblogs.com/blog/1686997/202304/1686997-20230423100904685-155121710.png" alt="" loading="lazy"></p>
+<h5 id="511-环境要求">5.1.1 环境要求</h5>
+<ol>
+<li>迁移项目最好保证两个Kubernetes集群版本一致。</li>
+<li>为了保证PV数据成功迁移，两边需要安装好相同名字的<code>StorageClass</code>。</li>
+<li>可以自己部署Minio，也可以使用公有云的对象存储服务，如华为的OBS、阿里的OSS等。</li>
+<li>本案例将集群A中app-system命名空间中的服务及PV数据迁移到集群B中。</li>
+</ol>
+<h5 id="512-项目环境">5.1.2 项目环境</h5>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>集群IP</th>
+<th>集群版本</th>
+<th>部署软件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>K8S 集群A</td>
+<td>192.168.1.102</td>
+<td>v1.22.10</td>
+<td>openebs、velero、app-system</td>
+</tr>
+<tr>
+<td>K8S 集群B</td>
+<td>192.168.1.103</td>
+<td>v1.22.10</td>
+<td>openebs、velero、minio</td>
+</tr>
+</tbody>
+</table>
+<h5 id="513-项目说明">5.1.3 项目说明</h5>
+<p>我们需要将集群A中 app-system 空间的所有资源和数据全部迁移到集群B中，该项目包括了<code>deployment</code>、<code>statefulset</code>、<code>service</code>、<code>ingress</code>、<code>job</code>、<code>cronjob</code>、<code>secret</code>、<code>configmap</code>、<code>pv</code>、<code>pvc</code>。</p>
+<pre><code class="language-bash"># 项目清单信息
+$ kubectl get deployment,sts,pvc -n app-system
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/hasura-graphql      1/1     1            1           5h27m
+deployment.apps/iot-backend         1/1     1            1           5h27m
+deployment.apps/iot-gateway         1/1     1            1           5h27m
+deployment.apps/iot-history         1/1     1            1           5h27m
+deployment.apps/iot-observer        1/1     1            1           5h27m
+deployment.apps/app-backend         1/1     1            1           5h27m
+deployment.apps/app-frontend        1/1     1            1           5h27m
+
+NAME                                READY   AGE
+statefulset.apps/minio              1/1     5h27m
+statefulset.apps/mongo              1/1     5h27m
+statefulset.apps/postgres           1/1     5h27m
+statefulset.apps/rabbitmq           1/1     5h27m
+statefulset.apps/redis              1/1     5h27m
+
+NAME                                       STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
+persistentvolumeclaim/data-minio-0         Bound    pvc-950d15a8-20a5-4e5f-8dbf-b904295355bb   50Gi       RWO            openebs-hostpath   5h27m
+persistentvolumeclaim/data-mongo-0         Bound    pvc-e435b80e-0370-4100-b223-ca841f24bd5d   50Gi       RWO            openebs-hostpath   5h27m
+persistentvolumeclaim/data-postgres-0      Bound    pvc-359ec32a-4bfc-4bc8-8cf3-38322e8ef59b   300Gi      RWO            openebs-hostpath   5h27m
+persistentvolumeclaim/data-redis-0         Bound    pvc-da718e0c-992c-4f6e-af44-abb1c7214a9e   2Gi        RWO            openebs-hostpath   5h27m
+persistentvolumeclaim/app-backend          Bound    pvc-506261a9-6be4-4d95-8807-58201e31a527   10Gi       RWO            openebs-hostpath   5h27m
+</code></pre>
+<h4 id="52-准备对象存储">5.2 准备对象存储</h4>
+<p>按照<strong>2.1</strong>和<strong>2.2</strong>的方法在<strong>集群B（192.168.1.103）</strong>中创建<code>minio</code>应用，用来存放备份数据。</p>
+<pre><code class="language-bash">$ kubectl get sts,svc -n velero
+NAME                     READY   AGE
+statefulset.apps/minio   1/1     3h44m
+
+NAME            TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)                       AGE
+service/minio   NodePort   10.99.223.162   &lt;none&gt;        9000:9000/TCP,9001:9001/TCP   3h44m
+</code></pre>
+<h4 id="53-安装velero">5.3 安装velero</h4>
+<p>请确保在<strong>集群A</strong>和<strong>集群B</strong>中已经安装好velero客户端，请参考<strong>3.1 安装velero命令程序</strong></p>
+<h5 id="531-在集群a中安装velero服务">5.3.1 在集群A中安装velero服务</h5>
+<pre><code class="language-bash">$ cat &gt; credentials-velero &lt;&lt;EOF
+[default]
+aws_access_key_id = minio
+aws_secret_access_key = minio123
+EOF
+
+$ velero install \
+  --provider aws \
+  --image velero/velero:v1.10.2 \
+  --plugins velero/velero-plugin-for-aws:v1.6.0 \
+  --bucket velero \
+  --secret-file ./credentials-velero \
+  --use-node-agent \
+  --use-volume-snapshots=false \
+  --namespace velero \
+  --backup-location-config region=minio,s3ForcePathStyle="true",s3Url=http://192.168.1.103:9000 \
+  --wait
+</code></pre>
+<p>注意：其中<code>S3</code>的地址指向<strong>集群B（192.168.1.103）</strong>的minio对象存储。</p>
+<h5 id="532-在集群b种安装velero服务">5.3.2 在集群B种安装velero服务</h5>
+<pre><code class="language-bash">$ cat &gt; credentials-velero &lt;&lt;EOF
+[default]
+aws_access_key_id = minio
+aws_secret_access_key = minio123
+EOF
+
+$ velero install \
+  --provider aws \
+  --image velero/velero:v1.10.2 \
+  --plugins velero/velero-plugin-for-aws:v1.6.0 \
+  --bucket velero \
+  --secret-file ./credentials-velero \
+  --use-node-agent \
+  --use-volume-snapshots=false \
+  --namespace velero \
+  --backup-location-config region=minio,s3ForcePathStyle="true",s3Url=http://minio:9000 \
+  --wait
+</code></pre>
+<p>注意：其中<code>S3</code>的地址指向本集群minio对象存储的svc地址。</p>
+<h4 id="54-备份mos项目">5.4 备份MOS项目</h4>
+<pre><code class="language-bash">$ velero backup create app-backup \
+  --default-volumes-to-fs-backup \
+  --include-namespaces app-system
+Backup request "app-backup" submitted successfully.
+Run `velero backup describe app-backup` or `velero backup logs app-backup` for more details.
+
+# 查看备份状态
+$ velero backup get
+NAME         STATUS      ERRORS   WARNINGS   CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
+app-backup   Completed   0        0          2023-03-28 16:34:56 +0800 CST   29d       default            &lt;none&gt;
+</code></pre>
+<ul>
+<li><code>--default-volumes-to-fs-backup</code>：默认将所有PV卷进行备份，详情查看<a href="https://velero.io/docs/v1.10/file-system-backup/" target="_blank" rel="noopener">官方文档</a>。</li>
+<li><code>--include-namespaces</code>：指定要备份的命名空间</li>
+</ul>
+<p>登入minio控制台上可以看到备份的文件：<br>
+<img src="https://img2023.cnblogs.com/blog/1686997/202304/1686997-20230423101253111-54562663.png" alt="" loading="lazy"></p>
+<h4 id="55-恢复到集群b">5.5 恢复到集群B</h4>
+<pre><code class="language-bash"># 到集群B中查看备份资源
+$ velero backup get
+NAME         STATUS      ERRORS   WARNINGS   CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
+app-backup   Completed   0        0          2023-03-28 16:41:55 +0800 CST   29d       default            &lt;none&gt;
+
+# 执行恢复命令
+$ velero restore create --from-backup app-backup
+Restore request "app-backup-20230328164601" submitted successfully.
+Run `velero restore describe app-backup-20230328164601` or `velero restore logs app-backup-20230328164601` for more details.
+
+# 查看恢复任务
+$ velero restore get 
+NAME                        BACKUP       STATUS      STARTED                         COMPLETED                       ERRORS   WARNINGS   CREATED                         SELECTOR
+app-backup-20230328164601   app-backup   Completed   2023-03-28 16:46:01 +0800 CST   2023-03-28 17:01:26 +0800 CST   0        30         2023-03-28 16:46:01 +0800 CST   &lt;none&gt;
+</code></pre>
+<h4 id="56-验证服务和数据">5.6 验证服务和数据</h4>
+<pre><code class="language-bash">$ kubectl get deploy,sts,svc,pvc -n app-system
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/hasura-graphql      1/1     1            1           29m
+deployment.apps/iot-backend         1/1     1            1           29m
+deployment.apps/iot-gateway         1/1     1            1           29m
+deployment.apps/iot-history         1/1     1            1           29m
+deployment.apps/iot-observer        1/1     1            1           29m
+deployment.apps/app-backend         1/1     1            1           29m
+deployment.apps/app-frontend        1/1     1            1           29m
+
+NAME                                READY   AGE
+statefulset.apps/minio              1/1     29m
+statefulset.apps/mongo              1/1     29m
+statefulset.apps/postgres           1/1     29m
+statefulset.apps/rabbitmq           1/1     29m
+statefulset.apps/redis              1/1     29m
+
+NAME                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                               AGE
+service/hasura-graphql      ClusterIP   10.107.231.148   &lt;none&gt;        8080/TCP                              29m
+service/iot-backend         ClusterIP   10.98.78.23      &lt;none&gt;        3000/TCP                              29m
+service/iot-gateway         ClusterIP   10.108.211.114   &lt;none&gt;        1880/TCP                              29m
+service/iot-history         ClusterIP   10.98.217.234    &lt;none&gt;        3000/TCP                              29m
+service/iot-observer        ClusterIP   10.105.75.200    &lt;none&gt;        3010/TCP                              29m
+service/minio               ClusterIP   10.97.14.151     &lt;none&gt;        9000/TCP,9001/TCP                     29m
+service/mongo               ClusterIP   10.97.212.84     &lt;none&gt;        27017/TCP                             29m
+service/app-backend         ClusterIP   10.107.16.116    &lt;none&gt;        5959/TCP                              29m
+service/app-frontend        ClusterIP   10.100.136.90    &lt;none&gt;        80/TCP,443/TCP                        29m
+service/postgres            ClusterIP   10.101.235.245   &lt;none&gt;        5432/TCP,9187/TCP                     29m
+service/rabbitmq            ClusterIP   10.108.29.67     &lt;none&gt;        15672/TCP,5672/TCP                    29m
+service/redis               ClusterIP   10.101.105.81    &lt;none&gt;        6379/TCP,9121/TCP                     29m
+
+NAME                                       STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
+persistentvolumeclaim/data-minio-0         Bound    pvc-ca5c63bf-9aaa-4755-ad8f-35718f51decf   50Gi       RWO            openebs-hostpath   29m
+persistentvolumeclaim/data-mongo-0         Bound    pvc-03203801-e339-44ee-bfb4-b196808c7cc5   50Gi       RWO            openebs-hostpath   29m
+persistentvolumeclaim/data-postgres-0      Bound    pvc-e2f2593e-5869-420c-bd39-54ce01dfa63f   300Gi      RWO            openebs-hostpath   29m
+persistentvolumeclaim/data-redis-0         Bound    pvc-a8e4445c-c6b5-483b-8b18-9d650daf35cc   2Gi        RWO            openebs-hostpath   29m
+persistentvolumeclaim/app-backend          Bound    pvc-2b2f9747-a020-4a16-9975-2491457c4032   10Gi       RWO            openebs-hostpath   29m
+</code></pre>
+
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="0.1816982714826389" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2023-04-23 10:23">2023-04-23 10:23</span>&nbsp;
+<a href="https://www.cnblogs.com/wubolive/">帝都攻城狮</a>&nbsp;
+阅读(<span id="post_view_count">79</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17345716" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(17345716);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '17345716', targetLink: 'https://www.cnblogs.com/wubolive/p/17345716.html', title: '利用Velero对K8S备份还原与集群迁移实战' })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+
+<script>
+    var cb_entryId = 17345716, cb_entryCreatedDate = '2023-04-23 10:23', cb_postType = 1, cb_postTitle = '利用Velero对K8S备份还原与集群迁移实战';
+    var allowComments = true, cb_blogId = 516592, cb_blogApp = 'wubolive', cb_blogUserGuid = '760bd91f-2702-47c0-2e02-08d6d6fbce8d';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+            <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 帝都攻城狮
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    <div id="page_end_html">
+        <script language="javascript" type="text/javascript">
+// 生成目录索引列表
+// ref: http://www.cnblogs.com/wangqiguo/p/4355032.html
+// modified by: zzq
+function GenerateContentList()
+{
+    var mainContent = $('#cnblogs_post_body');
+    var h2_list = $('#cnblogs_post_body h2');//如果你的章节标题不是h2,只需要将这里的h2换掉即可
+
+    if(mainContent.length < 1)
+        return;
+ 
+    if(h2_list.length>0)
+    {
+        var content = '<a rel="nofollow noopener"  name="_labelTop"></a>';
+        content += '<div id="navCategory" style="color:#152e97;">';
+        content += '<p style="font-size:18px;"><b>目录</b></p>';
+        content += '<ul>';
+        for(var i=0; i<h2_list.length; i++)
+        {
+            var go_to_top = '<div style="text-align: right;"><a rel="nofollow noopener"  href="#_labelTop" style="color:#f68a33">回到顶部</a><a rel="nofollow noopener"  name="_label' + i + '"></a></div>';
+            $(h2_list[i]).before(go_to_top);
+            
+            var h3_list = $(h2_list[i]).nextAll("h3");
+            var li3_content = '';
+            for(var j=0; j<h3_list.length; j++)
+            {
+                var tmp = $(h3_list[j]).prevAll('h2').first();
+                if(!tmp.is(h2_list[i]))
+                    break;
+                var li3_anchor = '<a rel="nofollow noopener"  name="_label' + i + '_' + j + '"></a>';
+                $(h3_list[j]).before(li3_anchor);
+                li3_content += '<li><a rel="nofollow noopener"  href="#_label' + i + '_' + j + '">' + $(h3_list[j]).text() + '</a></li>';
+            }
+            
+            var li2_content = '';
+            if(li3_content.length > 0)
+                li2_content = '<li><a rel="nofollow noopener"  href="#_label' + i + '">' + $(h2_list[i]).text() + '</a><ul>' + li3_content + '</ul></li>';
+            else
+                li2_content = '<li><a rel="nofollow noopener"  href="#_label' + i + '">' + $(h2_list[i]).text() + '</a></li>';
+            content += li2_content;
+        }
+        content += '</ul>';
+        content += '</div><p>&nbsp;</p>';
+        content += '<hr style="height:1px;border:none;border-top:1px dashed #0066CC;"/>';
+        if($('#cnblogs_post_body').length != 0 )
+        {
+            $($('#cnblogs_post_body')[0]).prepend(content);
+        }
+    }   
+}
+
+GenerateContentList();
+</script>
+    </div>
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULn8DnsazQN8ZxPa7sUZFdoM58t8YOVDt41GX9M_NB_FcVo27Y8CeBvECdP3CUkUbrZjp_Xzxd6CV1IaLNxXViXzu-t7zI5MGARgt73HrMfceWHahKJo-k4EWNebEbINmCM" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

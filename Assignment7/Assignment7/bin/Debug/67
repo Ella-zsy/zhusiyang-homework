@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="description" content="京东小程序是一个开放技术平台，正在被越来越多的头部品牌选择，用于站内私域流量的营销和运营。诸如各种日化、奢侈品等品牌对ARVR有较多的诉求，希望京东小程序引擎提供一些底层能力，叠加品牌自主的个性化开发" />
+    <meta property="og:description" content="京东小程序是一个开放技术平台，正在被越来越多的头部品牌选择，用于站内私域流量的营销和运营。诸如各种日化、奢侈品等品牌对ARVR有较多的诉求，希望京东小程序引擎提供一些底层能力，叠加品牌自主的个性化开发" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>京东小程序接入ARVR的技术方案和性能调优 - 京东云开发者 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/webload/bundle-webload.min.css?v=vwfmBnspA-KCkp-eu1yARSkRSLh1W3M1_ez-f4Sg8t4" />
+        <link media="(prefers-color-scheme: light)" id="highlighter-theme-github" type="text/css" rel="stylesheet" href="/css/hljs/github.css?v=ja0z-lPRcUPYhi-sdtJJEKlXmCMywxJtCLxCQzKd2K0" />
+        <link media="(prefers-color-scheme: dark)" id="highlighter-theme-vs2015-dark" type="text/css" rel="stylesheet" href="/css/hljs/vs2015.css?v=CW_0vf5ci1rUGokoTVmmkav1K7xe6lNGyjWNwugPUFg" />
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/webload/bundle-webload-mobile.min.css?v=ZBWq3OPQpKdP7jvC_UMCkC1a79tQGcXLPZwlftZaLVg" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/Jcloud/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/Jcloud/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/Jcloud/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 760230;
+        var currentBlogApp = 'Jcloud';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'WebLoad';
+        var visitorUserId = '';
+        var hasCustomScript = false;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = true;
+        window.mathEngine = 1;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'github';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = true;
+        window.enableMacStyleCodeBlock = false
+    </script>
+        <script>
+            var currentPostDateAdded = '2023-04-23 09:29';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-webload has-navbar mathjax3">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://www.cnblogs.com/cmt/p/17320765.html" onclick="countCreativeClicks('M2-博客园')">
+                    园子的商业化努力-困境求助：开设捐助通道
+                </a>                
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'Jcloud', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <div id="home">
+    <div id="header">
+        <div id="blogTitle">
+            <div class="title"><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/Jcloud/">Jcloud</a>
+</div>
+<div class="subtitle"></div>
+
+        </div>
+        <div id="navigator">
+            
+<ul id="navList">
+    <li id="nav_sitehome"><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+    <li id="nav_myhome">
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/Jcloud/">
+首页</a>
+</li>
+    <li id="nav_newpost">
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+    <li id="nav_contact">
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E4%BA%AC%E4%B8%9C%E4%BA%91%E5%BC%80%E5%8F%91%E8%80%85">
+联系</a></li>
+    <li id="nav_rss">
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/Jcloud/rss/">
+订阅</a></li>
+    <li id="nav_admin">
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+            <div class="blogStats">
+                <div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div id="mainContent">
+            <div class="forFlow">
+                <div id="post_detail">
+    <div id="topics">
+        <div class="post">
+            <h1 class="postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/Jcloud/p/17345515.html">
+    <span role="heading" aria-level="2">京东小程序接入ARVR的技术方案和性能调优</span>
+    
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                    <div id="cnblogs_post_description" style="display: none">
+        <img src="https://img2023.cnblogs.com/blog/2927063/202304/2927063-20230423092821076-611266022.png" alt="京东小程序接入ARVR的技术方案和性能调优" class="desc_img" />
+        京东小程序是一个开放技术平台，正在被越来越多的头部品牌选择，用于站内私域流量的营销和运营。诸如各种日化、奢侈品等品牌对ARVR有较多的诉求，希望京东小程序引擎提供一些底层能力，叠加品牌自主的个性化开发和定制，以支持更加丰富的场景和玩法，比如AR试妆、试戴等。
+    </div>
+<div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<p>作者：京东零售 戴旭</p>
+<blockquote>
+<p>京东小程序是一个开放技术平台，正在被越来越多的头部品牌选择，用于站内私域流量的营销和运营。诸如各种日化、奢侈品等品牌对ARVR有较多的诉求，希望京东小程序引擎提供一些底层能力，叠加品牌自主的个性化开发和定制，以支持更加丰富的场景和玩法，比如AR试妆、试戴等。</p>
+</blockquote>
+<p>我们小程序引擎联合ARVR团队，在双方产研测的努力和协作下，完成了相关能力的设计和开发。整体功能于京东APP11.6.6版本发布上线，期待为更多的商家和品牌赋能。</p>
+<p><img src="https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/8f8cf1b2159b41de854858505e11770f~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1682812718&amp;x-signature=3UgsA2d%2BWQay37dTOs%2FUj73Cp24%3D" alt="" loading="lazy"></p>
+<p>体验路径和效果（负责相关模块的产品小姐姐友情录屏）</p>
+<h1 id="技术方案">技术方案</h1>
+<p>这里以人脸识别为例，先介绍整体的技术方案。</p>
+<h2 id="概念介绍">概念介绍</h2>
+<p><strong>技术关键词：相机、实时帧、AR算法、同层渲染、WebGL。</strong></p>
+<p>这几个关键词里面，前三个比较好理解，人脸识别，会用相机采集人脸的实时帧数据，调用AR算法，获取计算结果，把数据传输给小程序前端。</p>
+<p>后面两个关键词和小程序的场景有关系，WebGL技术是小程序为了支持游戏、ARVR等高性能渲染的需求，采用原生的OpenGL实现了一套WebGL的接口。小程序页面是WebView渲染，而我们既然提到了采用OpenGL原生渲染，就需要把原生组件，正确的插入到Web的视图层级，同层渲染就是将原生组件和WebView DOM 元素放在一起进行混合渲染的技术，能够保证原生组件和 DOM 元素在渲染层级、滚动、触摸事件处理等方面保持一致。</p>
+<h2 id="总体流程">总体流程</h2>
+<p>小程序引擎在底层原生支持了相机、实时帧、AR、WebGL等能力，同时暴露了若干 js 的api。小程序开发者通过相关api的调用，执行开启相机、获取实时帧数据，调用AR接口，获取计算结果数据，进行WebGL渲染等操作。简要的流程如下：</p>
+<p><img src="https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/6b4629ad5e0446a0ace975694ac8e4c8~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1682812718&amp;x-signature=0xMrBuKlT%2FMmRhC96RQ%2Bis2haKk%3D" alt="" loading="lazy"></p>
+<h2 id="分层设计">分层设计</h2>
+<p>从分层的角度看整个技术方案的设计，大致如下：</p>
+<p><img src="https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/651b7c6cb5754111a2dd9467490f092f~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1682812718&amp;x-signature=8trKIthecPKy8sDGo4HpAiRMO5k%3D" alt="" loading="lazy"></p>
+<p>其中在AR引擎这一层，分为内置和外部AR引擎，也是由于小程序本身是开放的技术平台，我们采用了接口协议化的设计，支持第三方宿主采用自主的AR引擎，同时提供了相机、实时帧、WebGL等原子化能力，小程序服务商可以构建专有的AR引擎为上层业务赋能。</p>
+<h1 id="技术挑战">技术挑战</h1>
+<p>WebGL技术原理的篇幅过大，它也不仅仅是为了ARVR这个场景服务，所以包括AR算法之内，都不在本篇的详细介绍范围之内。</p>
+<p>在这部分，我们专注于小程序和ARVR叠加的领域：内存和帧率的优化。</p>
+<p>我们知道在欣赏电视和电影画面时，只要画面刷新率达到24帧/秒，就能满足人们的需求，也就是说我们至少要在中端甚至中低端的机器上达到24帧以上的帧率。</p>
+<p>为了保证基本的画质，相机实时帧的分辨率设置为1280*720，以RBGA格式存储，那么每一帧的数据是1280*720*4=3686400Byte，约3.5MB，每秒24帧以上的帧率，这个是不小的数据量。总的来说，在性能优化上，我们遇到的主要挑战如下：</p>
+<p><strong>挑战1，</strong>数据从原生传输到js，在从js传递到原生，如此大的数据量将会成为js和原生通信的瓶颈；</p>
+<p><strong>挑战2，</strong>在iOS平台上，相机output只能指定BGRA格式，因为原始相机实时帧 CMSampleBufferRef对象内包含CVPixelBuffer对象，CoreVideo对象不支持RGBA格式，参考官方文档<br>
+<a href="https://developer.apple.com/library/archive/qa/qa1501/_index.html" target="_blank" rel="noopener">https://developer.apple.com/library/archive/qa/qa1501/_index.html</a></p>
+<p>而WebGL标准的接口不支持BGRA格式，参考文档：<br>
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/texImage2D%EF%BC%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BC%9A%E5%8A%A0%E9%87%8D%E6%80%A7%E8%83%BD%E7%9A%84%E8%B4%9F%E6%8B%85%EF%BC%9B" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/texImage2D，数据格式的转换会加重性能的负担；</a></p>
+<p><strong>挑战3，</strong>即便以24帧为标准，每一帧的处理时间大约只有41ms，需要经历原生相机生产、数据格式转换、数据双向传输、ar算法、webgl绘制等流程，每一环节都很重，我们需要考虑如何利用并发调度优势，并且保证实时帧的时序不会发生错乱，因为时序一旦乱了，影像虽然一直在输出，但是视觉感受是混乱的。</p>
+<p>针对上述挑战，进行了一系列的优化，最终在中低端手机（iPhone8 Plus）上达到平均26~27帧的帧率，整体体验较为流畅，具体调优下面详细介绍。</p>
+<h1 id="性能调优">性能调优</h1>
+<h2 id="1数据传输优化">1、数据传输优化</h2>
+<p>原生和js之间传输大量的数据会成为性能的瓶颈，数据传输优化就是减少数据传输频次，最好是数据保留一份，只传递数据的标记。</p>
+<p>我们设计了一个NativeBuffer缓存来优化这个问题。主要流程如下</p>
+<p><img src="https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/6cd0e8f47c0446959bf895616d81c0fa~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1682812718&amp;x-signature=m8g%2BjqRqpfYVXuyYbdPdSUIZcms%3D" alt="" loading="lazy"></p>
+<p>但是在js环境中，最终还是要使用js对象，原生相机实时帧的数据需要被转换为js对象。那么如何做才能让数据只保留一份呢？</p>
+<p><strong>NO COPY</strong></p>
+<p>iOS端选择运行小程序的js框架是JavaScriptCore，JavaScriptCore提供了一些C语言的接口方法，可以以NO COPY的方式，把一个void类型的二进制数据指针作为backing store，创建相对应的js对象，一般类型是ArrayBuffer或者TypeArray。也就是说原生和js对象背后的数据是同一份，共享这部分内存。</p>
+<p><img src="https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/f5a8df3388bd4903babb7344864ae49b~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1682812718&amp;x-signature=c9DG6olwCFrdcORM%2BoWUmx0Cyf4%3D" alt="" loading="lazy"></p>
+<p>这样一来我们只需要保证缓存的原始相机实时帧的数据不释放，那么js对象引用的这部分数据就会一直有效。那这部分数据要在什么时候去清理呢？</p>
+<p><strong>销毁</strong></p>
+<p>在创建js对象的时候，可以指定一个C的函数指针作为入参。当JavaScriptCore检测到这个js对象销毁的时候，会自动触发该C函数的调用。我们需要按照指定的函数原型实现一个C的方法，在这个函数里去做缓存的清理，可以看一下这个函数的原型：</p>
+<pre><code>typedef void (*JSTypedArrayBytesDeallocator)(void* bytes, void* deallocatorContext);
+
+
+</code></pre>
+<p>该函数有2个参数，第一个bytes是原始相机实时帧的二进制数据，第二个是上下文环境，这里我们传的是NativeBuffer管理类的实例，在这个函数的具体实现中，我们去匹配NativeBuffer管理的缓存地址，找到相关数据进行清理。</p>
+<p><strong>写入优化</strong></p>
+<p>前面我们说过，数据流转是双向的。原生把相机的数据传输到js侧，js调用ARVR的人脸检测接口，还需要把这份数据在传输到原生。因为相机和人脸检测是相互独立的接口，js拿到相机数据不一定非要调用人脸检测，调用人脸检测的数据也不一定非要来自于相机，还可以是一个本地的图片。</p>
+<p>相对应的，我们在NativeBuffer的设计中，提供数据双向传递的接口，getNativeBuffer：id和setNativeBuffer：id。在原生传递到js的数据中，我们用了NO Copy的方式去做优化，那么在js传递到原生的数据，由于我们不知道数据来源，所以需要开辟一份新的内存空间，调用memcpy复制数据。但是实际上，我们在做数据复制之前，可以用JavaScriptCore提供的接口，从js的ArrayBuffer对象中提取到真实数据的内存地址，然后在NativeBuffer缓存池中查找，如果找到了则无需再做数据复制。这样保证了数据始终只有一份。</p>
+<p><img src="https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/79fa74dbca394f0b88094c94d3c03294~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1682812718&amp;x-signature=mBWRf8wPmTHdyJoLrXU0ddTluRU%3D" alt="" loading="lazy"></p>
+<p><strong>数据类型</strong></p>
+<p>在实践的过程中，js端在选择二进制对象的数据类型的时候，可能会用ArrayBuffer或者TypeArray。一旦js端进行了数据类型转换，比如ArrayBuffer转TypeArray，引擎在调用setNativeBuffer的时候，传递的是转换后的数据类型，将会导致setNativeBuffer内部的写入优化失效，进而在低端机上带来明显的卡顿。在这里，我们统一使用一致的数据类型，不能随意的转换数据类型。</p>
+<h2 id="2相机实时帧格式转换">2、相机实时帧格式转换</h2>
+<p>在技术挑战中我们提到，iOS平台上，相机output只能指定为BGRA格式，而WebGL标准的接口不支持该格式。如果不进行格式转换，会导致红蓝颜色颠倒，红色物体呈现蓝色，蓝色物体呈现红色。所以在数据缓存和传输之前，要做格式转换，我们需要找到一个快速低成本的方法。</p>
+<p>要想做数据格式转换，需要了解一些基本的图像数据在内存中的布局情况，如下图所示。</p>
+<p><img src="https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/cd4aedf6108d40d8841b40a0dd46bd8c~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1682812718&amp;x-signature=Xl%2Fy7tHbdnbbt4n5lJ8cud893MY%3D" alt="" loading="lazy"></p>
+<p>这里我们选取的BGRA和RGBA格式都是32位，也就是每一个像素点是4个字节。</p>
+<p>真实图像数据由于内存对齐的原因，大小并不一定是width*height*4个字节，CoreVideo框架提供了获取相机数据宽高的方法，我们要计算出待处理的字节大小，每4个字节做一次循环，把第一位和第三位做一个调换，就能无需malloc内存，把BGRA转换为RGBA格式。</p>
+<h2 id="3并发调度">3、并发调度</h2>
+<p>在技术挑战中还提到，每一帧的处理时间大约只有41ms，需要经历原生相机生产、数据格式转换、数据双向传输、ar算法、webgl绘制等这么多流程，如何利用并发优势，并且保证实时帧的时序不会发生错乱呢？</p>
+<p>我们为了保证UI主线程的流畅，要尽可能把更多的环节放到子线程执行，这个时候哪怕写入缓存这样一个轻量的操作放到主线程都可能会带来画面的卡顿。</p>
+<p>实时帧的处理、AR算法分别放在不同的线程，为了保证实时帧时序，均采用串行队列。</p>
+<p>采用了多线程之后，NativeBuffer数据的存储和清理需要加上线程安全保护。</p>
+<p>这样整体利用了多核的优势，并保证了调用时序。线程调度和处理流转如下图所示：</p>
+<p><img src="https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/85f7f7e9e6e842a985859719a5e053c9~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1682812718&amp;x-signature=GQN18XID9CymVfRJ3b5PlIOiXL4%3D" alt="" loading="lazy"></p>
+<h2 id="4资源管理">4、资源管理</h2>
+<p>理想情况下，原生相机产生一个实时帧数据，JS消耗一个，在中高端机器上，性能能够满足需求，整体表现较为平稳，但是在低端机器中，线程抢占非常频繁，当主线程和子线程发生线程抢占的时候，会导致供需不匹配，一旦实时帧数据消耗不及时，内存会产生爆炸式的增长，所以需要限定缓存池的容量，这个一般可以根据实际调试的情况指定一个数值即可。</p>
+<p>还有一旦出现内存警告或者当缓存满的时候，需要去清理缓存池，buffer如果正在被使用，就不能去清理，否则可能会出现白屏的现象，我们给buffer加了一个是否被消费的标记，当一个buffer被消费后，它不能以常规的方式清理，需要等待js消费完成之后清理，这个在上面也有介绍。</p>
+<p>在页面退出的时候，引擎需要监听相关的事情，确保实时帧的监听被停止，否则会出现多个js相机的监听事件并存，一个数据被多次消费而引发异常。</p>
+<h1 id="结语">结语</h1>
+<p>京东小程序致力于打造卓越的技术开放平台，我们在提升性能、用户体验上不断努力，我们也在建设和完善小程序的各种能力，欢迎大家提供宝贵的建议。</p>
+
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="0.21923688525231483" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2023-04-23 09:29">2023-04-23 09:29</span>&nbsp;
+<a href="https://www.cnblogs.com/Jcloud/">京东云开发者</a>&nbsp;
+阅读(<span id="post_view_count">51</span>)&nbsp;
+评论(<span id="post_comment_count">1</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17345515" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(17345515);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '17345515', targetLink: 'https://www.cnblogs.com/Jcloud/p/17345515.html', title: '京东小程序接入ARVR的技术方案和性能调优' })">举报</a>
+</div>
+        </div>
+        
+<script>
+    var cb_entryId = 17345515, cb_entryCreatedDate = '2023-04-23 09:29', cb_postType = 1, cb_postTitle = '京东小程序接入ARVR的技术方案和性能调优';
+    var allowComments = true, cb_blogId = 760230, cb_blogApp = 'Jcloud', cb_blogUserGuid = '04747bff-fa5c-406f-546d-08da62d1944a';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+        <a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+            <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+    </div>
+</div>
+            </div>
+        </div>
+
+        <div id="sideBar">
+            <div id="sideBarMain">
+                <div id="sidebar_news" class="newsItem">
+    
+<h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script> 
+</div>
+<div id="sidebar_c3"></div>
+                <div id="calendar"><div id="blog-calendar" style="display:none"></div></div>                
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="leftcontentcontainer">
+                    <!-- begin:SingleColumn -->
+                    <div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+                    <!-- end:  SingleColumn -->
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <div id="footer">
+        <!--done-->
+Copyright &copy; 2023 京东云开发者
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+    </div>
+</div>
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULkhDoZZn09oLaS-DZNcDmCmzKG3nJ_5mwthR8S9SavuVcObIUFiSP1j0dDPhu_EX9FFnSce4RtotpPiBX2WYeRS6ypsGlh-sAp4WtpVMr6Sd9CJ4sBXYI7wUQsz7dCE5DI" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

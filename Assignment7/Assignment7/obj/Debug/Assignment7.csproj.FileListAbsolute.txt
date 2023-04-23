@@ -1,0 +1,13 @@
+D:\homework-ruan\Assignment7\Assignment7\obj\Debug\Assignment7.csproj.AssemblyReference.cache
+D:\homework-ruan\Assignment7\Assignment7\obj\Debug\Assignment7.csproj.SuggestedBindingRedirects.cache
+D:\homework-ruan\Assignment7\Assignment7\obj\Debug\Assignment7.csproj.CoreCompileInputs.cache
+D:\homework-ruan\Assignment7\Assignment7\bin\Debug\Assignment7.exe.config
+D:\homework-ruan\Assignment7\Assignment7\bin\Debug\Assignment7.exe
+D:\homework-ruan\Assignment7\Assignment7\bin\Debug\Assignment7.pdb
+D:\homework-ruan\Assignment7\Assignment7\bin\Debug\System.Collections.Immutable.dll
+D:\homework-ruan\Assignment7\Assignment7\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\homework-ruan\Assignment7\Assignment7\obj\Debug\Assignment7.csproj.CopyComplete
+D:\homework-ruan\Assignment7\Assignment7\obj\Debug\Assignment7.exe
+D:\homework-ruan\Assignment7\Assignment7\obj\Debug\Assignment7.pdb
+D:\homework-ruan\Assignment7\Assignment7\obj\Debug\Assignment7.Form1.resources
+D:\homework-ruan\Assignment7\Assignment7\obj\Debug\Assignment7.csproj.GenerateResource.cache

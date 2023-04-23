@@ -1,0 +1,559 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="description" content="Redis集群是一种通过将多个Redis节点连接在一起以实现高可用性、数据分片和负载均衡的技术。它允许Redis在不同节点上同时提供服务，提高整体性能和可靠性。根据搭建的方式和集群的特性，Redis集" />
+    <meta property="og:description" content="Redis集群是一种通过将多个Redis节点连接在一起以实现高可用性、数据分片和负载均衡的技术。它允许Redis在不同节点上同时提供服务，提高整体性能和可靠性。根据搭建的方式和集群的特性，Redis集" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>详解Redis三大集群模式，轻松实现高可用！ - 一灯架构 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/codinglife/bundle-codinglife.min.css?v=KhEfknsQdc0P-l_JHvJ4M5MpHxCqROySGNshnHAGUg4" />
+        <link id="highlighter-theme-atelier-estuary-light" type="text/css" rel="stylesheet" href="/css/hljs/atelier-estuary-light.css?v=ejhJJ0Gk5a4HUJBClhC-BwjQTCWIHE9seMZX6W-WJi0" />
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/yidengjiagou/custom.css?v=9VBlmAx1UekuHocx2z3hY0qvDuo=" />
+    <link type="text/css" rel="stylesheet" href="/css/fonts/Consolas.min.css" />
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/codinglife/bundle-codinglife-mobile.min.css?v=olw5cvIxb0V5dzf8QCwjbQOun53qoeKpUHSNhnOfVBU" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/yidengjiagou/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/yidengjiagou/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/yidengjiagou/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 755511;
+        var currentBlogApp = 'yidengjiagou';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'CodingLife';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 1;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'atelier-estuary-light';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+        <script>
+            var currentPostDateAdded = '2023-04-23 10:48';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-codinglife no-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'yidengjiagou', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/yidengjiagou/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/yidengjiagou/">一灯架构</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/yidengjiagou/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E4%B8%80%E7%81%AF%E6%9E%B6%E6%9E%84">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/yidengjiagou/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/yidengjiagou/p/17345831.html">
+    <span role="heading" aria-level="2">详解Redis三大集群模式，轻松实现高可用！</span>
+    
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                    <div id="cnblogs_post_description" style="display: none">
+        <img src="https://img2023.cnblogs.com/blog/734446/202304/734446-20230423104729288-1537615624.png" alt="详解Redis三大集群模式，轻松实现高可用！" class="desc_img" />
+        Redis集群是一种通过将多个Redis节点连接在一起以实现高可用性、数据分片和负载均衡的技术。它允许Redis在不同节点上同时提供服务，提高整体性能和可靠性。根据搭建的方式和集群的特性，Redis集群主要有三种模式：主从复制模式（Master-Slave）、哨兵模式（Sentinel）和Cluster模式。
+    </div>
+<div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<p><img src="https://img2023.cnblogs.com/blog/734446/202304/734446-20230423104553727-1171728881.png" alt="image" loading="lazy"></p>
+<h2 id="1-redis集群简介"><strong>1. Redis集群简介</strong></h2>
+<h3 id="11-什么是redis集群"><strong>1.1 什么是Redis集群</strong></h3>
+<p>Redis集群是一种通过将多个Redis节点连接在一起以实现高可用性、数据分片和负载均衡的技术。它允许Redis在不同节点上同时提供服务，提高整体性能和可靠性。根据搭建的方式和集群的特性，Redis集群主要有三种模式：主从复制模式（Master-Slave）、哨兵模式（Sentinel）和Cluster模式。</p>
+<h3 id="12-redis集群的作用和优势"><strong>1.2 Redis集群的作用和优势</strong></h3>
+<ol>
+<li><strong>高可用性</strong>：Redis集群可以在某个节点发生故障时，自动进行故障转移，保证服务的持续可用。</li>
+<li><strong>负载均衡</strong>：Redis集群可以将客户端请求分发到不同的节点上，有效地分摊节点的压力，提高系统的整体性能。</li>
+<li><strong>容灾恢复</strong>：通过主从复制或哨兵模式，Redis集群可以在主节点出现故障时，快速切换到从节点，实现业务的无缝切换。</li>
+<li><strong>数据分片</strong>：在Cluster模式下，Redis集群可以将数据分散在不同的节点上，从而突破单节点内存限制，实现更大规模的数据存储。</li>
+<li><strong>易于扩展</strong>：Redis集群可以根据业务需求和系统负载，动态地添加或移除节点，实现水平扩展。</li>
+</ol>
+<p>通过了解Redis集群的概念和优势，接下来将详细介绍三大集群模式的原理、配置、优缺点以及应用场景。</p>
+<h2 id="2-主从复制模式master-slave"><strong>2. 主从复制模式</strong>（Master-Slave）</h2>
+<h3 id="21-主从复制原理"><strong>2.1 主从复制原理</strong></h3>
+<p>主从复制是Redis的一种基本集群模式，它通过将一个Redis节点（主节点）的数据复制到一个或多个其他Redis节点（从节点）来实现数据的冗余和备份。</p>
+<p>主节点负责处理客户端的写操作，同时从节点会实时同步主节点的数据。客户端可以从从节点读取数据，实现读写分离，提高系统性能。</p>
+<p><img src="https://img2023.cnblogs.com/blog/734446/202304/734446-20230423104604712-958561171.png" alt="image" loading="lazy"></p>
+<h3 id="22-主从复制配置和实现"><strong>2.2 主从复制配置和实现</strong></h3>
+<ol>
+<li>
+<p><strong>配置主节点</strong>：在主节点的redis.conf配置文件中，无需进行特殊配置，主节点默认监听所有客户端请求。</p>
+<pre><code class="language-bash"># 主节点默认端口号6379
+port 6379
+</code></pre>
+</li>
+<li>
+<p><strong>配置从节点</strong>：在从节点的redis.conf配置文件中，添加如下配置，指定主节点的地址和端口：</p>
+<pre><code class="language-bash"># 从节点设置端口号6380
+port 6380
+
+# replicaof 主节点IP 主节点端口
+replicaof 127.0.0.1 6379
+</code></pre>
+<p>或者，通过Redis命令行在从节点上执行如下命令：</p>
+<pre><code class="language-bash">redis&gt; replicaof 127.0.0.1 6379
+</code></pre>
+</li>
+<li>
+<p><strong>验证主从复制</strong>：在主节点上执行写操作，然后在从节点上进行读操作，检查数据是否一致。</p>
+</li>
+</ol>
+<h3 id="23-主从复制的优缺点"><strong>2.3 主从复制的优缺点</strong></h3>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>配置简单，易于实现。</li>
+<li>实现数据冗余，提高数据可靠性。</li>
+<li>读写分离，提高系统性能。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>主节点故障时，需要手动切换到从节点，故障恢复时间较长。</li>
+<li>主节点承担所有写操作，可能成为性能瓶颈。</li>
+<li>无法实现数据分片，受单节点内存限制。</li>
+</ol>
+<h3 id="24-主从复制场景应用"><strong>2.4 主从复制场景应用</strong></h3>
+<p>主从复制模式适用于以下场景：</p>
+<ol>
+<li>数据备份和容灾恢复：通过从节点备份主节点的数据，实现数据冗余。</li>
+<li>读写分离：将读操作分发到从节点，减轻主节点压力，提高系统性能。</li>
+<li>在线升级和扩展：在不影响主节点的情况下，通过增加从节点来扩展系统的读取能力。</li>
+</ol>
+<p>总结：主从复制模式适合数据备份、读写分离和在线升级等场景，但在主节点故障时需要手动切换，不能自动实现故障转移。如果对高可用性要求较高，可以考虑使用哨兵模式或Cluster模式。</p>
+<h2 id="3-哨兵模式sentinel"><strong>3. 哨兵模式</strong>（<strong>Sentinel）</strong></h2>
+<h3 id="31-哨兵模式原理"><strong>3.1 哨兵模式原理</strong></h3>
+<p>哨兵模式是在主从复制基础上加入了哨兵节点，实现了自动故障转移。哨兵节点是一种特殊的Redis节点，它会监控主节点和从节点的运行状态。当主节点发生故障时，哨兵节点会自动从从节点中选举出一个新的主节点，并通知其他从节点和客户端，实现故障转移。</p>
+<p><img src="https://img2023.cnblogs.com/blog/734446/202304/734446-20230423104619091-219085123.png" alt="image" loading="lazy"></p>
+<h3 id="32-哨兵模式配置和实现"><strong>3.2 哨兵模式配置和实现</strong></h3>
+<ol>
+<li>
+<p><strong>配置主从复制</strong>：首先按照主从复制模式的配置方法，搭建一个主从复制集群（上面已经讲过）。</p>
+</li>
+<li>
+<p><strong>配置哨兵节点</strong>：在哨兵节点上创建一个新的哨兵配置文件（如：sentinel.conf），并添加如下配置：</p>
+<pre><code class="language-bash"># sentinel节点端口号
+port 26379
+
+# sentinel monitor 被监控主节点名称 主节点IP 主节点端口 quorum
+sentinel monitor mymaster 127.0.0.1 6379 2
+
+# sentinel down-after-milliseconds 被监控主节点名称 毫秒数
+sentinel down-after-milliseconds mymaster 60000
+
+# sentinel failover-timeout 被监控主节点名称 毫秒数
+sentinel failover-timeout mymaster 180000
+</code></pre>
+<p>其中，<code>quorum</code>是指触发故障转移所需的最小哨兵节点数。<code>down-after-milliseconds</code>表示主节点被判断为失效的时间。<code>failover-timeout</code>是故障转移超时时间。</p>
+<blockquote>
+<p>为什么只配置了sentinel监控主节点，没有配置监控从节点？<br>
+因为通过主节点，就可以找到从节点。</p>
+</blockquote>
+</li>
+<li>
+<p><strong>启动哨兵节点</strong>：使用如下命令启动哨兵节点：</p>
+<pre><code class="language-bash">redis&gt; redis-sentinel /path/to/sentinel.conf
+</code></pre>
+</li>
+<li>
+<p><strong>验证哨兵模式</strong>：手动停止主节点，观察哨兵节点是否自动选举出新的主节点，并通知其他从节点和客户端。</p>
+</li>
+</ol>
+<h3 id="33-哨兵模式的优缺点"><strong>3.3 哨兵模式的优缺点</strong></h3>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>自动故障转移，提高系统的高可用性。</li>
+<li>具有主从复制模式的所有优点，如数据冗余和读写分离。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>配置和管理相对复杂。</li>
+<li>依然无法实现数据分片，受单节点内存限制。</li>
+</ol>
+<h3 id="34-哨兵模式场景应用"><strong>3.4 哨兵模式场景应用</strong></h3>
+<p>哨兵模式适用于以下场景：</p>
+<ol>
+<li>高可用性要求较高的场景：通过自动故障转移，确保服务的持续可用。</li>
+<li>数据备份和容灾恢复：在主从复制的基础上，提供自动故障转移功能。</li>
+</ol>
+<p>总结：哨兵模式在主从复制模式的基础上实现了自动故障转移，提高了系统的高可用性。然而，它仍然无法实现数据分片。如果需要实现数据分片和负载均衡，可以考虑使用Cluster模式。</p>
+<h2 id="4-cluster模式"><strong>4. Cluster模式</strong></h2>
+<h3 id="41-cluster模式原理"><strong>4.1 Cluster模式原理</strong></h3>
+<p>Cluster模式是Redis的一种高级集群模式，它通过数据分片和分布式存储实现了负载均衡和高可用性。在Cluster模式下，Redis将所有的键值对数据分散在多个节点上。每个节点负责一部分数据，称为槽位。通过对数据的分片，Cluster模式可以突破单节点的内存限制，实现更大规模的数据存储。</p>
+<p><img src="https://img2023.cnblogs.com/blog/734446/202304/734446-20230423104631153-1328078427.png" alt="image" loading="lazy"></p>
+<h3 id="42-数据分片与槽位"><strong>4.2 数据分片与槽位</strong></h3>
+<p>Redis Cluster将数据分为16384个槽位，每个节点负责管理一部分槽位。当客户端向Redis Cluster发送请求时，Cluster会根据键的哈希值将请求路由到相应的节点。具体来说，Redis Cluster使用CRC16算法计算键的哈希值，然后对16384取模，得到槽位编号。</p>
+<h3 id="43-cluster模式配置和实现"><strong>4.3 Cluster模式配置和实现</strong></h3>
+<ol>
+<li>
+<p><strong>配置Redis节点</strong>：为每个节点创建一个redis.conf配置文件，并添加如下配置：</p>
+<pre><code class="language-bash"># cluster节点端口号
+port 7001
+
+# 开启集群模式
+cluster-enabled yes
+
+# 节点超时时间
+cluster-node-timeout 15000
+</code></pre>
+</li>
+</ol>
+<p>像这样的配置，一共需要创建6个，我们做一个三主三从的集群。</p>
+<ol>
+<li>
+<p><strong>启动Redis节点</strong>：使用如下命令启动6个节点：</p>
+<pre><code class="language-bash">redis&gt; redis-server redis_7001.conf
+</code></pre>
+</li>
+<li>
+<p><strong>创建Redis Cluster</strong>：使用Redis命令行工具执行如下命令创建Cluster：</p>
+<pre><code class="language-bash">redis&gt; redis-cli --cluster create 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006 --cluster-replicas 1
+</code></pre>
+<p><strong>cluster-replicas</strong> 表示从节点的数量，1代表每个主节点都有一个从节点。</p>
+</li>
+<li>
+<p><strong>验证Cluster模式</strong>：向Cluster发送请求，观察请求是否正确路由到相应的节点。</p>
+</li>
+</ol>
+<h3 id="44-cluster模式的优缺点"><strong>4.4 Cluster模式的优缺点</strong></h3>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>数据分片，实现大规模数据存储。</li>
+<li>负载均衡，提高系统性能。</li>
+<li>自动故障转移，提高高可用性。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>配置和管理较复杂。</li>
+<li>一些复杂的多键操作可能受到限制。</li>
+</ol>
+<h3 id="45-cluster模式场景应用"><strong>4.5 Cluster模式场景应用</strong></h3>
+<p>Cluster模式适用于以下场景：</p>
+<ol>
+<li>大规模数据存储：通过数据分片，突破单节点内存限制。</li>
+<li>高性能要求场景：通过负载均衡，提高系统性能。</li>
+<li>高可用性要求场景：通过自动故障转移，确保服务的持续可用。</li>
+</ol>
+<p>总结：Cluster模式在提供高可用性的同时，实现了数据分片和负载均衡，适用于大规模数据存储和高性能要求的场景。然而，它的配置和管理相对复杂，且某些复杂的多键操作可能受到限制。</p>
+<h2 id="5-总结"><strong>5. 总结</strong></h2>
+<p>本文详细介绍了Redis的三大集群模式：主从复制、哨兵模式和Cluster模式。每种模式都有其特点和应用场景，具体如下：</p>
+<ol>
+<li><strong>主从复制模式</strong>：适用于数据备份和读写分离场景，配置简单，但在主节点故障时需要手动切换。</li>
+<li><strong>哨兵模式</strong>：在主从复制的基础上实现自动故障转移，提高高可用性，适用于高可用性要求较高的场景。</li>
+<li><strong>Cluster模式</strong>：通过数据分片和负载均衡实现大规模数据存储和高性能，适用于大规模数据存储和高性能要求场景。</li>
+</ol>
+<p>在实际应用中，可以根据系统的需求和特点选择合适的Redis集群模式，以实现高可用性、高性能和大规模数据存储。</p>
+<blockquote>
+<p><strong>我是「一灯架构」，如果本文对你有帮助，欢迎各位小伙伴点赞、评论和关注，感谢各位老铁，我们下期见</strong></p>
+</blockquote>
+<p><img src="https://img2022.cnblogs.com/blog/734446/202210/734446-20221013100155564-1308352040.png" alt="image" loading="lazy"></p>
+
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="0.16433158693171296" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2023-04-23 10:48">2023-04-23 10:48</span>&nbsp;
+<a href="https://www.cnblogs.com/yidengjiagou/">一灯架构</a>&nbsp;
+阅读(<span id="post_view_count">127</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17345831" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(17345831);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '17345831', targetLink: 'https://www.cnblogs.com/yidengjiagou/p/17345831.html', title: '详解Redis三大集群模式，轻松实现高可用！' })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+
+<script>
+    var cb_entryId = 17345831, cb_entryCreatedDate = '2023-04-23 10:48', cb_postType = 1, cb_postTitle = '详解Redis三大集群模式，轻松实现高可用！';
+    var allowComments = true, cb_blogId = 755511, cb_blogApp = 'yidengjiagou', cb_blogUserGuid = 'f4d57c4b-f2d0-e411-b908-9dcfd8948a71';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+            <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 一灯架构
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    <div id="page_end_html">
+        <link href="//blog-static.cnblogs.com/files/enjoy233/nav.my-right.css" rel="stylesheet">
+<script type="text/javascript" src="//files.cnblogs.com/files/enjoy233/nav.my.js"></script>
+
+<div class="scrollBtn" id="scrollBtn">
+    <ul class="clearfix">
+        <li class="sB-home">
+            <a rel="nofollow noopener"  href="http://www.cnblogs.com/enjoy233" class="ff-t" title="首页"></a>
+        </li>
+        <li class="sB-comment">
+            <a rel="nofollow noopener"  href="#blog-comments-placeholder" onclick="$('#tbCommentBody').focus();" class="ff-t" title="添加评论"></a>
+        </li>
+        <li class="sB-share"><a rel="nofollow noopener"  onclick="if(cb_entryId !=undefined){AddToWz(cb_entryId)}" href="javascript:void(0);" title="收藏"></a></li>
+        <li class="sB-goTop" id="goTop" style="display: list-item;">
+            <a rel="nofollow noopener"  href="#top" title="回顶部"></a>
+        </li>
+    </ul>
+</div>
+    </div>
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULneqG-W1WjoZ3PIXgS7OVCcxtKRKJkfaaQ3dLGhHrb5TSl_Xb_L6qZt_WjAbQ1FPzjyykZLRm16pkVs15PgWn1bVTISCpzo3FPoUQpadBoydGc7LO9qLOuHWmRD97105UY" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

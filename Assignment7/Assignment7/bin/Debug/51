@@ -1,0 +1,636 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>huxiaofeng - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/book/bundle-book.min.css?v=jeIWFbREsBywulLasTpkQaxky-lM6nSP4v7QSo89d0Y" />
+        
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/book/bundle-book-mobile.min.css?v=321Pkcnk9olIIUfBXbzLcb9xzuLVNc5RopWnoGejDh0" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/huxiaofeng1029/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/huxiaofeng1029/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/huxiaofeng1029/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 730838;
+        var currentBlogApp = 'huxiaofeng1029';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'BOOK';
+        var visitorUserId = '';
+        var hasCustomScript = false;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-book has-navbar">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://www.cnblogs.com/cmt/p/17320765.html" onclick="countCreativeClicks('M2-博客园')">
+                    园子的商业化努力-困境求助：开设捐助通道
+                </a>                
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'huxiaofeng1029', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <script type="text/javascript">
+	try {
+		if (screen.availWidth > 1200) {
+			document.getElementById("MainCss").href = '/skins/book/bundle-book-2.min.css';
+		}
+	} catch (e) { }
+</script>
+
+<div id="header">
+<div id="HeaderTitle">
+<div id="Title">
+<a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/huxiaofeng1029/">ifeng</a>
+
+</div>
+<div id="subTitle"></div>
+</div>
+</div>
+
+
+<div id="main">
+	
+
+
+
+
+
+		
+<p class="date">
+	<a href="https://www.cnblogs.com/huxiaofeng1029/archive/2023/04/23.html"></a>
+	2023年4月23日
+		  
+</p>
+
+	<div class="post" role="article" aria-describedby="postlist_description_17345947">
+		<h2><a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huxiaofeng1029/p/17345947.html">
+    <span>
+        DRF的filter组件
+    </span>
+    
+</a></h2>
+		
+		
+
+    <div class="c_b_p_desc" id="postlist_description_17345947">
+摘要：            
+DRF的Filter组件 如果某个API需要传递一些条件进行搜索，其实就在是URL后面通过GET传参即可，例如： /api/users?age=19&amp;category=12 在drf中filter组件可以支持条件搜索。 1. 自定义filter # models.py from django.db         <a href="https://www.cnblogs.com/huxiaofeng1029/p/17345947.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+		
+		<p class="postfoot">		
+			posted @ 2023-04-23 11:17
+huxiaofeng
+<span data-post-id="17345947" class="post-view-count">阅读(4)</span> 
+<span data-post-id="17345947" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17345947" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17345947" rel="nofollow">
+    编辑
+</a>
+
+		</p>
+	</div>
+
+
+		
+<p class="date">
+	<a href="https://www.cnblogs.com/huxiaofeng1029/archive/2023/04/22.html"></a>
+	2023年4月22日
+		  
+</p>
+
+	<div class="post" role="article" aria-describedby="postlist_description_17344304">
+		<h2><a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huxiaofeng1029/p/17344304.html">
+    <span>
+        DRF的Serializer组件(源码分析)
+    </span>
+    
+</a></h2>
+		
+		
+
+    <div class="c_b_p_desc" id="postlist_description_17344304">
+摘要：            
+DRF的Serializer组件(源码分析) 1. 数据校验 drf中为我们提供了Serializer，他主要有两大功能： 对请求数据校验（底层调用Django的Form和ModelForm） 对数据库查询到的对象进行序列化 示例一: 基于Serializer # models.py class U        <a href="https://www.cnblogs.com/huxiaofeng1029/p/17344304.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+		
+		<p class="postfoot">		
+			posted @ 2023-04-22 22:26
+huxiaofeng
+<span data-post-id="17344304" class="post-view-count">阅读(82)</span> 
+<span data-post-id="17344304" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17344304" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17344304" rel="nofollow">
+    编辑
+</a>
+
+		</p>
+	</div>
+
+
+		
+<p class="date">
+	<a href="https://www.cnblogs.com/huxiaofeng1029/archive/2023/04/21.html"></a>
+	2023年4月21日
+		  
+</p>
+
+	<div class="post" role="article" aria-describedby="postlist_description_17341292">
+		<h2><a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huxiaofeng1029/p/17341292.html">
+    <span>
+        DRF的限流组件(源码分析)
+    </span>
+    
+</a></h2>
+		
+		
+
+    <div class="c_b_p_desc" id="postlist_description_17341292">
+摘要：            
+DRF限流组件(源码分析) 限流，限制用户访问频率，例如：用户1分钟最多访问100次 或者 短信验证码一天每天可以发送50次， 防止盗刷。 对于匿名用户，使用用户IP作为唯一标识。 对于登录用户，使用用户ID或名称作为唯一标识。 缓存={ 用户标识：[12:33,12:32,12:31,12:30,        <a href="https://www.cnblogs.com/huxiaofeng1029/p/17341292.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+		
+		<p class="postfoot">		
+			posted @ 2023-04-21 17:56
+huxiaofeng
+<span data-post-id="17341292" class="post-view-count">阅读(87)</span> 
+<span data-post-id="17341292" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17341292" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17341292" rel="nofollow">
+    编辑
+</a>
+
+		</p>
+	</div>
+	<div class="post" role="article" aria-describedby="postlist_description_17340501">
+		<h2><a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huxiaofeng1029/p/17340501.html">
+    <span>
+        DRF的权限组件(源码分析)
+    </span>
+    
+</a></h2>
+		
+		
+
+    <div class="c_b_p_desc" id="postlist_description_17340501">
+摘要：            
+DRF的权限组件(源码分析) 1. 创建用户表 from django.db import models # Create your models here. class UserInfo(models.Model): role_choice = ((1, &#39;CEO&#39;), (2, &#39;CTO&#39;), (        <a href="https://www.cnblogs.com/huxiaofeng1029/p/17340501.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+		
+		<p class="postfoot">		
+			posted @ 2023-04-21 15:23
+huxiaofeng
+<span data-post-id="17340501" class="post-view-count">阅读(5)</span> 
+<span data-post-id="17340501" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17340501" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17340501" rel="nofollow">
+    编辑
+</a>
+
+		</p>
+	</div>
+	<div class="post" role="article" aria-describedby="postlist_description_17339601">
+		<h2><a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huxiaofeng1029/p/17339601.html">
+    <span>
+        DRF的认证组件(源码分析)
+    </span>
+    
+</a></h2>
+		
+		
+
+    <div class="c_b_p_desc" id="postlist_description_17339601">
+摘要：            
+DRF认证组件(源码分析) 1. 数据库建立用户表 在drf中也给我们提供了 认证组件 ，帮助我们快速实现认证相关的功能，例如： # models.py from django.db import models class UserInfo(models.Model): username = mod        <a href="https://www.cnblogs.com/huxiaofeng1029/p/17339601.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+		
+		<p class="postfoot">		
+			posted @ 2023-04-21 10:58
+huxiaofeng
+<span data-post-id="17339601" class="post-view-count">阅读(54)</span> 
+<span data-post-id="17339601" class="post-comment-count">评论(2)</span> 
+<span data-post-id="17339601" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17339601" rel="nofollow">
+    编辑
+</a>
+
+		</p>
+	</div>
+
+
+		
+<p class="date">
+	<a href="https://www.cnblogs.com/huxiaofeng1029/archive/2023/04/19.html"></a>
+	2023年4月19日
+		  
+</p>
+
+	<div class="post" role="article" aria-describedby="postlist_description_17332742">
+		<h2><a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huxiaofeng1029/p/17332742.html">
+    <span>
+        selenium部分知识点总结
+    </span>
+    
+</a></h2>
+		
+		
+
+    <div class="c_b_p_desc" id="postlist_description_17332742">
+摘要：            
+selenium部分总结 最近写了一个selenium自动化脚本. 基于此总结一些常用的代码 1. 用户输入换行符不终止输入 strings = &#39;&#39; s = input(&#39;请输入：(q停止输入)&#39;) while s != &#39;q&#39;: # 此处可自行设置 strings = strings + s +        <a href="https://www.cnblogs.com/huxiaofeng1029/p/17332742.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+		
+		<p class="postfoot">		
+			posted @ 2023-04-19 11:28
+huxiaofeng
+<span data-post-id="17332742" class="post-view-count">阅读(6)</span> 
+<span data-post-id="17332742" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17332742" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17332742" rel="nofollow">
+    编辑
+</a>
+
+		</p>
+	</div>
+
+
+		
+<p class="date">
+	<a href="https://www.cnblogs.com/huxiaofeng1029/archive/2023/04/17.html"></a>
+	2023年4月17日
+		  
+</p>
+
+	<div class="post" role="article" aria-describedby="postlist_description_17324537">
+		<h2><a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huxiaofeng1029/p/17324537.html">
+    <span>
+        DRF版本控制(源码分析)
+    </span>
+    
+</a></h2>
+		
+		
+
+    <div class="c_b_p_desc" id="postlist_description_17324537">
+摘要：            
+DRF中版本控制的五种情况(源码分析) 在restful规范中要去，后端的API中需要体现版本。 drf框架中支持5种版本的设置。 1. URL的GET参数传递（*） 示例: user/?version=v1 # settings.py REST_FRAMEWORK = { &quot;VERSION_PAR        <a href="https://www.cnblogs.com/huxiaofeng1029/p/17324537.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+		
+		<p class="postfoot">		
+			posted @ 2023-04-17 00:06
+huxiaofeng
+<span data-post-id="17324537" class="post-view-count">阅读(53)</span> 
+<span data-post-id="17324537" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17324537" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17324537" rel="nofollow">
+    编辑
+</a>
+
+		</p>
+	</div>
+
+
+		
+<p class="date">
+	<a href="https://www.cnblogs.com/huxiaofeng1029/archive/2023/04/16.html"></a>
+	2023年4月16日
+		  
+</p>
+
+	<div class="post" role="article" aria-describedby="postlist_description_17324235">
+		<h2><a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huxiaofeng1029/p/17324235.html">
+    <span>
+        django restframework的简单使用
+    </span>
+    
+</a></h2>
+		
+		
+
+    <div class="c_b_p_desc" id="postlist_description_17324235">
+摘要：            
+django restframework的简单使用 1.快速上手 配置: (pip install djangorestframework==3.12.4) # settings.py INSTALLED_APPS = [ &#39;rest_framework&#39; ] REST_FRAMEWORK = {         <a href="https://www.cnblogs.com/huxiaofeng1029/p/17324235.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+		
+		<p class="postfoot">		
+			posted @ 2023-04-16 22:04
+huxiaofeng
+<span data-post-id="17324235" class="post-view-count">阅读(3)</span> 
+<span data-post-id="17324235" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17324235" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17324235" rel="nofollow">
+    编辑
+</a>
+
+		</p>
+	</div>
+	<div class="post" role="article" aria-describedby="postlist_description_17324157">
+		<h2><a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huxiaofeng1029/p/17324157.html">
+    <span>
+        FBV和CBV的区别(源码分析)
+    </span>
+    
+</a></h2>
+		
+		
+
+    <div class="c_b_p_desc" id="postlist_description_17324157">
+摘要：            
+FBV和CBV源码分析 FBV直接调用user方法执行业务代码 CBV相当于在FBV上面封装了一层 from django.contrib import admin from django.urls import path from app01 import views urlpatterns =         <a href="https://www.cnblogs.com/huxiaofeng1029/p/17324157.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+		
+		<p class="postfoot">		
+			posted @ 2023-04-16 21:29
+huxiaofeng
+<span data-post-id="17324157" class="post-view-count">阅读(4)</span> 
+<span data-post-id="17324157" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17324157" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17324157" rel="nofollow">
+    编辑
+</a>
+
+		</p>
+	</div>
+
+
+		
+<p class="date">
+	<a href="https://www.cnblogs.com/huxiaofeng1029/archive/2023/04/15.html"></a>
+	2023年4月15日
+		  
+</p>
+
+	<div class="post" role="article" aria-describedby="postlist_description_17321327">
+		<h2><a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/huxiaofeng1029/p/17321327.html">
+    <span>
+        django渲染模版时比实际少了8小时?
+    </span>
+    
+</a></h2>
+		
+		
+
+    <div class="c_b_p_desc" id="postlist_description_17321327">
+摘要：            
+这是因为django的时间是UTC时间. 我们通过改配置文件将其改成本地时间 修改配置文件 # 将时间从UTC转化成当前时间 TIME_ZONE = &#39;Asia/Shanghai&#39; # USE_TZ = True html页面上面渲染 &lt;td&gt;{{ foo.create_datetime|date:        <a href="https://www.cnblogs.com/huxiaofeng1029/p/17321327.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+		
+		<p class="postfoot">		
+			posted @ 2023-04-15 16:13
+huxiaofeng
+<span data-post-id="17321327" class="post-view-count">阅读(3)</span> 
+<span data-post-id="17321327" class="post-comment-count">评论(1)</span> 
+<span data-post-id="17321327" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17321327" rel="nofollow">
+    编辑
+</a>
+
+		</p>
+	</div>
+
+
+
+<div class="topicListFooter">
+    <div id="nav_next_page">
+        
+    <a href="https://www.cnblogs.com/huxiaofeng1029/?page=2">
+        下一页
+    </a>
+
+    </div>    
+</div>
+
+
+
+
+
+
+<script>
+    updatePostStats(
+        $(".post-view-count").map(function () { return this.dataset.postId }).get(),
+        function(id, count) { $(".post-view-count[data-post-id=" + id + "]").text("阅读(" + count + ")") },
+        function(id, count) { $(".post-comment-count[data-post-id=" + id + "]").text("评论(" + count + ")") },
+        function(id, count) { $(".post-digg-count[data-post-id=" + id + "]").text("推荐(" + count + ")") });
+</script>
+	<p id="footer">
+	Powered by: 
+	<br />
+	
+	<a href="https://www.cnblogs.com/" id="footer_site_link">博客园</a>
+	<br />
+	Copyright &copy; 2023 huxiaofeng
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+</p>
+
+
+</div>
+<div id="rightmenu">
+	
+		<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>
+		
+<h3>导航</h3>
+<ul>
+			<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+			<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/huxiaofeng1029/">
+首页</a>
+</li>
+			<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+			<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/huxiaofeng">
+联系</a></li>
+			<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/huxiaofeng1029/rss/">
+订阅</a>
+<a id="blog_nav_rss_image" href="https://www.cnblogs.com/huxiaofeng1029/rss/">
+    <img src="/skins/book/images/xml.gif" alt="订阅" />
+</a></li>
+			<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		<div id="sidebar_news" class="newsItem">
+    
+<h3>公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+		<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+	
+</div>
+			
+			
+			
+			
+			 
+
+	
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULmb2lh2jb6bxba1hJzL7vSBwvT_gYU7zuTQcaAM8UDfGDAu9hzu4FMkaMlVHg650z87fngEtx7_KO3BWUKG0dLUmtM9iqiFQS9Vo9HCUmVRXWeMK31g1mvDR-3L8riLPK8" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

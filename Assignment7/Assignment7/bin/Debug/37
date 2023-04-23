@@ -1,0 +1,1036 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>逆水寒龙 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/buildtowin/bundle-buildtowin.min.css?v=Tgl1d--mRuaeqinLMFZ2zu1KEazOmNWHLTJIcXu4SXU" />
+        
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/buildtowin/bundle-buildtowin-mobile.min.css?v=ZBWq3OPQpKdP7jvC_UMCkC1a79tQGcXLPZwlftZaLVg" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/24la/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/24la/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/24la/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 109201;
+        var currentBlogApp = '24la';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'BuildtoWin';
+        var visitorUserId = '';
+        var hasCustomScript = false;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-buildtowin has-navbar">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://www.cnblogs.com/cmt/p/17320765.html" onclick="countCreativeClicks('M2-博客园')">
+                    园子的商业化努力-困境求助：开设捐助通道
+                </a>                
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, '24la', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/24la/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/24la/">逆水寒龙</a>
+</h1>
+<h2>败人二字，非傲即惰</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/24la/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E9%80%86%E6%B0%B4%E5%AF%92%E9%BE%99">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/24la/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+
+
+
+
+		
+<div class="day pinned" role="article" aria-describedby="postlist_description_3797758">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2014/06/19.html"></a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle pinned-post" href="https://www.cnblogs.com/24la/p/3797758.html">
+    <span>
+            <span class="pinned-post-mark">[置顶]</span>
+        linux系统下基于mono部署asp.net，使用ef6与mysql出现的问题【索引】
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_3797758">
+摘要：            
+linux系统下基于mono部署asp.net，使用ef6与mysql出现的问题，弄了个索引方便查找。entity Framework 6 已经可以很好的与mysql在linux使用了，如果中间出现vs退出问题，那么请您重装下那个for visual studio的插件        <a href="https://www.cnblogs.com/24la/p/3797758.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2014-06-19 20:03
+逆水寒龙
+<span data-post-id="3797758" class="post-view-count">阅读(1419)</span> 
+<span data-post-id="3797758" class="post-comment-count">评论(0)</span> 
+<span data-post-id="3797758" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=3797758" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_17344503">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2023/04/23.html">2023年4月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/mysql-proxysql-replication-manager-read-write-split-mha.html">
+    <span>
+        mysql+proxysql+replication-manager的主从半同步复制+高可用+读写分离
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="postBody blogpost-body" id="postlist_postbody_17344503">
+        正文内容加载中...
+    </div>
+    <script type="text/javascript">getBlogPostBody(17344503);</script>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2023-04-23 12:53
+逆水寒龙
+<span data-post-id="17344503" class="post-view-count">阅读(56)</span> 
+<span data-post-id="17344503" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17344503" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17344503" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16290008">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2022/05/19.html">2022年5月19日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/apache-ftpserver-mysql-sqlite-file-method.html">
+    <span>
+        利用apache ftpserver搭建ftp服务器
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16290008">
+摘要：            
+操作环境： win2012r2 x64 datacenter Apache FtpServer 1.2.0 Java SE Development Kit 8u333 commons-dbcp2-2.9.0.jar commons-pool2-2.11.1.jar mysql server 8.0.        <a href="https://www.cnblogs.com/24la/p/apache-ftpserver-mysql-sqlite-file-method.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-05-19 20:31
+逆水寒龙
+<span data-post-id="16290008" class="post-view-count">阅读(640)</span> 
+<span data-post-id="16290008" class="post-comment-count">评论(0)</span> 
+<span data-post-id="16290008" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16290008" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_16169690">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2022/04/20.html">2022年4月20日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/16169690.html">
+    <span>
+        旧有的软件安装win10时安装不了时采用批处理安装exe软件
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_16169690">
+摘要：            
+@echo off &gt;nul 2&gt;&amp;1 &quot;%SYSTEMROOT%\system32\cacls.exe&quot; &quot;%SYSTEMROOT%\system32\config\system&quot; if &#39;%errorlevel%&#39; NEQ &#39;0&#39; ( goto UACPrompt ) else ( goto g        <a href="https://www.cnblogs.com/24la/p/16169690.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2022-04-20 14:22
+逆水寒龙
+<span data-post-id="16169690" class="post-view-count">阅读(98)</span> 
+<span data-post-id="16169690" class="post-comment-count">评论(0)</span> 
+<span data-post-id="16169690" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16169690" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_15008734">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2021/07/13.html">2021年7月13日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/raspberrypi-python-pip-install.html">
+    <span>
+        树莓派3b的raspberrypi系统安装pip
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_15008893">
+摘要：            
+树莓派源码安装pip，使用pip命令安装扩展包        <a href="https://www.cnblogs.com/24la/p/raspberrypi-python-pip-install.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2021-07-13 23:06
+逆水寒龙
+<span data-post-id="15008893" class="post-view-count">阅读(488)</span> 
+<span data-post-id="15008893" class="post-comment-count">评论(1)</span> 
+<span data-post-id="15008893" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=15008893" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/change-python-version.html">
+    <span>
+        树莓派3b的raspberrypi系统更改默认的python版本
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_15008734">
+摘要：            
+更换python默认版本        <a href="https://www.cnblogs.com/24la/p/change-python-version.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2021-07-13 22:16
+逆水寒龙
+<span data-post-id="15008734" class="post-view-count">阅读(1516)</span> 
+<span data-post-id="15008734" class="post-comment-count">评论(0)</span> 
+<span data-post-id="15008734" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=15008734" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_13949691">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2020/11/09.html">2020年11月9日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/docker-mysql-cnf.html">
+    <span>
+        Docker下安装mysql挂载本地配置本地数据库本地日志
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_13949691">
+摘要：            
+docker安装mysql，加载本地配置文件，修改mysql默认编码        <a href="https://www.cnblogs.com/24la/p/docker-mysql-cnf.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2020-11-09 17:32
+逆水寒龙
+<span data-post-id="13949691" class="post-view-count">阅读(763)</span> 
+<span data-post-id="13949691" class="post-comment-count">评论(0)</span> 
+<span data-post-id="13949691" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=13949691" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_11664510">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2019/10/12.html">2019年10月12日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/phpize_ext.html">
+    <span>
+        phpize安装PHP扩展
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_11664510">
+摘要：            
+lnmp1.6安装扩展        <a href="https://www.cnblogs.com/24la/p/phpize_ext.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2019-10-12 23:55
+逆水寒龙
+<span data-post-id="11664510" class="post-view-count">阅读(1255)</span> 
+<span data-post-id="11664510" class="post-comment-count">评论(0)</span> 
+<span data-post-id="11664510" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=11664510" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_6946534">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2017/06/05.html">2017年6月5日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/CodeIgniter-hmvc-1.html">
+    <span>
+        Codeigniter使用HMVC（一）
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_6946534">
+摘要：            
+学习下PHP的框架CodeIgniter如何使用hmvc分层        <a href="https://www.cnblogs.com/24la/p/CodeIgniter-hmvc-1.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2017-06-05 18:47
+逆水寒龙
+<span data-post-id="6946534" class="post-view-count">阅读(567)</span> 
+<span data-post-id="6946534" class="post-comment-count">评论(0)</span> 
+<span data-post-id="6946534" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=6946534" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_5900584">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2016/09/23.html">2016年9月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/Task-Runner-Explorer-for-vs2015.html">
+    <span>
+        Task Runner Explorer for vs2015找不到啊
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_5900584">
+摘要：            
+Task Runner Explorer for vs2015找不到啊，这么流行的插件怎么就没了呢？nonono，vs2015给他内置了        <a href="https://www.cnblogs.com/24la/p/Task-Runner-Explorer-for-vs2015.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2016-09-23 16:33
+逆水寒龙
+<span data-post-id="5900584" class="post-view-count">阅读(730)</span> 
+<span data-post-id="5900584" class="post-comment-count">评论(0)</span> 
+<span data-post-id="5900584" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=5900584" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_5815381">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2016/08/28.html">2016年8月28日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/angularjs-xmind.html">
+    <span>
+        AngularJs学习笔记
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_5815381">
+摘要：            
+最近项目要用angularjs，就花了两天时间大致的学习了一下angularjs，将做的脑图和demo分享出来。脑图便于学习记忆，在重新绘制的过程中学到不少东西。        <a href="https://www.cnblogs.com/24la/p/angularjs-xmind.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2016-08-28 16:58
+逆水寒龙
+<span data-post-id="5815381" class="post-view-count">阅读(335)</span> 
+<span data-post-id="5815381" class="post-comment-count">评论(0)</span> 
+<span data-post-id="5815381" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=5815381" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_5813321">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2016/08/27.html">2016年8月27日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/angularjs-description.html">
+    <span>
+        AngularJs学习的前景及优势
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_5813321">
+摘要：            
+最近开始学习angularjs，了解下其发展趋势和使用场景非常有必要，搜了很多资料得到这些不错的东西，整理下收藏下。        <a href="https://www.cnblogs.com/24la/p/angularjs-description.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2016-08-27 16:51
+逆水寒龙
+<span data-post-id="5813321" class="post-view-count">阅读(861)</span> 
+<span data-post-id="5813321" class="post-comment-count">评论(0)</span> 
+<span data-post-id="5813321" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=5813321" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_5429134">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2016/04/25.html">2016年4月25日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/wxpay-jsapi-refund.html">
+    <span>
+        微信支付JSAPI模式及退款CodeIgniter集成篇
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_5429134">
+摘要：            
+这几天摸索了不少东西，学到了很多，现在整理出来分享给大家。微信支付和退款集成，wechat-php-sdk微信类库和CodeIgniter集成，wechatpay类库和CodeIgniter集成。        <a href="https://www.cnblogs.com/24la/p/wxpay-jsapi-refund.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2016-04-25 02:08
+逆水寒龙
+<span data-post-id="5429134" class="post-view-count">阅读(5278)</span> 
+<span data-post-id="5429134" class="post-comment-count">评论(0)</span> 
+<span data-post-id="5429134" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=5429134" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_5424154">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2016/04/23.html">2016年4月23日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/wxpay-native-qrcode-codeigniter.html">
+    <span>
+        微信支付Native扫码支付模式二之CodeIgniter集成篇
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_5424154">
+摘要：            
+走了几天的弯路，直到遇到Lamtin指点（热心网友），他说你既然是集成到CI为何不自己写，我想了想是啊，为什么我一直陷入官方sdk的漩涡里不能跳出来去看这件事，官方提供了API接口，你只需要去调用这些接口啊，post参数啊，是吧，后悔浪费了3天时间。为了不让你们和我一样我把我的思路及代码发布出来，有什么问题可以留言。        <a href="https://www.cnblogs.com/24la/p/wxpay-native-qrcode-codeigniter.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2016-04-23 10:59
+逆水寒龙
+<span data-post-id="5424154" class="post-view-count">阅读(5342)</span> 
+<span data-post-id="5424154" class="post-comment-count">评论(1)</span> 
+<span data-post-id="5424154" class="post-digg-count">推荐(3)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=5424154" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_5281895">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2016/03/16.html">2016年3月16日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/debian-hd-install.html">
+    <span>
+        如何使用硬盘安装debian8.3？
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_5281895">
+摘要：            
+最近又开始折腾了，先弄个linux系统玩玩，捣鼓了半天发现用硬盘安装还是有很多麻烦事，有点小悲催，记录下来，以后都不会忘了。        <a href="https://www.cnblogs.com/24la/p/debian-hd-install.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2016-03-16 00:41
+逆水寒龙
+<span data-post-id="5281895" class="post-view-count">阅读(935)</span> 
+<span data-post-id="5281895" class="post-comment-count">评论(0)</span> 
+<span data-post-id="5281895" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=5281895" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_5245548">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2016/03/05.html">2016年3月5日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/git-question.html">
+    <span>
+        使用git将代码push到osc上
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_5245548">
+摘要：            
+使用git遇到的问题记录下，防止再次肉疼        <a href="https://www.cnblogs.com/24la/p/git-question.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2016-03-05 19:08
+逆水寒龙
+<span data-post-id="5245548" class="post-view-count">阅读(535)</span> 
+<span data-post-id="5245548" class="post-comment-count">评论(0)</span> 
+<span data-post-id="5245548" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=5245548" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_3995869">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2014/09/27.html">2014年9月27日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/raspberrypi-lampp.html">
+    <span>
+        树莓派(Raspberry Pi)搭建简单的lamp服务
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_3995869">
+摘要：            
+树莓派(Raspberry Pi)搭建简单的lamp服务        <a href="https://www.cnblogs.com/24la/p/raspberrypi-lampp.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2014-09-27 00:15
+逆水寒龙
+<span data-post-id="3995869" class="post-view-count">阅读(7327)</span> 
+<span data-post-id="3995869" class="post-comment-count">评论(0)</span> 
+<span data-post-id="3995869" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=3995869" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_3985827">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2014/09/22.html">2014年9月22日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/update-mysql-default-character.html">
+    <span>
+        win下修改mysql默认的字符集以防止乱码出现
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_3985827">
+摘要：            
+如何修改win下mysql默认的数据库编码？记录下来以方便后来人        <a href="https://www.cnblogs.com/24la/p/update-mysql-default-character.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2014-09-22 13:21
+逆水寒龙
+<span data-post-id="3985827" class="post-view-count">阅读(7117)</span> 
+<span data-post-id="3985827" class="post-comment-count">评论(0)</span> 
+<span data-post-id="3985827" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=3985827" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_3985133">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2014/09/21.html">2014年9月21日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/codeigniter-cannot-call-load-method.html">
+    <span>
+        CodeIgniter2.2.0-在控制器里调用load失败报错的问题
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_3985133">
+摘要：            
+codeigniter2.2.0调用load方法出现了问题，最后发现此问题是重写了父类方法造成，记录下来供自己查阅。        <a href="https://www.cnblogs.com/24la/p/codeigniter-cannot-call-load-method.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2014-09-21 22:51
+逆水寒龙
+<span data-post-id="3985133" class="post-view-count">阅读(2562)</span> 
+<span data-post-id="3985133" class="post-comment-count">评论(0)</span> 
+<span data-post-id="3985133" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=3985133" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_3812944">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2014/06/28.html">2014年6月28日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/libgdiplus-install-error-record.html">
+    <span>
+        Ubuntu Server（Ubuntu 14.04 LTS 64位）安装libgdiplus2.10.9出错问题记录
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_3812944">
+摘要：            
+今天重做了服务器系统，直接使用了Ubuntu的Server版（Ubuntu 14.04 LTS 64位），准备配置mono环境时，在安装libgdiplus2.10.9时出错了，现在把问题和解决方案记录下来备用，或者给遇到同样错误的你        <a href="https://www.cnblogs.com/24la/p/libgdiplus-install-error-record.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2014-06-28 01:41
+逆水寒龙
+<span data-post-id="3812944" class="post-view-count">阅读(5082)</span> 
+<span data-post-id="3812944" class="post-comment-count">评论(7)</span> 
+<span data-post-id="3812944" class="post-digg-count">推荐(4)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=3812944" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+		
+<div class="day" role="article" aria-describedby="postlist_description_3800213">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/24la/archive/2014/06/20.html">2014年6月20日
+</a>
+    </div>
+
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/24la/p/delete-mono.html">
+    <span>
+        linux下mono的安装与卸载
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+
+    <div class="c_b_p_desc" id="postlist_description_3800213">
+摘要：            
+本文针对新手，大牛们可以飘过去，如果对你有用，那不胜欢喜。常常为源码安装mono，安装后删除了源码安装包的童鞋，我很苦恼mono的删除，我把删除的方法收集过来放在一起，希望能帮助刚进mono大门的你。我们共同进步。        <a href="https://www.cnblogs.com/24la/p/delete-mono.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+</div>
+        <div class="clear"></div>
+        <div class="postDesc">posted @ 2014-06-20 22:23
+逆水寒龙
+<span data-post-id="3800213" class="post-view-count">阅读(13239)</span> 
+<span data-post-id="3800213" class="post-comment-count">评论(0)</span> 
+<span data-post-id="3800213" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=3800213" rel="nofollow">
+    编辑
+</a>
+</div>
+        <div class="clear"></div>
+</div>
+
+
+
+<div class="topicListFooter">
+    <div id="nav_next_page">
+        
+    <a href="https://www.cnblogs.com/24la/?page=2">
+        下一页
+    </a>
+
+    </div>    
+</div>
+
+
+
+
+
+
+<script>
+    updatePostStats(
+        $(".post-view-count").map(function () { return this.dataset.postId }).get(),
+        function(id, count) { $(".post-view-count[data-post-id=" + id + "]").text("阅读(" + count + ")") },
+        function(id, count) { $(".post-comment-count[data-post-id=" + id + "]").text("评论(" + count + ")") },
+        function(id, count) { $(".post-digg-count[data-post-id=" + id + "]").text("推荐(" + count + ")") });
+</script>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2023 逆水寒龙
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULnxX_WqIystdd8R1j5qlgrNz1NLDUtPspoZnKZhnyt3f3udYrPcve8djNYkyM2syvgeBriGi-eFwWqppzjLwsZjEg4hcX0YYvm0X5K6Yuk0M4TmVrxESMBTHGzYPN34ziA" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

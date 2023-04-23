@@ -1,0 +1,596 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>京东云技术团队 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=1vhSwkIM_ZbH7FoBJEmvwqf4uVSvVLle9uQMPlPtd_s" />
+    
+
+    <link id="MainCss" rel="stylesheet" href="/skins/lessismoreright/bundle-lessismoreright.min.css?v=jCa45SoodIrmNIWg5OOQ4J9KdJxbHTH5xUcbSPK8mGU" />
+        
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/lessismoreright/bundle-lessismoreright-mobile.min.css?v=Jh4f782OH7Kol9ZM4ZBuYmOlQ1ywvXIza_q1BuQ_5vo" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/jingdongkeji/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/jingdongkeji/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/jingdongkeji/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 777127;
+        var currentBlogApp = 'jingdongkeji';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'LessIsMoreRight';
+        var visitorUserId = '';
+        var hasCustomScript = false;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = true;
+        window.mathEngine = 1;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false
+    </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=QEG6LwSL2qZPG7UFsn5haCBlDMZ9Yzj6bWHw2T_YuXU"></script>
+    
+
+    
+</head>
+<body class="skin-lessismoreright has-navbar mathjax3">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://www.cnblogs.com/cmt/p/17320765.html" onclick="countCreativeClicks('M2-博客园')">
+                    园子的商业化努力-困境求助：开设捐助通道
+                </a>                
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="//common.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li>
+                    <a href="/" onclick="countClicks('skin-navbar-sitehome')">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/17320765.html" target="_blank">助园</a></li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="/images/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'jingdongkeji', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//common.cnblogs.com/images/blog/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//common.cnblogs.com/images/blog/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//common.cnblogs.com/images/blog/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//common.cnblogs.com/images/blog/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <div id="home">
+    <div id="header">
+        <div id="blogTitle">
+            <div class="title"><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/jingdongkeji/">jingdongkeji</a>
+</div>
+<div class="subtitle"></div>
+
+        </div>
+        <div id="navigator">
+            
+<ul id="navList">
+    <li id="nav_sitehome"><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+    <li id="nav_myhome">
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/jingdongkeji/">
+首页</a>
+</li>
+    <li id="nav_newpost">
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+    <li id="nav_contact">
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E4%BA%AC%E4%B8%9C%E4%BA%91%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">
+联系</a></li>
+    <li id="nav_rss">
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/jingdongkeji/rss/">
+订阅</a></li>
+    <li id="nav_admin">
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+            <div class="blogStats">
+                <div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div id="mainContent">
+            <div class="forFlow">
+                
+
+
+
+
+
+
+    
+
+
+<div class="day" role="article" aria-describedby="postlist_description_17317697">
+    <div class="dayTitle">
+        <a href="https://www.cnblogs.com/jingdongkeji/archive/2023/04.html">2023年4月
+</a>
+    </div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jingdongkeji/p/17345525.html">
+    <span>
+        长连接Netty服务内存泄漏，看我如何一步步捉“虫”解决
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+            
+
+    <div class="c_b_p_desc" id="postlist_description_17345525">
+摘要：            <img src="https://img2023.cnblogs.com/blog/3046120/202304/3046120-20230423093208487-798754184.png" alt="长连接Netty服务内存泄漏，看我如何一步步捉“虫”解决" class="desc_img" />
+事情要回顾到双11.11备战前夕，在那个风雨交加的夜晚，一个急促的咚咚报警，惊破了电闪雷鸣的黑夜，将沉浸在梦香，熟睡的我惊醒。        <a href="https://www.cnblogs.com/jingdongkeji/p/17345525.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2023-04-23 09:33
+京东云技术团队
+<span data-post-id="17345525" class="post-view-count">阅读(71)</span> 
+<span data-post-id="17345525" class="post-comment-count">评论(1)</span> 
+<span data-post-id="17345525" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17345525" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jingdongkeji/p/17339345.html">
+    <span>
+        Android事件分发-基础原理和场景分析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+            
+
+    <div class="c_b_p_desc" id="postlist_description_17339345">
+摘要：            <img src="https://img2023.cnblogs.com/blog/3046120/202304/3046120-20230421100830979-1079281380.png" alt="Android事件分发-基础原理和场景分析" class="desc_img" />
+和其他平台类似，Android 中 View 的布局是一个树形结构，各个 ViewGroup 和 View 是按树形结构嵌套布局的，从而会出现用户触摸的位置坐标可能会落在多个 View 的范围内，这样就不知道哪个 View 来响应这个事件，为了解决这一问题，就出现了事件分发机制。        <a href="https://www.cnblogs.com/jingdongkeji/p/17339345.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2023-04-21 10:09
+京东云技术团队
+<span data-post-id="17339345" class="post-view-count">阅读(37)</span> 
+<span data-post-id="17339345" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17339345" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17339345" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jingdongkeji/p/17335636.html">
+    <span>
+        一种面向后端的微服务低代码平台架构设计
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+            
+
+    <div class="c_b_p_desc" id="postlist_description_17335636">
+摘要：            <img src="https://img2023.cnblogs.com/blog/3046120/202304/3046120-20230420093045708-13052920.png" alt="一种面向后端的微服务低代码平台架构设计" class="desc_img" />
+结合京东业务研发实际情况，针对后端研发人员，设计一个微服务低代码平台，助力更高效低交付业务需求。现已结业，将我在本次项目中沉淀设计出的设计文档整理成文，期待与大家有进一步的碰撞沟通        <a href="https://www.cnblogs.com/jingdongkeji/p/17335636.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2023-04-20 09:31
+京东云技术团队
+<span data-post-id="17335636" class="post-view-count">阅读(524)</span> 
+<span data-post-id="17335636" class="post-comment-count">评论(1)</span> 
+<span data-post-id="17335636" class="post-digg-count">推荐(5)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17335636" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jingdongkeji/p/17333646.html">
+    <span>
+        缓存与数据库双写一致性几种策略分析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+            
+
+    <div class="c_b_p_desc" id="postlist_description_17333646">
+摘要：            <img src="https://img2023.cnblogs.com/blog/3046120/202304/3046120-20230419160249009-1244346140.png" alt="缓存与数据库双写一致性几种策略分析" class="desc_img" />
+本文将对几种缓存与数据库保证数据一致性的使用方式进行分析。为保证高并发性能，以下分析场景不考虑执行的原子性及加锁等强一致性要求的场景，仅追求最终一致性。        <a href="https://www.cnblogs.com/jingdongkeji/p/17333646.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2023-04-19 16:03
+京东云技术团队
+<span data-post-id="17333646" class="post-view-count">阅读(424)</span> 
+<span data-post-id="17333646" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17333646" class="post-digg-count">推荐(3)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17333646" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jingdongkeji/p/17332247.html">
+    <span>
+        《社区人员管理》实战案例设计&amp;个人案例分享
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+            
+
+    <div class="c_b_p_desc" id="postlist_description_17332247">
+摘要：            <img src="https://img2023.cnblogs.com/blog/3046120/202304/3046120-20230419095814340-1758467756.png" alt="《社区人员管理》实战案例设计&amp;amp;个人案例分享" class="desc_img" />
+设计是一个让人梦想成真过程，开始编码、测试、调试之前进行需求分析和架构设计，才能保证关键方面都做正确        <a href="https://www.cnblogs.com/jingdongkeji/p/17332247.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2023-04-19 09:59
+京东云技术团队
+<span data-post-id="17332247" class="post-view-count">阅读(37)</span> 
+<span data-post-id="17332247" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17332247" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17332247" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jingdongkeji/p/17329488.html">
+    <span>
+        【架构与设计】常见微服务分层架构的区别和落地实践
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+            
+
+    <div class="c_b_p_desc" id="postlist_description_17329488">
+摘要：            <img src="https://img2023.cnblogs.com/blog/3046120/202304/3046120-20230418143853809-1775229914.png" alt="【架构与设计】常见微服务分层架构的区别和落地实践" class="desc_img" />
+软件工程的方方面面都遵循一个最基本的道理：没有银弹，架构分层模型更是如此，每一种都有各自优缺点，所以请根据不同的业务场景，并遵循简单、可演进这两个重要的架构原则选择合适的架构分层模型即可。        <a href="https://www.cnblogs.com/jingdongkeji/p/17329488.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2023-04-18 16:22
+京东云技术团队
+<span data-post-id="17329488" class="post-view-count">阅读(366)</span> 
+<span data-post-id="17329488" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17329488" class="post-digg-count">推荐(1)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17329488" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jingdongkeji/p/17328635.html">
+    <span>
+        JDK8到JDK17有哪些吸引人的新特性？
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+            
+
+    <div class="c_b_p_desc" id="postlist_description_17328635">
+摘要：            <img src="https://img2023.cnblogs.com/blog/3046120/202304/3046120-20230418101437320-111183621.png" alt="JDK8到JDK17有哪些吸引人的新特性？" class="desc_img" />
+本文主要介绍JDK8到JDk17近200个JEP中比较有价值的新特性（按照价值从高到低排序)，这里有一部分特性作者也在线上环境使用过，也会将其中的使用心得分享给大家。        <a href="https://www.cnblogs.com/jingdongkeji/p/17328635.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2023-04-18 10:15
+京东云技术团队
+<span data-post-id="17328635" class="post-view-count">阅读(1846)</span> 
+<span data-post-id="17328635" class="post-comment-count">评论(11)</span> 
+<span data-post-id="17328635" class="post-digg-count">推荐(11)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17328635" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jingdongkeji/p/17326117.html">
+    <span>
+        缓存空间优化实践
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+            
+
+    <div class="c_b_p_desc" id="postlist_description_17326117">
+摘要：            
+缓存Redis，是我们最常用的服务，其适用场景广泛，被大量应用到各业务场景中。也正因如此，缓存成为了重要的硬件成本来源，我们有必要从空间上做一些优化，降低成本的同时也会提高性能。下面以我们的案例说明，将缓存空间减少70%的做法。        <a href="https://www.cnblogs.com/jingdongkeji/p/17326117.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2023-04-17 15:52
+京东云技术团队
+<span data-post-id="17326117" class="post-view-count">阅读(247)</span> 
+<span data-post-id="17326117" class="post-comment-count">评论(1)</span> 
+<span data-post-id="17326117" class="post-digg-count">推荐(4)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17326117" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jingdongkeji/p/17324787.html">
+    <span>
+        TiDB与MySQL的SQL差异及执行计划简析
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+            
+
+    <div class="c_b_p_desc" id="postlist_description_17324787">
+摘要：            <img src="https://img2023.cnblogs.com/blog/3046120/202304/3046120-20230417092757607-603202969.png" alt="TiDB与MySQL的SQL差异及执行计划简析" class="desc_img" />
+TiDB作为NewSQL，其在对MySQL（SQL92协议）的兼容上做了很多，MySQL作为当下使用较广的事务型数据库，在IT界尤其是互联网间使用广泛，那么对于开发人员来说，1）两个数据库产品在SQL开发及调优的过程中，都有哪些差异？在系统迁移前需要提前做哪些准备？ 2）TiDB的执行计划如何查看，如何SQL调优？ 本文做了一个简要归纳，欢迎查阅交流。        <a href="https://www.cnblogs.com/jingdongkeji/p/17324787.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2023-04-17 09:29
+京东云技术团队
+<span data-post-id="17324787" class="post-view-count">阅读(65)</span> 
+<span data-post-id="17324787" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17324787" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17324787" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+            <div class="postSeparator"></div>
+        <div class="postTitle" role="heading" aria-level="2">
+            <a class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jingdongkeji/p/17317697.html">
+    <span>
+        文盘Rust -- 用Tokio实现简易任务池
+    </span>
+    
+</a>
+        </div>
+        <div class="postCon">
+            
+
+    <div class="c_b_p_desc" id="postlist_description_17317697">
+摘要：            <img src="https://img2023.cnblogs.com/blog/3046120/202304/3046120-20230414110538366-300971586.png" alt="文盘Rust -- 用Tokio实现简易任务池" class="desc_img" />
+Tokio 无疑是 Rust 世界中最优秀的异步Runtime实现。非阻塞的特性带来了优异的性能，但是在实际的开发中我们往往需要在某些情况下阻塞任务来实现某些功能。        <a href="https://www.cnblogs.com/jingdongkeji/p/17317697.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="postDesc">
+            posted @ 2023-04-14 16:34
+京东云技术团队
+<span data-post-id="17317697" class="post-view-count">阅读(51)</span> 
+<span data-post-id="17317697" class="post-comment-count">评论(0)</span> 
+<span data-post-id="17317697" class="post-digg-count">推荐(0)</span> 
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=17317697" rel="nofollow">
+    编辑
+</a>
+
+        </div>
+        <div class="clear"></div>
+</div>
+
+<div class="topicListFooter">
+    <div id="nav_next_page">
+        
+    <a href="https://www.cnblogs.com/jingdongkeji/?page=2">
+        下一页
+    </a>
+
+    </div>    
+</div>
+
+
+
+
+<script>
+    updatePostStats(
+        $(".post-view-count").map(function () { return this.dataset.postId }).get(),
+        function(id, count) { $(".post-view-count[data-post-id=" + id + "]").text("阅读(" + count + ")") },
+        function(id, count) { $(".post-comment-count[data-post-id=" + id + "]").text("评论(" + count + ")") },
+        function(id, count) { $(".post-digg-count[data-post-id=" + id + "]").text("推荐(" + count + ")") });
+</script>
+            </div>
+        </div>
+
+        <div id="sideBar">
+            <div id="sideBarMain">
+                <div id="sidebar_news" class="newsItem">
+    
+<h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script> 
+</div>
+<div id="sidebar_c3"></div>
+                <div id="calendar"><div id="blog-calendar" style="display:none"></div></div>                
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="leftcontentcontainer">
+                    <!-- begin:SingleColumn -->
+                    <div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+                    <!-- end:  SingleColumn -->
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <div id="footer">
+        <!--done-->
+Copyright &copy; 2023 京东云技术团队
+<br /><span id="poweredby">Powered by .NET 7.0 on Kubernetes</span>
+
+    </div>
+</div>
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8M-opqJn5c1MsCC_BxLIULlezRqwylzacFY_d87rTJ6Cf3YbvF2T1BoC8nnxB0OPFnOdBdp2ju2l5j0P9lka6A1PWmnXOKuC9UaS8tHrcTEOR0U2C97YFBzR9O_KsLozhOkBsN2fwod3nVXlWU-u9Lo" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>
