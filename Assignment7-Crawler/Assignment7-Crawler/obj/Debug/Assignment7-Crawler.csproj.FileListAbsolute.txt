@@ -1,0 +1,8 @@
+D:\homework-ruan\Assignment7-Crawler\Assignment7-Crawler\bin\Debug\Assignment7-Crawler.exe.config
+D:\homework-ruan\Assignment7-Crawler\Assignment7-Crawler\bin\Debug\Assignment7-Crawler.exe
+D:\homework-ruan\Assignment7-Crawler\Assignment7-Crawler\bin\Debug\Assignment7-Crawler.pdb
+D:\homework-ruan\Assignment7-Crawler\Assignment7-Crawler\obj\Debug\Assignment7-Crawler.csproj.AssemblyReference.cache
+D:\homework-ruan\Assignment7-Crawler\Assignment7-Crawler\obj\Debug\Assignment7-Crawler.csproj.SuggestedBindingRedirects.cache
+D:\homework-ruan\Assignment7-Crawler\Assignment7-Crawler\obj\Debug\Assignment7-Crawler.csproj.CoreCompileInputs.cache
+D:\homework-ruan\Assignment7-Crawler\Assignment7-Crawler\obj\Debug\Assignment7-Crawler.exe
+D:\homework-ruan\Assignment7-Crawler\Assignment7-Crawler\obj\Debug\Assignment7-Crawler.pdb
